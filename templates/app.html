@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Личный кабинет</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --tg-bg: var(--tg-theme-bg-color, #ffffff);
+            --tg-text: var(--tg-theme-text-color, #000000);
+            --tg-hint: var(--tg-theme-hint-color, #999999);
+            --tg-link: var(--tg-theme-link-color, #007aff);
+            --tg-button: var(--tg-theme-button-color, #007aff);
+            --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+            --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f0f0f0);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: var(--tg-text);
+            background-color: var(--tg-bg);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        .view {
+            display: none; /* Все секции по умолчанию скрыты */
+        }
+        .view.active {
+            display: block; /* Показываем только активную */
+        }
+        /* Стили для экрана регистрации */
+        #registration-view {
+            text-align: center;
+            padding-top: 40px;
+        }
+        #registration-view h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        #registration-view p {
+            font-size: 16px;
+            color: var(--tg-hint);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .register-button {
+            display: inline-block;
+            width: 80%;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--tg-button-text);
+            background-color: var(--tg-button);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .register-button:active {
+            transform: scale(0.98);
+        }
+        /* Стили для личного кабинета (из прошлой версии) */
+        #cabinet-view h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #events-list {
+            list-style: none; padding: 0;
+        }
+        .event-card {
+            background-color: var(--tg-secondary-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .event-card p { margin: 0 0 5px; }
+        .event-card .event-name { font-weight: bold; font-size: 1.1em; color: var(--tg-link); }
+        .event-card .event-date { font-size: 0.8em; color: var(--tg-hint); text-align: right; }
+        #loader { 
+            text-align: center; 
+            padding: 40px 20px; 
+            font-size: 1.2em; 
+            color: var(--tg-hint);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Секция для загрузки -->
+    <div id="loader" class="view active">Загрузка данных...</div>
+
+    <!-- Секция для НЕзарегистрированных пользователей -->
+    <div id="registration-view" class="view">
+        <h1>Добро пожаловать!</h1>
+        <p>Для начала торговли необходимо<br>создать аккаунт у нашего партнера.</p>
+        <button id="register-btn" class="register-button">Создать аккаунт</button>
+    </div>
+
+    <!-- Секция для ЗАРЕГИСТРИРОВАННЫХ пользователей -->
+    <div id="cabinet-view" class="view">
+        <h1>История событий</h1>
+        <ul id="events-list"></ul>
+    </div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    // Сразу говорим Telegram, что готовы к отображению и растягиваемся
+    tg.ready();
+    tg.expand();
+
+    const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
+    
+    // Элементы на странице
+    const loaderView = document.getElementById('loader');
+    const registrationView = document.getElementById('registration-view');
+    const cabinetView = document.getElementById('cabinet-view');
+    const registerBtn = document.getElementById('register-btn');
+    const eventsList = document.getElementById('events-list');
+
+    function showView(viewElement) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        viewElement.classList.add('active');
+    }
+
+    function renderEvents(events) {
+        if (!events || events.length === 0) {
+            eventsList.innerHTML = '<li><p>Событий пока нет.</p></li>';
+            return;
+        }
+        eventsList.innerHTML = ''; // Очищаем список
+        // [event, sumdep, wdr_sum, status, created_at]
+        events.forEach(eventData => {
+            const li = document.createElement('li');
+            li.className = 'event-card';
+
+            const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
+            const formattedDate = new Date(createdAt).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            let details = '';
+            if (eventName === 'reg') {
+                details = '<p class="event-name">✅ Регистрация</p><p>Ваш аккаунт успешно создан.</p>';
+            } else if (eventName === 'FTD') {
+                details = `<p class="event-name">💰 Первый депозит</p><p>Сумма: <b>$${sumDep}</b></p>`;
+            } else if (eventName === 'dep') {
+                details = `<p class="event-name">➕ Пополнение</p><p>Сумма: <b>$${sumDep}</b></p>`;
+            } else if (eventName === 'wdr') {
+                details = `<p class="event-name">💵 Вывод средств</p><p>Сумма: <b>$${sumWdr}</b></p>`;
+            } else {
+                details = `<p class="event-name">📢 Событие: ${eventName}</p>`;
+            }
+            
+            if (status) {
+                 details += `<p>Статус: <b>${status}</b></p>`;
+            }
+
+            li.innerHTML = `${details}<p class="event-date">${formattedDate}</p>`;
+            eventsList.appendChild(li);
+        });
+    }
+
+    // Главная функция загрузки данных
+    function loadUserData(userId) {
+        fetch(`/user/${userId}/data`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.is_registered) {
+                    renderEvents(data.events);
+                    showView(cabinetView);
+                } else {
+                    showView(registrationView);
+                }
+            })
+            .catch(error => {
+                console.error("Ошибка загрузки данных:", error);
+                loaderView.innerText = "Не удалось загрузить данные. Попробуйте перезапустить приложение.";
+            });
+    }
+
+    // Событие: страница загружена
+    document.addEventListener('DOMContentLoaded', function() {
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const userId = tg.initDataUnsafe.user.id;
+            
+            // Назначаем обработчик на кнопку регистрации
+            registerBtn.onclick = function() {
+                const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
+                // Открываем внешнюю ссылку через метод Telegram
+                tg.openLink(personalLink);
+            };
+
+            // Загружаем данные пользователя
+            loadUserData(userId);
+        } else {
+            // Эта ветка сработает, если открыть HTML не через Telegram
+            loaderView.innerText = "Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через бота в Telegram.";
+        }
+    });
+</script>
+</body>
+</html>
