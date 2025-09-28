@@ -65,7 +65,7 @@ def my_id(message):
 def open_app(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     # !!! ВАЖНО: Замените 'https://your-domain.onrender.com' на реальный URL вашего веб-сервера после развертывания
-    web_app_info = telebot.types.WebAppInfo("https://your-domain.onrender.com/app")  
+    web_app_info = telebot.types.WebAppInfo("https://daaaaaan.onrender.com/app")  
     markup.add(telebot.types.KeyboardButton("🚀 Открыть кабинет", web_app=web_app_info))
     bot.send_message(message.chat.id, "Жми ниже, чтобы открыть личный кабинет:", reply_markup=markup)
 
@@ -138,4 +138,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
 
     app.run(host="0.0.0.0", port=port)
+
 
