@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- Язык передается из Flask -->
-<html lang="{{ lang }}">
+<html lang="en"> <!-- Язык будет установлен динамически через JS -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -29,9 +28,11 @@
         .view { display: none; }
         .view.active { display: block; }
 
-        /* --- Loader --- */
-        #loader-view { text-align: center; padding-top: 50px; }
+        /* --- Error & Loader Views --- */
+        #error-view, #loader-view { text-align: center; padding-top: 50px; }
+        #error-view p { color: var(--tg-hint); line-height: 1.5; }
         .spinner {
+            margin: 0 auto;
             width: 40px; height: 40px;
             border: 4px solid var(--tg-secondary-bg);
             border-top-color: var(--tg-link);
@@ -96,10 +97,13 @@
             text-align: center; padding-top: 50px; color: var(--tg-hint);
         }
         #empty-state p { margin-top: 15px; font-size: 16px; line-height: 1.5; }
-
     </style>
 </head>
 <body>
+
+    <div id="error-view" class="view">
+        <p data-translate-key="error_text"></p>
+    </div>
 
     <div id="loader-view" class="view active">
         <div class="spinner"></div>
@@ -131,10 +135,10 @@
     tg.expand();
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
-    const userLang = document.documentElement.lang || 'en';
 
     const TRANSLATIONS = {
         'ru': {
+            'error_text': 'Ошибка: не удалось определить пользователя.<br>Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
             'reg_title': 'Добро пожаловать!',
             'reg_subtitle': 'Для начала торговли создайте аккаунт у нашего партнера.',
             'reg_button': 'Создать аккаунт',
@@ -149,6 +153,7 @@
             'status_label': 'Статус'
         },
         'en': {
+            'error_text': 'Error: User not identified.<br>Please open the app via the "Menu" button in the bot.',
             'reg_title': 'Welcome!',
             'reg_subtitle': 'To start trading, create an account with our partner.',
             'reg_button': 'Create Account',
@@ -171,6 +176,7 @@
         'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
     };
 
+    const errorView = document.getElementById('error-view');
     const loaderView = document.getElementById('loader-view');
     const registrationView = document.getElementById('registration-view');
     const cabinetView = document.getElementById('cabinet-view');
@@ -178,8 +184,8 @@
     const eventsList = document.getElementById('events-list');
     const emptyState = document.getElementById('empty-state');
 
-    function applyTranslations() {
-        const t = TRANSLATIONS[userLang];
+    function applyTranslations(lang) {
+        const t = TRANSLATIONS[lang];
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.getAttribute('data-translate-key');
             if (t[key]) {
@@ -193,7 +199,7 @@
         viewElement.classList.add('active');
     }
 
-    function renderEvents(events) {
+    function renderEvents(events, lang) {
         if (!events || events.length === 0) {
             emptyState.style.display = 'block';
             eventsList.innerHTML = '';
@@ -201,14 +207,14 @@
         }
         emptyState.style.display = 'none';
         eventsList.innerHTML = '';
-        const t = TRANSLATIONS[userLang];
+        const t = TRANSLATIONS[lang];
 
         events.forEach(eventData => {
             const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
             const li = document.createElement('li');
             li.className = 'event-card';
 
-            const eventType = eventName.toLowerCase();
+            const eventType = (eventName || '').toLowerCase();
             const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
             const iconClass = `icon-${iconKey}`;
             
@@ -227,10 +233,10 @@
                 info = `${t.sum_label}: <b>$${sumWdr}</b> | ${t.status_label}: ${status || 'N/A'}`;
             } else {
                 title = eventName;
-                info = `Trader ID: ${eventData[2] || 'N/A'}`;
+                info = `Event details are not available`;
             }
             
-            const date = new Date(createdAt).toLocaleString(userLang, {
+            const date = new Date(createdAt).toLocaleString(lang, {
                 day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
             });
 
@@ -245,41 +251,47 @@
         });
     }
 
-    function loadUserData(userId) {
+    function loadUserData(userId, lang) {
         fetch(`/user/${userId}/data`)
             .then(response => response.json())
             .then(data => {
                 if (data.is_registered) {
-                    renderEvents(data.events);
+                    renderEvents(data.events, lang);
                     showView(cabinetView);
                 } else {
-                    showView(registration-view);
+                    showView(registrationView);
                 }
             })
             .catch(error => {
                 console.error("Data loading error:", error);
-                loaderView.innerHTML = "Failed to load data. Please try again.";
+                errorView.querySelector('p').innerText = 'Failed to load data. Please try again.';
+                showView(errorView);
             });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        applyTranslations();
-        
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const userId = tg.initDataUnsafe.user.id;
+            const user = tg.initDataUnsafe.user;
+            const userId = user.id;
+            const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
+            
+            document.documentElement.lang = userLang;
+            applyTranslations(userLang);
             
             registerBtn.onclick = function() {
                 const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
                 tg.openLink(personalLink);
             };
 
-            loadUserData(userId);
+            loadUserData(userId, userLang);
         } else {
-            loaderView.innerHTML = "Error: user not identified. Please open via Telegram bot.";
+            // Если данные пользователя недоступны, показываем ТОЛЬКО ошибку
+            const lang = (navigator.language && navigator.language.startsWith('ru')) ? 'ru' : 'en';
+            applyTranslations(lang);
+            showView(errorView);
         }
     });
 </script>
 
 </body>
 </html>
-
