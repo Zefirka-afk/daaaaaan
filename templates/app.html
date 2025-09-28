@@ -1,124 +1,192 @@
 <!DOCTYPE html>
-<html lang="ru">
+<!-- Язык передается из Flask -->
+<html lang="{{ lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Личный кабинет</title>
+    <title>Trading Cabinet</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --tg-bg: var(--tg-theme-bg-color, #ffffff);
             --tg-text: var(--tg-theme-text-color, #000000);
             --tg-hint: var(--tg-theme-hint-color, #999999);
-            --tg-link: var(--tg-theme-link-color, #007aff);
-            --tg-button: var(--tg-theme-button-color, #007aff);
+            --tg-link: var(--tg-theme-link-color, #2481cc);
+            --tg-button: var(--tg-theme-button-color, #2481cc);
             --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-            --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f1f1f1);
+            --accent-green: #28a745;
+            --accent-blue: #007bff;
+            --accent-orange: #fd7e14;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0; padding: 15px;
             color: var(--tg-text);
             background-color: var(--tg-bg);
             -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
         }
-        .view {
-            display: none; /* Все секции по умолчанию скрыты */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* --- Loader --- */
+        #loader-view { text-align: center; padding-top: 50px; }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid var(--tg-secondary-bg);
+            border-top-color: var(--tg-link);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .view.active {
-            display: block; /* Показываем только активную */
-        }
-        /* Стили для экрана регистрации */
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Registration View --- */
         #registration-view {
-            text-align: center;
-            padding-top: 40px;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding-top: 30px;
         }
-        #registration-view h1 {
-            font-size: 24px;
-            margin-bottom: 15px;
+        .welcome-card {
+            background-color: var(--tg-secondary-bg);
+            border-radius: 16px; padding: 25px;
+            width: 90%; max-width: 350px;
         }
-        #registration-view p {
-            font-size: 16px;
-            color: var(--tg-hint);
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
+        .welcome-icon { margin-bottom: 20px; }
+        .welcome-card h1 { font-size: 22px; margin: 0 0 10px; }
+        .welcome-card p { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.5; }
         .register-button {
-            display: inline-block;
-            width: 80%;
-            padding: 15px 20px;
-            font-size: 18px;
-            font-weight: bold;
+            width: 100%; padding: 14px;
+            font-size: 17px; font-weight: 600;
             color: var(--tg-button-text);
             background-color: var(--tg-button);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.1s ease;
+            border: none; border-radius: 10px; cursor: pointer;
         }
-        .register-button:active {
-            transform: scale(0.98);
-        }
-        /* Стили для личного кабинета (из прошлой версии) */
-        #cabinet-view h1 {
-            font-size: 24px;
+
+        /* --- Cabinet View --- */
+        .header {
+            font-size: 24px; font-weight: 700;
             margin-bottom: 20px;
         }
-        #events-list {
-            list-style: none; padding: 0;
-        }
+        #events-list { list-style: none; padding: 0; margin: 0; }
         .event-card {
+            display: flex; align-items: center;
             background-color: var(--tg-secondary-bg);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px; padding: 15px;
             margin-bottom: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-        .event-card p { margin: 0 0 5px; }
-        .event-card .event-name { font-weight: bold; font-size: 1.1em; color: var(--tg-link); }
-        .event-card .event-date { font-size: 0.8em; color: var(--tg-hint); text-align: right; }
-        #loader { 
-            text-align: center; 
-            padding: 40px 20px; 
-            font-size: 1.2em; 
-            color: var(--tg-hint);
+        .event-icon {
+            flex-shrink: 0; margin-right: 15px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
         }
+        .event-icon svg { width: 22px; height: 22px; }
+        .event-details { flex-grow: 1; }
+        .event-title { font-weight: 600; }
+        .event-info { font-size: 14px; color: var(--tg-hint); }
+        .event-date {
+            font-size: 12px; color: var(--tg-hint);
+            margin-top: 4px;
+        }
+        .icon-reg { background-color: #e7f3ff; color: #007bff; }
+        .icon-ftd, .icon-dep { background-color: #eaf6ec; color: #28a745; }
+        .icon-wdr { background-color: #fff3e9; color: #fd7e14; }
+
+        /* --- Empty State --- */
+        #empty-state {
+            text-align: center; padding-top: 50px; color: var(--tg-hint);
+        }
+        #empty-state p { margin-top: 15px; font-size: 16px; line-height: 1.5; }
+
     </style>
 </head>
 <body>
 
-    <!-- Секция для загрузки -->
-    <div id="loader" class="view active">Загрузка данных...</div>
-
-    <!-- Секция для НЕзарегистрированных пользователей -->
-    <div id="registration-view" class="view">
-        <h1>Добро пожаловать!</h1>
-        <p>Для начала торговли необходимо<br>создать аккаунт у нашего партнера.</p>
-        <button id="register-btn" class="register-button">Создать аккаунт</button>
+    <div id="loader-view" class="view active">
+        <div class="spinner"></div>
     </div>
 
-    <!-- Секция для ЗАРЕГИСТРИРОВАННЫХ пользователей -->
+    <div id="registration-view" class="view">
+        <div class="welcome-card">
+            <div class="welcome-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tg-link);"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            </div>
+            <h1 data-translate-key="reg_title"></h1>
+            <p data-translate-key="reg_subtitle"></p>
+            <button id="register-btn" class="register-button" data-translate-key="reg_button"></button>
+        </div>
+    </div>
+
     <div id="cabinet-view" class="view">
-        <h1>История событий</h1>
+        <h1 class="header" data-translate-key="cabinet_title"></h1>
         <ul id="events-list"></ul>
+        <div id="empty-state" style="display: none;">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <p data-translate-key="empty_state_text"></p>
+        </div>
     </div>
 
 <script>
     const tg = window.Telegram.WebApp;
-    // Сразу говорим Telegram, что готовы к отображению и растягиваемся
     tg.ready();
     tg.expand();
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
-    
-    // Элементы на странице
-    const loaderView = document.getElementById('loader');
+    const userLang = document.documentElement.lang || 'en';
+
+    const TRANSLATIONS = {
+        'ru': {
+            'reg_title': 'Добро пожаловать!',
+            'reg_subtitle': 'Для начала торговли создайте аккаунт у нашего партнера.',
+            'reg_button': 'Создать аккаунт',
+            'cabinet_title': 'История событий',
+            'empty_state_text': 'Здесь будет отображаться<br>история ваших действий.',
+            'event_reg': 'Регистрация',
+            'event_reg_desc': 'Аккаунт успешно создан',
+            'event_ftd': 'Первый депозит',
+            'event_dep': 'Пополнение',
+            'event_wdr': 'Вывод средств',
+            'sum_label': 'Сумма',
+            'status_label': 'Статус'
+        },
+        'en': {
+            'reg_title': 'Welcome!',
+            'reg_subtitle': 'To start trading, create an account with our partner.',
+            'reg_button': 'Create Account',
+            'cabinet_title': 'Event History',
+            'empty_state_text': 'Your actions will be<br>displayed here.',
+            'event_reg': 'Registration',
+            'event_reg_desc': 'Account created successfully',
+            'event_ftd': 'First Deposit',
+            'event_dep': 'Deposit',
+            'event_wdr': 'Withdrawal',
+            'sum_label': 'Amount',
+            'status_label': 'Status'
+        }
+    };
+
+    const ICONS = {
+        'reg': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+        'ftd': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
+        'dep': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
+        'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
+    };
+
+    const loaderView = document.getElementById('loader-view');
     const registrationView = document.getElementById('registration-view');
     const cabinetView = document.getElementById('cabinet-view');
     const registerBtn = document.getElementById('register-btn');
     const eventsList = document.getElementById('events-list');
+    const emptyState = document.getElementById('empty-state');
+
+    function applyTranslations() {
+        const t = TRANSLATIONS[userLang];
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (t[key]) {
+                el.innerHTML = t[key];
+            }
+        });
+    }
 
     function showView(viewElement) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -127,82 +195,91 @@
 
     function renderEvents(events) {
         if (!events || events.length === 0) {
-            eventsList.innerHTML = '<li><p>Событий пока нет.</p></li>';
+            emptyState.style.display = 'block';
+            eventsList.innerHTML = '';
             return;
         }
-        eventsList.innerHTML = ''; // Очищаем список
-        // [event, sumdep, wdr_sum, status, created_at]
+        emptyState.style.display = 'none';
+        eventsList.innerHTML = '';
+        const t = TRANSLATIONS[userLang];
+
         events.forEach(eventData => {
+            const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
             const li = document.createElement('li');
             li.className = 'event-card';
 
-            const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
-            const formattedDate = new Date(createdAt).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const eventType = eventName.toLowerCase();
+            const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
+            const iconClass = `icon-${iconKey}`;
             
-            let details = '';
-            if (eventName === 'reg') {
-                details = '<p class="event-name">✅ Регистрация</p><p>Ваш аккаунт успешно создан.</p>';
-            } else if (eventName === 'FTD') {
-                details = `<p class="event-name">💰 Первый депозит</p><p>Сумма: <b>$${sumDep}</b></p>`;
-            } else if (eventName === 'dep') {
-                details = `<p class="event-name">➕ Пополнение</p><p>Сумма: <b>$${sumDep}</b></p>`;
-            } else if (eventName === 'wdr') {
-                details = `<p class="event-name">💵 Вывод средств</p><p>Сумма: <b>$${sumWdr}</b></p>`;
+            let title, info;
+            if (eventType === 'reg') {
+                title = t.event_reg;
+                info = t.event_reg_desc;
+            } else if (eventType === 'ftd') {
+                title = t.event_ftd;
+                info = `${t.sum_label}: <b>$${sumDep}</b>`;
+            } else if (eventType === 'dep') {
+                title = t.event_dep;
+                info = `${t.sum_label}: <b>$${sumDep}</b>`;
+            } else if (eventType === 'wdr') {
+                title = t.event_wdr;
+                info = `${t.sum_label}: <b>$${sumWdr}</b> | ${t.status_label}: ${status || 'N/A'}`;
             } else {
-                details = `<p class="event-name">📢 Событие: ${eventName}</p>`;
+                title = eventName;
+                info = `Trader ID: ${eventData[2] || 'N/A'}`;
             }
             
-            if (status) {
-                 details += `<p>Статус: <b>${status}</b></p>`;
-            }
+            const date = new Date(createdAt).toLocaleString(userLang, {
+                day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
 
-            li.innerHTML = `${details}<p class="event-date">${formattedDate}</p>`;
+            li.innerHTML = `
+                <div class="event-icon ${iconClass}">${ICONS[iconKey]}</div>
+                <div class="event-details">
+                    <div class="event-title">${title}</div>
+                    <div class="event-info">${info}</div>
+                    <div class="event-date">${date}</div>
+                </div>`;
             eventsList.appendChild(li);
         });
     }
 
-    // Главная функция загрузки данных
     function loadUserData(userId) {
         fetch(`/user/${userId}/data`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.is_registered) {
                     renderEvents(data.events);
                     showView(cabinetView);
                 } else {
-                    showView(registrationView);
+                    showView(registration-view);
                 }
             })
             .catch(error => {
-                console.error("Ошибка загрузки данных:", error);
-                loaderView.innerText = "Не удалось загрузить данные. Попробуйте перезапустить приложение.";
+                console.error("Data loading error:", error);
+                loaderView.innerHTML = "Failed to load data. Please try again.";
             });
     }
 
-    // Событие: страница загружена
     document.addEventListener('DOMContentLoaded', function() {
+        applyTranslations();
+        
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             const userId = tg.initDataUnsafe.user.id;
             
-            // Назначаем обработчик на кнопку регистрации
             registerBtn.onclick = function() {
                 const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
-                // Открываем внешнюю ссылку через метод Telegram
                 tg.openLink(personalLink);
             };
 
-            // Загружаем данные пользователя
             loadUserData(userId);
         } else {
-            // Эта ветка сработает, если открыть HTML не через Telegram
-            loaderView.innerText = "Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через бота в Telegram.";
+            loaderView.innerHTML = "Error: user not identified. Please open via Telegram bot.";
         }
     });
 </script>
+
 </body>
 </html>
+
