@@ -19,7 +19,7 @@ WEB_APP_URL = "https://daaaaaan.onrender.com"
 # ===================================================================
 TEXTS = {
     'ru': {
-        'welcome': "Привет 👋 Я бот для трейдинга!\n\nНажми на кнопку ниже, чтобы войти в свой личный кабинет и начать.",
+        'welcome': "Привет 👋 Я бот для трейдинга!\n\nНажми на кнопку <b>Меню</b> слева внизу, чтобы открыть свой личный кабинет.",
         'my_id': "Твой Telegram ID: <b>{id}</b>",
         'reg_success': "✅ <b>Регистрация подтверждена!</b>\nВаш личный кабинет в приложении обновлен.",
         'ftd_success': "💰 <b>Первый депозит!</b>\nВы внесли <b>${sum}</b>. Данные в кабинете обновлены.",
@@ -28,7 +28,7 @@ TEXTS = {
         'new_event': "🔔 <b>Новое событие:</b> {event}"
     },
     'en': {
-        'welcome': "Hello 👋 I'm a trading bot!\n\nPress the button below to enter your personal cabinet and get started.",
+        'welcome': "Hello 👋 I'm a trading bot!\n\nPress the <b>Menu</b> button in the bottom left to open your personal cabinet.",
         'my_id': "Your Telegram ID: <b>{id}</b>",
         'reg_success': "✅ <b>Registration confirmed!</b>\nYour personal cabinet has been updated.",
         'ftd_success': "💰 <b>First deposit!</b>\nYou've deposited <b>${sum}</b>. Your cabinet is updated.",
@@ -37,8 +37,7 @@ TEXTS = {
         'new_event': "🔔 <b>New event:</b> {event}"
     }
 }
-# Временное хранилище для языка пользователя. 
-# Для продакшена лучше хранить язык в базе данных, привязанной к user_id.
+# Временное хранилище для языка пользователя.
 user_langs = {}
 
 # ===================================================================
@@ -51,7 +50,6 @@ app = Flask(__name__)
 # =========            ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ           =========
 # ===================================================================
 def init_db():
-    """Создает таблицу в базе данных, если она не существует."""
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS postbacks (
@@ -64,7 +62,6 @@ def init_db():
     conn.close()
 
 def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=None):
-    """Сохраняет данные из постбека в базу данных."""
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
     c = conn.cursor()
     c.execute("""INSERT INTO postbacks (event, subid, trader_id, sumdep, wdr_sum, status)
@@ -78,25 +75,17 @@ def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=Non
 # ===================================================================
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    """
-    Обрабатывает команду /start, определяет язык пользователя 
-    и отправляет кнопку для открытия Mini App.
-    """
     lang_code = message.from_user.language_code
     lang = 'ru' if lang_code and lang_code.startswith('ru') else 'en'
-    user_langs[message.chat.id] = lang  # Сохраняем язык пользователя
+    user_langs[message.chat.id] = lang
 
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    # Передаем язык в URL Mini App
-    web_app_info = telebot.types.WebAppInfo(f"{WEB_APP_URL}/app/{lang}") 
-    markup.add(telebot.types.KeyboardButton("🚀 Открыть кабинет", web_app=web_app_info))
-    
-    bot.send_message(message.chat.id, TEXTS[lang]['welcome'], reply_markup=markup)
+    # УБИРАЕМ большую кнопку ReplyKeyboardMarkup. 
+    # Теперь пользователь будет использовать кнопку "Меню", настроенную в @BotFather.
+    bot.send_message(message.chat.id, TEXTS[lang]['welcome'])
 
 @bot.message_handler(commands=['myid'])
 def my_id(message):
-    """Отправляет пользователю его Telegram ID для отладки."""
-    lang = user_langs.get(message.chat.id, 'en') # Используем сохраненный язык
+    lang = user_langs.get(message.chat.id, 'en')
     bot.send_message(message.chat.id, TEXTS[lang]['my_id'].format(id=message.chat.id))
 
 # ===================================================================
@@ -104,19 +93,15 @@ def my_id(message):
 # ===================================================================
 @app.route("/")
 def index():
-    """Страница-заглушка для проверки работы веб-сервера."""
     return "Web server for Telegram Mini App is running."
 
-@app.route("/app/<lang>")
-def app_page(lang):
-    """Отдает главную страницу Mini App, передавая в шаблон язык."""
-    if lang not in ['ru', 'en']:
-        lang = 'en'
-    return render_template("app.html", lang=lang)
+# Упрощенный маршрут. Язык теперь определяется на стороне фронтенда (в app.html).
+@app.route("/app")
+def app_page():
+    return render_template("app.html")
 
 @app.route("/user/<int:chat_id>/data")
 def user_data_api(chat_id):
-    """API для фронтенда: отдает статус регистрации и историю событий."""
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
     c = conn.cursor()
     c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),))
@@ -130,7 +115,6 @@ def user_data_api(chat_id):
 
 @app.route("/postback", methods=["GET", "POST"])
 def partner_postback():
-    """Принимает постбеки от партнерской сети и уведомляет пользователя на его языке."""
     data = request.args
     event, subid = data.get("event"), data.get("subid")
     trader_id, sumdep = data.get("trader_id"), data.get("sumdep")
@@ -142,7 +126,7 @@ def partner_postback():
     
     save_postback(event, subid, trader_id, sumdep, wdr_sum, status)
 
-    lang = user_langs.get(chat_id, 'en') # Получаем сохраненный язык пользователя
+    lang = user_langs.get(chat_id, 'en')
     message_text = ""
     if event == "reg": message_text = TEXTS[lang]['reg_success']
     elif event == "FTD": message_text = TEXTS[lang]['ftd_success'].format(sum=sumdep)
@@ -164,15 +148,10 @@ if __name__ == "__main__":
     
     def run_bot():
         print("Starting bot polling...")
-        # Удаляем вебхук и очищаем обновления при старте, чтобы избежать ошибки 409 Conflict
         bot.delete_webhook(drop_pending_updates=True)
         bot.infinity_polling(skip_pending=True)
 
-    # Запускаем бота в отдельном потоке, чтобы он не блокировал веб-сервер
     threading.Thread(target=run_bot, daemon=True).start()
     
-    # Запускаем веб-сервер Flask
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
-
-
