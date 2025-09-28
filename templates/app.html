@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Язык будет установлен динамически через JS -->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,90 +17,284 @@
             --accent-green: #28a745;
             --accent-blue: #007bff;
             --accent-orange: #fd7e14;
+            --accent-purple: #6f42c1;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
         }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0; padding: 15px;
+            margin: 0; 
+            padding: 16px;
             color: var(--tg-text);
             background-color: var(--tg-bg);
             -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .view { display: none; }
-        .view.active { display: block; }
-
+        
+        .view { 
+            display: none; 
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .view.active { 
+            display: flex; 
+        }
+        
         /* --- Error & Loader Views --- */
-        #error-view, #loader-view { text-align: center; padding-top: 50px; }
-        #error-view p { color: var(--tg-hint); line-height: 1.5; }
+        #error-view, #loader-view { 
+            text-align: center; 
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        #error-view p { 
+            color: var(--tg-hint); 
+            line-height: 1.6;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
         .spinner {
             margin: 0 auto;
-            width: 40px; height: 40px;
+            width: 48px; 
+            height: 48px;
             border: 4px solid var(--tg-secondary-bg);
-            border-top-color: var(--tg-link);
+            border-top-color: var(--tg-button);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
+        
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+        
         /* --- Registration View --- */
         #registration-view {
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding-top: 30px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
+        
         .welcome-card {
-            background-color: var(--tg-secondary-bg);
-            border-radius: 16px; padding: 25px;
-            width: 90%; max-width: 350px;
+            background: var(--tg-secondary-bg);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: var(--card-shadow);
+            margin: 0 auto;
         }
-        .welcome-icon { margin-bottom: 20px; }
-        .welcome-card h1 { font-size: 22px; margin: 0 0 10px; }
-        .welcome-card p { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.5; }
+        
+        .welcome-icon {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .welcome-icon svg {
+            width: 72px;
+            height: 72px;
+            color: var(--tg-button);
+        }
+        
+        .welcome-card h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 16px;
+            line-height: 1.3;
+        }
+        
+        .welcome-card p {
+            color: var(--tg-hint);
+            margin: 0 0 28px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
         .register-button {
-            width: 100%; padding: 14px;
-            font-size: 17px; font-weight: 600;
+            width: 100%;
+            padding: 16px;
+            font-size: 17px;
+            font-weight: 600;
             color: var(--tg-button-text);
             background-color: var(--tg-button);
-            border: none; border-radius: 10px; cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(36, 129, 204, 0.3);
         }
-
+        
+        .register-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(36, 129, 204, 0.4);
+        }
+        
+        .register-button:active {
+            transform: translateY(0);
+        }
+        
         /* --- Cabinet View --- */
         .header {
-            font-size: 24px; font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--tg-button), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        #events-list { list-style: none; padding: 0; margin: 0; }
+        
+        #events-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        
         .event-card {
-            display: flex; align-items: center;
-            background-color: var(--tg-secondary-bg);
-            border-radius: 12px; padding: 15px;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            background: var(--tg-secondary-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--tg-button);
         }
+        
+        .event-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        
         .event-icon {
-            flex-shrink: 0; margin-right: 15px;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            margin-right: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .event-icon svg { width: 22px; height: 22px; }
-        .event-details { flex-grow: 1; }
-        .event-title { font-weight: 600; }
-        .event-info { font-size: 14px; color: var(--tg-hint); }
+        
+        .event-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .event-details {
+            flex-grow: 1;
+        }
+        
+        .event-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 4px;
+            color: var(--tg-text);
+        }
+        
+        .event-info {
+            font-size: 15px;
+            color: var(--tg-hint);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
         .event-date {
-            font-size: 12px; color: var(--tg-hint);
-            margin-top: 4px;
+            font-size: 13px;
+            color: var(--tg-hint);
+            opacity: 0.8;
         }
-        .icon-reg { background-color: #e7f3ff; color: #007bff; }
-        .icon-ftd, .icon-dep { background-color: #eaf6ec; color: #28a745; }
-        .icon-wdr { background-color: #fff3e9; color: #fd7e14; }
-
+        
+        .icon-reg { 
+            background-color: #e7f3ff; 
+            color: #007bff;
+            border-left-color: #007bff;
+        }
+        
+        .icon-ftd, .icon-dep { 
+            background-color: #eaf6ec; 
+            color: #28a745;
+            border-left-color: #28a745;
+        }
+        
+        .icon-wdr { 
+            background-color: #fff3e9; 
+            color: #fd7e14;
+            border-left-color: #fd7e14;
+        }
+        
         /* --- Empty State --- */
         #empty-state {
-            text-align: center; padding-top: 50px; color: var(--tg-hint);
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            color: var(--tg-hint);
+            flex: 1;
         }
-        #empty-state p { margin-top: 15px; font-size: 16px; line-height: 1.5; }
+        
+        #empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            color: var(--tg-hint);
+            opacity: 0.6;
+        }
+        
+        #empty-state p {
+            margin-top: 16px;
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 24px;
+            }
+            
+            .welcome-card h1 {
+                font-size: 22px;
+            }
+            
+            .event-card {
+                padding: 16px;
+            }
+            
+            .event-icon {
+                width: 44px;
+                height: 44px;
+                margin-right: 12px;
+            }
+            
+            .event-title {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
-
     <div id="error-view" class="view">
         <p data-translate-key="error_text"></p>
     </div>
@@ -112,7 +306,11 @@
     <div id="registration-view" class="view">
         <div class="welcome-card">
             <div class="welcome-icon">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--tg-link);"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
             </div>
             <h1 data-translate-key="reg_title"></h1>
             <p data-translate-key="reg_subtitle"></p>
@@ -124,174 +322,178 @@
         <h1 class="header" data-translate-key="cabinet_title"></h1>
         <ul id="events-list"></ul>
         <div id="empty-state" style="display: none;">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
             <p data-translate-key="empty_state_text"></p>
         </div>
     </div>
 
-<script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
 
-    const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
+        const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
 
-    const TRANSLATIONS = {
-        'ru': {
-            'error_text': 'Ошибка: не удалось определить пользователя.<br>Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
-            'reg_title': 'Добро пожаловать!',
-            'reg_subtitle': 'Для начала торговли создайте аккаунт у нашего партнера.',
-            'reg_button': 'Создать аккаунт',
-            'cabinet_title': 'История событий',
-            'empty_state_text': 'Здесь будет отображаться<br>история ваших действий.',
-            'event_reg': 'Регистрация',
-            'event_reg_desc': 'Аккаунт успешно создан',
-            'event_ftd': 'Первый депозит',
-            'event_dep': 'Пополнение',
-            'event_wdr': 'Вывод средств',
-            'sum_label': 'Сумма',
-            'status_label': 'Статус'
-        },
-        'en': {
-            'error_text': 'Error: User not identified.<br>Please open the app via the "Menu" button in the bot.',
-            'reg_title': 'Welcome!',
-            'reg_subtitle': 'To start trading, create an account with our partner.',
-            'reg_button': 'Create Account',
-            'cabinet_title': 'Event History',
-            'empty_state_text': 'Your actions will be<br>displayed here.',
-            'event_reg': 'Registration',
-            'event_reg_desc': 'Account created successfully',
-            'event_ftd': 'First Deposit',
-            'event_dep': 'Deposit',
-            'event_wdr': 'Withdrawal',
-            'sum_label': 'Amount',
-            'status_label': 'Status'
-        }
-    };
-
-    const ICONS = {
-        'reg': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
-        'ftd': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
-        'dep': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
-        'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
-    };
-
-    const errorView = document.getElementById('error-view');
-    const loaderView = document.getElementById('loader-view');
-    const registrationView = document.getElementById('registration-view');
-    const cabinetView = document.getElementById('cabinet-view');
-    const registerBtn = document.getElementById('register-btn');
-    const eventsList = document.getElementById('events-list');
-    const emptyState = document.getElementById('empty-state');
-
-    function applyTranslations(lang) {
-        const t = TRANSLATIONS[lang];
-        document.querySelectorAll('[data-translate-key]').forEach(el => {
-            const key = el.getAttribute('data-translate-key');
-            if (t[key]) {
-                el.innerHTML = t[key];
+        const TRANSLATIONS = {
+            'ru': {
+                'error_text': 'Ошибка: не удалось определить пользователя.<br>Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
+                'reg_title': 'Добро пожаловать!',
+                'reg_subtitle': 'Для начала торговли создайте аккаунт у нашего партнера.',
+                'reg_button': 'Создать аккаунт',
+                'cabinet_title': 'История событий',
+                'empty_state_text': 'Здесь будет отображаться<br>история ваших действий.',
+                'event_reg': 'Регистрация',
+                'event_reg_desc': 'Аккаунт успешно создан',
+                'event_ftd': 'Первый депозит',
+                'event_dep': 'Пополнение',
+                'event_wdr': 'Вывод средств',
+                'sum_label': 'Сумма',
+                'status_label': 'Статус'
+            },
+            'en': {
+                'error_text': 'Error: User not identified.<br>Please open the app via the "Menu" button in the bot.',
+                'reg_title': 'Welcome!',
+                'reg_subtitle': 'To start trading, create an account with our partner.',
+                'reg_button': 'Create Account',
+                'cabinet_title': 'Event History',
+                'empty_state_text': 'Your actions will be<br>displayed here.',
+                'event_reg': 'Registration',
+                'event_reg_desc': 'Account created successfully',
+                'event_ftd': 'First Deposit',
+                'event_dep': 'Deposit',
+                'event_wdr': 'Withdrawal',
+                'sum_label': 'Amount',
+                'status_label': 'Status'
             }
-        });
-    }
+        };
 
-    function showView(viewElement) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        viewElement.classList.add('active');
-    }
+        const ICONS = {
+            'reg': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+            'ftd': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
+            'dep': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
+            'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
+        };
 
-    function renderEvents(events, lang) {
-        if (!events || events.length === 0) {
-            emptyState.style.display = 'block';
-            eventsList.innerHTML = '';
-            return;
-        }
-        emptyState.style.display = 'none';
-        eventsList.innerHTML = '';
-        const t = TRANSLATIONS[lang];
+        const errorView = document.getElementById('error-view');
+        const loaderView = document.getElementById('loader-view');
+        const registrationView = document.getElementById('registration-view');
+        const cabinetView = document.getElementById('cabinet-view');
+        const registerBtn = document.getElementById('register-btn');
+        const eventsList = document.getElementById('events-list');
+        const emptyState = document.getElementById('empty-state');
 
-        events.forEach(eventData => {
-            const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
-            const li = document.createElement('li');
-            li.className = 'event-card';
-
-            const eventType = (eventName || '').toLowerCase();
-            const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
-            const iconClass = `icon-${iconKey}`;
-            
-            let title, info;
-            if (eventType === 'reg') {
-                title = t.event_reg;
-                info = t.event_reg_desc;
-            } else if (eventType === 'ftd') {
-                title = t.event_ftd;
-                info = `${t.sum_label}: <b>$${sumDep}</b>`;
-            } else if (eventType === 'dep') {
-                title = t.event_dep;
-                info = `${t.sum_label}: <b>$${sumDep}</b>`;
-            } else if (eventType === 'wdr') {
-                title = t.event_wdr;
-                info = `${t.sum_label}: <b>$${sumWdr}</b> | ${t.status_label}: ${status || 'N/A'}`;
-            } else {
-                title = eventName;
-                info = `Event details are not available`;
-            }
-            
-            const date = new Date(createdAt).toLocaleString(lang, {
-                day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
-            });
-
-            li.innerHTML = `
-                <div class="event-icon ${iconClass}">${ICONS[iconKey]}</div>
-                <div class="event-details">
-                    <div class="event-title">${title}</div>
-                    <div class="event-info">${info}</div>
-                    <div class="event-date">${date}</div>
-                </div>`;
-            eventsList.appendChild(li);
-        });
-    }
-
-    function loadUserData(userId, lang) {
-        fetch(`/user/${userId}/data`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.is_registered) {
-                    renderEvents(data.events, lang);
-                    showView(cabinetView);
-                } else {
-                    showView(registrationView);
+        function applyTranslations(lang) {
+            const t = TRANSLATIONS[lang];
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (t[key]) {
+                    el.innerHTML = t[key];
                 }
-            })
-            .catch(error => {
-                console.error("Data loading error:", error);
-                errorView.querySelector('p').innerText = 'Failed to load data. Please try again.';
-                showView(errorView);
             });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
-            const userId = user.id;
-            const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
-            
-            document.documentElement.lang = userLang;
-            applyTranslations(userLang);
-            
-            registerBtn.onclick = function() {
-                const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
-                tg.openLink(personalLink);
-            };
-
-            loadUserData(userId, userLang);
-        } else {
-            // Если данные пользователя недоступны, показываем ТОЛЬКО ошибку
-            const lang = (navigator.language && navigator.language.startsWith('ru')) ? 'ru' : 'en';
-            applyTranslations(lang);
-            showView(errorView);
         }
-    });
-</script>
 
+        function showView(viewElement) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            viewElement.classList.add('active');
+        }
+
+        function renderEvents(events, lang) {
+            if (!events || events.length === 0) {
+                emptyState.style.display = 'flex';
+                eventsList.innerHTML = '';
+                return;
+            }
+            emptyState.style.display = 'none';
+            eventsList.innerHTML = '';
+            const t = TRANSLATIONS[lang];
+
+            events.forEach(eventData => {
+                const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
+                const li = document.createElement('li');
+                li.className = 'event-card';
+
+                const eventType = (eventName || '').toLowerCase();
+                const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
+                const iconClass = `icon-${iconKey}`;
+                
+                let title, info;
+                if (eventType === 'reg') {
+                    title = t.event_reg;
+                    info = t.event_reg_desc;
+                } else if (eventType === 'ftd') {
+                    title = t.event_ftd;
+                    info = `${t.sum_label}: <b>$${sumDep}</b>`;
+                } else if (eventType === 'dep') {
+                    title = t.event_dep;
+                    info = `${t.sum_label}: <b>$${sumDep}</b>`;
+                } else if (eventType === 'wdr') {
+                    title = t.event_wdr;
+                    info = `${t.sum_label}: <b>$${sumWdr}</b> | ${t.status_label}: ${status || 'N/A'}`;
+                } else {
+                    title = eventName;
+                    info = `Event details are not available`;
+                }
+                
+                const date = new Date(createdAt).toLocaleString(lang, {
+                    day: '2-digit', 
+                    month: 'short', 
+                    year: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                });
+
+                li.innerHTML = `
+                    <div class="event-icon ${iconClass}">${ICONS[iconKey]}</div>
+                    <div class="event-details">
+                        <div class="event-title">${title}</div>
+                        <div class="event-info">${info}</div>
+                        <div class="event-date">${date}</div>
+                    </div>`;
+                eventsList.appendChild(li);
+            });
+        }
+
+        function loadUserData(userId, lang) {
+            fetch(`/user/${userId}/data`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.is_registered) {
+                        renderEvents(data.events, lang);
+                        showView(cabinetView);
+                    } else {
+                        showView(registrationView);
+                    }
+                })
+                .catch(error => {
+                    console.error("Data loading error:", error);
+                    errorView.querySelector('p').innerHTML = 'Failed to load data. Please try again.';
+                    showView(errorView);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                const user = tg.initDataUnsafe.user;
+                const userId = user.id;
+                const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
+                
+                document.documentElement.lang = userLang;
+                applyTranslations(userLang);
+                
+                registerBtn.onclick = function() {
+                    const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
+                    tg.openLink(personalLink);
+                };
+
+                loadUserData(userId, userLang);
+            } else {
+                const lang = (navigator.language && navigator.language.startsWith('ru')) ? 'ru' : 'en';
+                applyTranslations(lang);
+                showView(errorView);
+            }
+        });
+    </script>
 </body>
 </html>
