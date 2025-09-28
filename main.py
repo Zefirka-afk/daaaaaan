@@ -8,7 +8,7 @@ import telebot
 # =========                   КОНФИГУРАЦИЯ                    =========
 # ===================================================================
 # !!! ВАЖНО: Вставьте сюда свой токен, полученный от @BotFather
-TOKEN = "8183205134:AAEJ95MtbBfYQXOej4ZBxb3GRyS1oz56qlY" 
+TOKEN = "8369181511:AAEvwUn5gQUAXizdvvUpbP4repqU26iKQd0" 
 
 # !!! ВАЖНО: Вставьте сюда основной URL вашего приложения с Render
 # Пример: "https://your-app-name.onrender.com"
@@ -174,3 +174,4 @@ if __name__ == "__main__":
     # Запускаем веб-сервер Flask
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
