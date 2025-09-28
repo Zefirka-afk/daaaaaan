@@ -5,7 +5,7 @@ from flask import Flask, request, render_template
 import telebot
 
 # ========= Конфиги =========
-TOKEN = "8369181511:AAHglPmAnHRDqsuTAghaCtIhIQ58iVHukqI"  # замени на свой
+TOKEN = "8369181511:AAHglPmAnHRDqsuTAghaCtIhIQ58iVHukqI"  
 REGISTER_LINK = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START"
 
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
@@ -138,3 +138,4 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
 
     app.run(host="0.0.0.0", port=port)
+
