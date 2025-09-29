@@ -78,7 +78,7 @@
         .signal-card p { margin: 0; font-size: 14px; line-height: 1.5; }
         
         .spinner-icon { animation: pulse 1.5s infinite; }
-        .back-btn { margin-top: 40px; }
+        .back-btn-simple { margin-top: 40px; }
         
         #error-view { text-align: center; padding-top: 60px; }
         #error-view p { color: var(--tg-hint); line-height: 1.6; font-size: 16px; }
@@ -189,7 +189,7 @@
             <h1>🚧</h1>
             <h1 data-translate-key="wip_title"></h1>
             <p data-translate-key="wip_subtitle"></p>
-            <button class="primary-btn back-to-choice-btn" data-translate-key="btn_back"></button>
+            <button class="primary-btn back-to-choice-btn back-btn-simple" data-translate-key="btn_back"></button>
         </div>
     </div>
     
@@ -198,13 +198,8 @@
             <h1 class="spinner-icon">⏳</h1>
             <h1 data-translate-key="searching_title"></h1>
             <p data-translate-key="searching_subtitle"></p>
-            <button class="primary-btn back-to-choice-btn" data-translate-key="btn_back"></button>
+            <button class="primary-btn back-to-choice-btn back-btn-simple" data-translate-key="btn_back"></button>
         </div>
-    </div>
-
-    <!-- === ЛИЧНЫЙ КАБИНЕТ (пока не используется в основном флоу) === -->
-    <div id="cabinet-view" class="view">
-        <!-- Сюда можно будет добавить кнопку для возврата к сигналам -->
     </div>
     
     <!-- === ЭКРАН ОШИБКИ === -->
@@ -289,6 +284,7 @@
             const signalChoiceView = document.getElementById('signal-choice-view');
             const vipWipView = document.getElementById('vip-wip-view');
             const simpleSignalSearchView = document.getElementById('simple-signal-search-view');
+            const errorView = document.getElementById('error-view');
             let currentSlide = 0;
 
             function goToSlide(slideIndex) {
@@ -303,11 +299,7 @@
                 tg.openLink(personalLink);
             });
             document.getElementById('deposit-btn').addEventListener('click', () => {
-                tg.showPopup({
-                    title: TRANSLATIONS[userLang].post_reg_button,
-                    message: TRANSLATIONS[userLang].post_reg_subtitle,
-                    buttons: [{type: 'ok', text: 'OK'}]
-                });
+                 tg.openLink(`https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START&sub_id1=${userId}`);
             });
             document.getElementById('go-to-signals-btn').addEventListener('click', () => showView(signalChoiceView));
             document.getElementById('vip-signal-card').addEventListener('click', () => showView(vipWipView));
@@ -334,7 +326,7 @@
                         }
                     }
                 })
-                .catch(() => showView(document.getElementById('error-view')));
+                .catch(() => showView(errorView));
         } else {
             const lang = (navigator.language && navigator.language.startsWith('ru')) ? 'ru' : 'en';
             applyTranslations(lang);
@@ -345,5 +337,4 @@
 
 </body>
 </html>
-
 
