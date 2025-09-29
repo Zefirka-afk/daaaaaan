@@ -31,7 +31,8 @@
             margin: 0; color: var(--tg-text); background-color: var(--tg-bg);
             min-height: 100vh; box-sizing: border-box; 
             opacity: 0; transition: opacity 0.5s ease; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            padding-top: max(20px, env(safe-area-inset-top));
         }
         body.ready { opacity: 1; }
 
@@ -40,8 +41,8 @@
         
         .centered-content {
             display: flex; flex-direction: column; justify-content: center;
-            align-items: center; text-align: center; height: 100%;
-            padding: 20px; box-sizing: border-box;
+            align-items: center; text-align: center; 
+            height: calc(100vh - 40px); /* Занимает всю высоту за вычетом отступов body */
         }
         .content-block { max-width: 350px; }
         
@@ -344,5 +345,6 @@
 
 </body>
 </html>
+
 
 
