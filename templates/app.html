@@ -2,81 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Trading Cabinet</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --tg-bg: var(--tg-theme-bg-color, #ffffff);
-            --tg-text: var(--tg-theme-text-color, #000000);
-            --tg-hint: var(--tg-theme-hint-color, #999999);
-            --tg-link: var(--tg-theme-link-color, #2481cc);
-            --tg-button: var(--tg-theme-button-color, #2481cc);
-            --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-            --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f1f1f1);
-            --accent-green: #28a745;
-            --accent-blue: #007bff;
-            --accent-orange: #fd7e14;
-            --accent-purple: #6f42c1;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --border-radius: 16px;
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0; 
-            padding: 16px;
-            color: var(--tg-text);
-            background-color: var(--tg-bg);
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .view { 
-            display: none; 
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .view.active { 
-            display: flex; 
-        }
-        
-        /* --- Error & Loader Views --- */
-        #error-view, #loader-view { 
-            text-align: center; 
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        #error-view p { 
-            color: var(--tg-hint); 
-            line-height: 1.6;<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Trading Cabinet</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            /* Используем цвета из темы Telegram, но с темным уклоном */
             --tg-bg: var(--tg-theme-secondary-bg-color, #18222d);
             --tg-text: var(--tg-theme-text-color, #ffffff);
             --tg-hint: var(--tg-theme-hint-color, #ababad);
             --tg-button: var(--tg-theme-button-color, #5288c1);
             --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
             
-            /* Кастомные цвета для акцентов */
             --glass-bg: rgba(36, 51, 69, 0.5);
             --glass-border: rgba(255, 255, 255, 0.1);
             --accent-green: #28a745;
@@ -103,7 +39,7 @@
             background-size: 400% 400%;
             animation: gradient-animation 15s ease infinite;
             padding: 20px;
-            padding-top: max(20px, env(safe-area-inset-top)); /* Адаптация под "челку" на iPhone */
+            padding-top: max(20px, env(safe-area-inset-top));
             min-height: 100vh;
             box-sizing: border-box;
             opacity: 0;
@@ -116,7 +52,6 @@
         .view { display: none; }
         .view.active { display: block; }
         
-        /* --- Стили для карточек "матовое стекло" --- */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
@@ -126,11 +61,9 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
 
-        /* --- Loader & Error --- */
         #loader-view, #error-view { text-align: center; padding-top: 60px; }
         #error-view p { color: var(--tg-hint); line-height: 1.6; font-size: 16px; }
 
-        /* --- Registration View --- */
         #registration-view {
             display: flex; flex-direction: column; align-items: center; text-align: center;
             padding-top: 40px;
@@ -157,7 +90,6 @@
             box-shadow: 0 2px 10px rgba(82, 136, 193, 0.5);
         }
 
-        /* --- Cabinet View --- */
         .header {
             font-size: 28px; font-weight: 700;
             margin-bottom: 25px;
@@ -192,7 +124,6 @@
 
     <div id="app-container" style="display: none;">
         <div id="loader-view" class="view">
-             <!-- Loader is now handled by body opacity, so this can be empty or removed -->
         </div>
         <div id="registration-view" class="view">
             <div class="welcome-card glass-card">
@@ -222,6 +153,8 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
+    tg.setHeaderColor('#18222d');
+    tg.setBackgroundColor('#18222d');
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
 
@@ -258,14 +191,31 @@
         }
     };
     
-    const ICONS = { /* ... ICONS object from previous version ... */ };
+    const ICONS = {
+        'reg': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+        'ftd': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
+        'dep': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
+        'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
+    };
     
     const appContainer = document.getElementById('app-container');
     const errorView = document.getElementById('error-view');
-    /* ... other element variables ... */
+    const loaderView = document.getElementById('loader-view');
+    const registrationView = document.getElementById('registration-view');
+    const cabinetView = document.getElementById('cabinet-view');
 
-    function applyTranslations(lang) { /* ... function from previous version ... */ }
-    function showView(viewElement) { /* ... function from previous version ... */ }
+    function applyTranslations(lang) {
+        const t = TRANSLATIONS[lang];
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (t[key]) el.innerHTML = t[key];
+        });
+    }
+
+    function showView(viewElement) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        viewElement.classList.add('active');
+    }
 
     function renderEvents(events, lang) {
         const eventsList = document.getElementById('events-list');
@@ -283,15 +233,13 @@
             const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
             const li = document.createElement('li');
             li.className = 'event-card glass-card';
-            li.style.animationDelay = `${index * 0.07}s`; // Staggered animation
+            li.style.animationDelay = `${index * 0.07}s`;
 
-            // ... The rest of the rendering logic from the previous version ...
-            // This part can be copied directly, as it just fills the HTML
             const eventType = (eventName || '').toLowerCase();
             const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
             const iconClass = `icon-${iconKey}`;
             
-            let title, info, amount_html = '';
+            let title, info;
             if (eventType === 'reg') { title = t.event_reg; info = t.event_reg_desc; } 
             else if (eventType === 'ftd') { title = t.event_ftd; info = `${t.sum_label}: $${sumDep}`; } 
             else if (eventType === 'dep') { title = t.event_dep; info = `${t.sum_label}: $${sumDep}`; } 
@@ -311,13 +259,31 @@
         });
     }
 
-    function loadUserData(userId, lang) { /* ... function from previous version ... */ }
+    function loadUserData(userId, lang) {
+        fetch(`/user/${userId}/data`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.is_registered) {
+                    renderEvents(data.events, lang);
+                    showView(cabinetView);
+                } else {
+                    showView(registrationView);
+                }
+            })
+            .catch(error => {
+                console.error("Data loading error:", error);
+                const p = errorView.querySelector('p');
+                p.innerText = 'Failed to load data. Please try again.';
+                showView(errorView);
+            });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('ready');
         
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             appContainer.style.display = 'block';
+            showView(loaderView);
             
             const user = tg.initDataUnsafe.user;
             const userId = user.id;
@@ -340,8 +306,6 @@
             showView(errorView);
         }
     });
-    // NOTE: Make sure to re-paste the full JS functions and constants that were omitted for brevity.
-    // I've included the core logic, but you need the full script.
 </script>
 
 </body>
