@@ -8,6 +8,9 @@
     
     --glass-bg: rgba(36, 51, 69, 0.6);
     --glass-border: rgba(255, 255, 255, 0.1);
+
+    --color-green: #28a745;
+    --color-red: #dc3545;
 }
 
 /* --- 2. Анимации --- */
@@ -95,7 +98,7 @@ p.description { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.6; font-
 }
 .features-list li::before {
     content: '✓';
-    color: #28a745;
+    color: var(--color-green);
     font-size: 20px;
     margin-right: 12px;
 }
@@ -106,7 +109,8 @@ p.description { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.6; font-
     align-items: center;
     margin-top: 20px;
 }
-.nav-buttons.full-width .main-button {
+.nav-buttons.full-width .main-button,
+.nav-buttons.full-width .back-button {
     width: 100%;
 }
 .main-button {
@@ -144,6 +148,7 @@ p.description { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.6; font-
 .signal-button {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 15px;
@@ -166,3 +171,36 @@ p.description { color: var(--tg-hint); margin: 0 0 25px; line-height: 1.6; font-
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
+/* --- 9. НОВЫЕ СТИЛИ ДЛЯ ЭКРАНА СИГНАЛА --- */
+.signal-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.signal-step {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 12px 0;
+    animation: fadeIn 0.5s ease-out;
+}
+.signal-step b {
+    color: var(--tg-button);
+    font-weight: 700;
+}
+.buy-signal {
+    color: var(--color-green);
+    font-weight: 700;
+    font-size: 22px;
+}
+.sell-signal {
+    color: var(--color-red);
+    font-weight: 700;
+    font-size: 22px;
+}
+.signal-result {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 25px;
+    color: #f0b90b; /* Золотой цвет для победы */
+}
