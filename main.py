@@ -3,68 +3,6 @@ import sqlite3
 import threading
 from flask import Flask, request, render_template, jsonify
 import telebot
-
-# ===================================================================
-# ========= КОНФИГУРАЦИЯ ====
-# ===================================================================
-# !!! ВАЖНО: Вставьте сюда свой токен, полученный от @BotFather
-TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"  # <-- ЗАМЕНИТЕ ВАШИМ ТОКЕНОМ
-
-# !!! ВАЖНО: Вставьте сюда основной URL вашего приложения с Render
-# Пример: "https://your-app-name.onrender.com"
-WEB_APP_URL = "https://daaaaaan.onrender.com" # <-- ЗАМЕНИТЕ ВАШИМ URL
-
-# ===================================================================
-# ========= ПЕРЕВОДЫ (TEXTS) =========
-# ===================================================================
-TEXTS = {
-    'ru': {
-        'welcome': "Привет 👋 Я бот для трейдинга!\n\nНажми на кнопку <b>Меню</b> слева внизу, чтобы открыть свой личный кабинет.",
-        'my_id': "Твой Telegram ID: <b>{id}</b>",
-        'reg_success': "✅ <b>Регистрация подтверждена!</b>\nВаш личный кабинет в приложении обновлен.",
-        'ftd_success': "💰 <b>Первый депозит!</b>\nВы внесли <b>{sum}</b>. Данные в кабинете обновлены.",
-        'dep_success': "➕ <b>Пополнение</b>\nВы пополнили счет на <b>{sum}</b>. Данные в кабинете обновлены.",
-        'wdr_request': "💵 <b>Запрос на вывод</b>\nСумма: <b>{sum}</b>. Статус: {status}",
-        'new_event': "🔔 <b>Новое событие:</b> {event}"
-    },
-    'en': {
-        'welcome': "Hello 👋 I'm a trading bot!\n\nPress the <b>Menu</b> button in the bottom left to open your personal cabinet.",
-        'my_id': "Your Telegram ID: <b>{id}</b>",
-        'reg_success': "✅ <b>Registration confirmed!</b>\nYour personal cabinet has been updated.",
-        'ftd_success': "💰 <b>First deposit!</b>\nYou've deposited <b>{sum}</b>. Your cabinet is updated.",
-        'dep_success': "➕ <b>Deposit</b>\nYou have topped up your account with <b>{sum}</b>.",
-        'wdr_request': "💵 <b>Withdrawal request</b>\nAmount: <b>{sum}</b>. Status: {status}",
-        'new_event': "🔔 <b>New event:</b> {event}"
-    }
-}
-
-# Временное хранилище для языка пользователя.
-user_langs = {}
-
-# ===================================================================
-# ========= ИНИЦИАЛИЗАЦИЯ БОТА И ВЕБ-СЕРВЕРА =========
-# ===================================================================
-bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
-app = Flask(__name__) 
-
-# ===================================================================
-# ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
-# ===================================================================
-def init_db():
-    conn = sqlite3.connect("postbacks.db", check_same_thread=False)
-    c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS postbacks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        event TEXT, subid TEXT, trader_id TEXT,
-        sumdep REAL, wdr_sum REAL, status TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )""")
-    conn.commit()
-    conn.close()import os
-import sqlite3
-import threading
-from flask import Flask, request, render_template, jsonify
-import telebot
 import random
 import time
 
@@ -109,7 +47,7 @@ user_langs = {}
 # ========= ИНИЦИАЛИЗАЦИЯ БОТА И ВЕБ-СЕРВЕРА =========
 # ===================================================================
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
-app = Flask(__name__) 
+app = Flask(__name__)
 
 # ===================================================================
 # ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
@@ -164,7 +102,7 @@ def app_page():
 @app.route("/user/<int:chat_id>/data")
 def user_data_api(chat_id):
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
-    conn.row_factory = sqlite3.Row 
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
     
     c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),))
@@ -269,5 +207,3 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
-
-
