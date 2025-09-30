@@ -3,47 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Pocket pro</title> <!-- Изменил название -->
-    
-    <!-- Подключаем Telegram Web App JS -->
+    <title>Pocket pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <!-- !!! ВАЖНО: Подключаем наш внешний CSS файл !!! -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <!-- Весь остальной HTML и JS код остается без изменений -->
-    <div id="app-container" style="display: none;">
-        <div id="loader-view" class="view">
-            <!-- Можно добавить сюда SVG-анимацию загрузки, если нужно -->
+<div class="app-wrapper">
+
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
+    <div id="loader-view" class="view active">
+        <div class="card">
+            <p class="spinner">⏳</p>
+            <p data-translate-key="loading"></p>
         </div>
-        <div id="registration-view" class="view">
-            <div class="welcome-card glass-card">
-                <div class="welcome-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                </div>
-                <h1 data-translate-key="reg_title"></h1>
-                <p data-translate-key="reg_subtitle"></p>
-                <button id="register-btn" class="register-button" data-translate-key="reg_button"></button>
+    </div>
+    
+    <!-- ЭКРАН 0.1: ОШИБКА -->
+    <div id="error-view" class="view">
+        <div class="card">
+            <p data-translate-key="error_text"></p>
+        </div>
+    </div>
+
+    <!-- БЛОК 1: ОНБОРДИНГ ДО РЕГИСТРАЦИИ -->
+    <!-- Шаг 1.1 -->
+    <div id="onboarding-1-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb1_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb1_desc"></p>
+            <div class="stats-container">
+                <div class="stat-item"><div class="value">1000+</div><div class="label" data-translate-key="onb1_stat1"></div></div>
+                <div class="stat-item"><div class="value">95%</div><div class="label" data-translate-key="onb1_stat2"></div></div>
+                <div class="stat-item"><div class="value">24/7</div><div class="label" data-translate-key="onb1_stat3"></div></div>
+            </div>
+            <div class="nav-buttons full-width">
+                <button class="main-button" id="btn-onb1-next" data-translate-key="start_btn"></button>
             </div>
         </div>
-        <div id="cabinet-view" class="view">
-            <h1 class="header" data-translate-key="cabinet_title"></h1>
-            <ul id="events-list"></ul>
-            <div id="empty-state" class="glass-card" style="display: none;">
-                 <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                <p data-translate-key="empty_state_text"></p>
+    </div>
+    <!-- Шаг 1.2 -->
+    <div id="onboarding-2-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb2_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb2_desc"></p>
+            <ul class="features-list">
+                <li data-translate-key="onb2_feat1"></li>
+                <li data-translate-key="onb2_feat2"></li>
+                <li data-translate-key="onb2_feat3"></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb2-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb2-next" data-translate-key="next_btn"></button>
+            </div>
+        </div>
+    </div>
+    <!-- Шаг 1.3 -->
+    <div id="onboarding-3-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb3_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb3_desc"></p>
+             <ul class="features-list">
+                <li data-translate-key="onb3_feat1"></li>
+                <li data-translate-key="onb3_feat2"></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb3-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb3-next" data-translate-key="onb3_btn"></button>
+            </div>
+        </div>
+    </div>
+    <!-- Шаг 1.4 -->
+    <div id="onboarding-4-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb4_title"></h1>
+            <p class="description" data-translate-key="onb4_desc"></p>
+            <ul class="features-list">
+                <li data-translate-key="onb4_feat1"></li>
+                <li data-translate-key="onb4_feat2"></li>
+                <li data-translate-key="onb4_feat3"></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb4-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-register" data-translate-key="onb4_btn"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ (ОЖИДАНИЕ ДЕПОЗИТА) -->
+    <div id="post-reg-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="postreg_title"></h1>
+            <p class="description" data-translate-key="postreg_desc"></p>
+            <p class="description" data-translate-key="postreg_warn"></p>
+        </div>
+    </div>
+
+    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (ВЫБОР СИГНАЛА) -->
+    <div id="post-deposit-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="postdep_title"></h1>
+            <p class="description" data-translate-key="postdep_desc"></p>
+            <p class="description" data-translate-key="postdep_profit"></p>
+            <div class="signal-buttons">
+                <div class="signal-button" id="btn-vip-signal">
+                    <h3 data-translate-key="vip_signal_title"></h3>
+                    <p data-translate-key="vip_signal_desc"></p>
+                </div>
+                <div class="signal-button" id="btn-simple-signal">
+                    <h3 data-translate-key="simple_signal_title"></h3>
+                    <p data-translate-key="simple_signal_desc"></p>
+                </div>
             </div>
         </div>
     </div>
     
-    <div id="error-view" class="view">
-        <p data-translate-key="error_text"></p>
+    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ -->
+    <!-- WIP - В разработке -->
+    <div id="wip-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="wip_title"></h1>
+            <p class="description" data-translate-key="wip_desc"></p>
+            <div class="nav-buttons full-width">
+                 <button class="back-button" id="btn-wip-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
+    <!-- Поиск сигнала -->
+    <div id="searching-view" class="view status-view">
+        <div class="card">
+            <p class="spinner">⏳</p>
+            <h1 class="title" data-translate-key="search_title"></h1>
+            <p class="description" data-translate-key="search_desc"></p>
+        </div>
     </div>
 
+</div>
+
 <script>
-    // Весь ваш JavaScript код остается здесь без изменений
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -51,159 +151,158 @@
     tg.setBackgroundColor('#18222d');
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
-
+    
     const TRANSLATIONS = {
         'ru': {
-            'error_text': 'Ошибка: не удалось определить пользователя.<br>Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
-            'reg_title': 'Добро пожаловать!',
-            'reg_subtitle': 'Создайте аккаунт у нашего партнера, чтобы начать торговлю.',
-            'reg_button': '🚀 Начать регистрацию',
-            'cabinet_title': 'Ваши события',
-            'empty_state_text': 'Здесь будет история<br>ваших финансовых операций.',
-            'event_reg': 'Аккаунт создан',
-            'event_reg_desc': 'Регистрация прошла успешно',
-            'event_ftd': 'Первый депозит',
-            'event_dep': 'Пополнение счета',
-            'event_wdr': 'Вывод средств',
-            'sum_label': 'Сумма',
-            'status_label': 'Статус'
+            'loading': 'Загрузка данных...',
+            'error_text': 'Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
+            'start_btn': 'Начать >',
+            'next_btn': 'Далее >',
+            'back_btn': '< Назад',
+            // Onboarding 1
+            'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
+            'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
+            // Onboarding 2
+            'onb2_title': 'VIP Статус', 'onb2_desc': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров',
+            'onb2_feat1': 'Обычные сигналы: 5-10/день', 'onb2_feat2': 'VIP сигналы: 20+/день', 'onb2_feat3': 'Точность VIP: до 95%',
+            // Onboarding 3
+            'onb3_title': 'Начните зарабатывать', 'onb3_desc': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня',
+            'onb3_feat1': 'Прибыль: до 95%', 'onb3_feat2': 'Скорость: 1-15 мин.', 'onb3_btn': 'Начать торговать >',
+            // Onboarding 4
+            'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера',
+            'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >',
+            // Post-Reg
+            'postreg_title': 'Классно! Стартуем', 'postreg_desc': 'И помни, что с любой суммой можно достичь высот!', 'postreg_warn': 'Теперь сделай депозит. Я проверю зачисление депозита, не шути со мной.',
+            // Post-Deposit
+            'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>{deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>{profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
+            // Signal choice
+            'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.',
+            'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'У тебя будет 30 секунд, чтобы подготовиться. Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
+            // Other screens
+            'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
+            'search_title': 'Я в поиске сигнала ⏳', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро.',
         },
         'en': {
-            'error_text': 'Error: User not identified.<br>Please open the app via the "Menu" button in the bot.',
-            'reg_title': 'Welcome!',
-            'reg_subtitle': 'Create an account with our partner to start trading.',
-            'reg_button': '🚀 Start Registration',
-            'cabinet_title': 'Your Events',
-            'empty_state_text': 'Your financial transaction<br>history will appear here.',
-            'event_reg': 'Account Created',
-            'event_reg_desc': 'Registration was successful',
-            'event_ftd': 'First Deposit',
-            'event_dep': 'Account Deposit',
-            'event_wdr': 'Withdrawal',
-            'sum_label': 'Amount',
-            'status_label': 'Status'
+            'loading': 'Loading data...',
+            'error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.',
+            'start_btn': 'Start >',
+            'next_btn': 'Next >',
+            'back_btn': '< Back',
+            // Onboarding 1
+            'onb1_title': 'Premium Signals', 'onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy',
+            'onb1_stat1': 'Traders', 'onb1_stat2': 'Accuracy', 'onb1_stat3': 'Support',
+            // Onboarding 2
+            'onb2_title': 'VIP Status', 'onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders',
+            'onb2_feat1': 'Regular signals: 5-10/day', 'onb2_feat2': 'VIP signals: 20+/day', 'onb2_feat3': 'VIP accuracy: up to 95%',
+            // Onboarding 3
+            'onb3_title': 'Start Earning', 'onb3_desc': 'Join thousands of successful traders and start getting stable profit today',
+            'onb3_feat1': 'Profit: up to 95%', 'onb3_feat2': 'Speed: 1-15 min.', 'onb3_btn': 'Start Trading >',
+            // Onboarding 4
+            'onb4_title': 'Registration in Pocket Option', 'onb4_desc': 'To receive signals, you need to register with a reliable broker',
+            'onb4_feat1': 'Licensed broker', 'onb4_feat2': 'Fast payouts', 'onb4_feat3': 'Minimum deposit $10', 'onb4_btn': 'Register >',
+            // Post-Reg
+            'postreg_title': 'Awesome! Let\'s start', 'postreg_desc': 'And remember, you can reach great heights with any amount!', 'postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.',
+            // Post-Deposit
+            'postdep_title': 'Super, your deposit is funded!', 'postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>', 'postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!',
+            // Signal choice
+            'vip_signal_title': '👑 VIP Signal', 'vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.',
+            'simple_signal_title': 'Simple Signal', 'simple_signal_desc': 'You will have 30 seconds to prepare. I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?',
+            // Other screens
+            'wip_title': 'Work in Progress', 'wip_desc': 'This feature will be available soon.',
+            'search_title': 'Searching for a signal ⏳', 'search_desc': 'Get ready, go to the platform, you will need to act quickly.',
         }
     };
-    
-    const ICONS = {
-        'reg': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
-        'ftd': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
-        'dep': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`,
-        'wdr': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z"></path></svg>`
-    };
-    
-    const appContainer = document.getElementById('app-container');
-    const errorView = document.getElementById('error-view');
-    const loaderView = document.getElementById('loader-view');
-    const registrationView = document.getElementById('registration-view');
-    const cabinetView = document.getElementById('cabinet-view');
 
-    function applyTranslations(lang) {
+    function applyTranslations(lang, data = {}) {
         const t = TRANSLATIONS[lang];
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.getAttribute('data-translate-key');
-            if (t[key]) el.innerHTML = t[key];
+            if (t[key]) {
+                let text = t[key];
+                for(const dataKey in data) {
+                    text = text.replace(`{${dataKey}}`, data[dataKey]);
+                }
+                el.innerHTML = text;
+            }
         });
     }
 
-    function showView(viewElement) {
+    function showView(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        viewElement.classList.add('active');
+        const viewElement = document.getElementById(viewId);
+        if (viewElement) {
+            viewElement.classList.add('active');
+        }
     }
 
-    function renderEvents(events, lang) {
-        const eventsList = document.getElementById('events-list');
-        const emptyState = document.getElementById('empty-state');
-        if (!events || events.length === 0) {
-            emptyState.style.display = 'block';
-            eventsList.innerHTML = '';
+    function setupNavigation() {
+        // Onboarding
+        document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
+        document.getElementById('btn-onb2-back').onclick = () => showView('onboarding-1-view');
+        document.getElementById('btn-onb2-next').onclick = () => showView('onboarding-3-view');
+        document.getElementById('btn-onb3-back').onclick = () => showView('onboarding-2-view');
+        document.getElementById('btn-onb3-next').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view');
+        // Signals
+        document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
+        document.getElementById('btn-simple-signal').onclick = () => showView('searching-view');
+        document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
+    }
+    
+    async function main() {
+        if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+            applyTranslations('en'); // Default lang if no user
+            showView('error-view');
             return;
         }
-        emptyState.style.display = 'none';
-        eventsList.innerHTML = '';
-        const t = TRANSLATIONS[lang];
 
-        events.forEach((eventData, index) => {
-            const [eventName, sumDep, sumWdr, status, createdAt] = eventData;
-            const li = document.createElement('li');
-            li.className = 'event-card glass-card';
-            li.style.animationDelay = `${index * 0.07}s`;
-
-            const eventType = (eventName || '').toLowerCase();
-            const iconKey = ['reg', 'ftd', 'dep', 'wdr'].find(k => eventType.startsWith(k)) || 'dep';
-            const iconClass = `icon-${iconKey}`;
-            
-            let title, info;
-            if (eventType === 'reg') { title = t.event_reg; info = t.event_reg_desc; } 
-            else if (eventType === 'ftd') { title = t.event_ftd; info = `${t.sum_label}: $${sumDep}`; } 
-            else if (eventType === 'dep') { title = t.event_dep; info = `${t.sum_label}: $${sumDep}`; } 
-            else if (eventType === 'wdr') { title = t.event_wdr; info = `${t.status_label}: ${status || 'N/A'}`; }
-            else { title = eventName; info = `Event details not available`; }
-            
-            const date = new Date(createdAt).toLocaleString(lang, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-
-            li.innerHTML = `
-                <div class="event-icon ${iconClass}">${ICONS[iconKey]}</div>
-                <div class="event-details">
-                    <div class="event-title">${title}</div>
-                    <div class="event-info">${info}</div>
-                </div>
-                <div class="event-date">${date}</div>`;
-            eventsList.appendChild(li);
-        });
-    }
-
-    function loadUserData(userId, lang) {
-        fetch(`/user/${userId}/data`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.is_registered) {
-                    renderEvents(data.events, lang);
-                    showView(cabinetView);
-                } else {
-                    showView(registrationView);
-                }
-            })
-            .catch(error => {
-                console.error("Data loading error:", error);
-                const p = errorView.querySelector('p');
-                p.innerText = 'Failed to load data. Please try again.';
-                showView(errorView);
-            });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        document.body.classList.add('ready');
+        const user = tg.initDataUnsafe.user;
+        const userId = user.id;
+        const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
+        document.documentElement.lang = userLang;
         
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            appContainer.style.display = 'block';
-            showView(loaderView);
-            
-            const user = tg.initDataUnsafe.user;
-            const userId = user.id;
-            const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
-            
-            document.documentElement.lang = userLang;
-            applyTranslations(userLang);
-            
-            const registerBtn = document.getElementById('register-btn');
-            registerBtn.onclick = function() {
-                const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
-                tg.openLink(personalLink);
-            };
+        // Apply translations first
+        applyTranslations(userLang);
+        setupNavigation();
+        
+        // Setup Register button
+        document.getElementById('btn-register').onclick = () => {
+            const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
+            tg.openLink(personalLink);
+        };
 
-            loadUserData(userId, userLang);
+        try {
+            const response = await fetch(`/user/${userId}/data`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            
+            const hasDeposit = data.events.some(e => e[0] === 'FTD' || e[0] === 'dep');
 
-        } else {
-            const lang = (navigator.language && navigator.language.startsWith('ru')) ? 'ru' : 'en';
-            applyTranslations(lang);
-            showView(errorView);
+            if (data.is_registered) {
+                if (hasDeposit) {
+                    const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
+                    const depositAmount = parseFloat(depositEvent[1]);
+                    const profitAmount = (depositAmount * 3.3).toFixed(2);
+                    
+                    applyTranslations(userLang, {
+                        deposit_sum: `$${depositAmount}`,
+                        profit_sum: `$${profitAmount}`
+                    });
+                    showView('post-deposit-view');
+                } else {
+                    showView('post-reg-view');
+                }
+            } else {
+                showView('onboarding-1-view');
+            }
+        } catch (error) {
+            console.error("Data loading error:", error);
+            showView('error-view');
         }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', main);
 </script>
 
 </body>
 </html>
-
-
-
