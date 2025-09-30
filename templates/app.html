@@ -338,7 +338,7 @@
         tg.expand(); // Растягиваем приложение на весь экран
 
         // !!! ВАЖНО: Вставьте сюда свою реферальную ссылку
-        const REFERRAL_LINK = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START"; 
+        const REFERRAL_LINK = "https://u3.shortink.io/register?utm_campaign=85192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START&"; 
 
         const user = tg.initDataUnsafe?.user;
         if (!user) {
@@ -365,7 +365,7 @@
         const registerLink = document.getElementById('register-link');
         
         // Устанавливаем реферальную ссылку с ID пользователя
-        registerLink.href = `${REFERRAL_LINK}${chat_id}`;
+        registerLink.href = `${REFERRAL_LINK}subid=${chat_id}`;
         
         // Открытие ссылок через Telegram
         registerLink.addEventListener('click', function(e) {
@@ -443,3 +443,4 @@
 </script>
 </body>
 </html>
+
