@@ -1,282 +1,445 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Pocket Option Signals</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Trading Cabinet</title>
+    <!-- Подключаем официальный скрипт Telegram для Mini Apps -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        /* Базовые стили для всего приложения */
+        :root {
+            --tg-theme-bg-color: #ffffff; /* Светлая тема по умолчанию */
+            --tg-theme-text-color: #000000;
+            --tg-theme-button-color: #007bff;
+            --tg-theme-button-text-color: #ffffff;
+            --primary-blue: #007AFF;
+            --light-gray: #f2f2f7;
+            --dark-gray: #8e8e93;
+        }
 
-  <style>
-    body { 
-      font-family: "Segoe UI", Arial, sans-serif; 
-      background: linear-gradient(180deg, #f0f4f9, #dce3f0); 
-      margin: 0; 
-      padding: 0;
-      color: #222;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      padding: 30px;
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    h1 { margin: 10px 0; font-size: 26px; color: #2a2f45; }
-    h2 { margin: 8px 0; font-size: 20px; font-weight: 500; color: #4c5673; }
-    p { font-size: 16px; line-height: 1.5; margin: 8px 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-    button { 
-      display: inline-block;
-      background: linear-gradient(135deg, #007bff, #4da3ff);
-      color: white; 
-      border: none; 
-      padding: 14px 28px; 
-      border-radius: 10px; 
-      font-size: 16px; 
-      font-weight: bold;
-      margin: 12px 6px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,123,255,0.3);
-    }
-    button.secondary {
-      background: #f0f0f0;
-      color: #333;
-    }
-    .info {
-      font-size: 14px; 
-      color: #555;
-      margin-top: 4px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 15px 0;
-    }
-    ul li {
-      font-size: 15px;
-      padding: 6px 0;
-    }
-  </style>
+        /* Контейнер для экранов */
+        .screen {
+            display: none; /* Все экраны по умолчанию скрыты */
+            width: 100%;
+            max-width: 400px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Стиль для активного экрана */
+        .screen.active {
+            display: flex;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--dark-gray);
+            margin: 0 0 24px 0;
+            line-height: 1.5;
+        }
+
+        /* Карточки с информацией (Traders, Accuracy, Support) */
+        .info-cards {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: var(--light-gray);
+            padding: 12px;
+            border-radius: 10px;
+            width: 30%;
+            font-size: 14px;
+        }
+        .card .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--tg-theme-text-color);
+        }
+        .card .label {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        /* Список преимуществ */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .feature-list li {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-gray);
+            color: var(--primary-blue);
+        }
+
+        /* Кнопки навигации (вперед/назад) */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .nav-buttons .btn {
+            width: 48%;
+        }
+
+        /* Экран загрузки */
+        #loading-screen {
+            font-size: 18px;
+            color: var(--dark-gray);
+        }
+    </style>
 </head>
 <body>
-  <!-- Контейнер -->
-  <div class="container">
-    <!-- Карточки (страницы) -->
-    <div class="card page active" id="page1">
-      <h1 id="p1_title"></h1>
-      <h2 id="p1_sub"></h2>
-      <p id="p1_desc"></p>
-      <p id="traders"></p>
-      <p id="accuracy"></p>
-      <p id="support"></p>
-      <button onclick="nextPage(2)" id="startBtn"></button>
+
+    <!-- 0. Экран загрузки -->
+    <div id="loading-screen" class="screen active">
+        <p data-translate="loading">Loading...</p>
     </div>
 
-    <div class="card page" id="page2">
-      <button class="secondary" onclick="nextPage(1)" id="backBtn1"></button>
-      <h1 id="vip_title"></h1>
-      <h2>Pocket Option</h2>
-      <p id="vip_desc"></p>
-      <p id="vip_regular"></p>
-      <p id="vip_signals"></p>
-      <p id="vip_accuracy"></p>
-      <button onclick="nextPage(3)" id="nextBtn1"></button>
+    <!-- 1. Приветственный экран -->
+    <div id="welcome-screen" class="screen">
+        <h1 data-translate="welcome_title">Premium Signals for Pocket Option</h1>
+        <p data-translate="welcome_subtitle">Get accurate trading signals from professional analysts with up to 95% accuracy</p>
+        <div class="info-cards">
+            <div class="card"><div class="value">1000+</div><div class="label" data-translate="traders">Traders</div></div>
+            <div class="card"><div class="value">95%</div><div class="label" data-translate="accuracy">accuracy</div></div>
+            <div class="card"><div class="value">24/7</div><div class="label" data-translate="support">Support</div></div>
+        </div>
+        <button class="btn btn-primary" data-nav="vip-status-screen" data-translate="start_btn">Start ></button>
     </div>
 
-    <div class="card page" id="page3">
-      <button class="secondary" onclick="nextPage(2)" id="backBtn2"></button>
-      <h1 id="earn_title"></h1>
-      <h2>Pocket Option</h2>
-      <p id="earn_desc"></p>
-      <p id="profit"></p>
-      <p id="speed"></p>
-      <button onclick="nextPage(4)" id="nextBtn2"></button>
+    <!-- 2. Экран VIP статуса -->
+    <div id="vip-status-screen" class="screen">
+        <h1 data-translate="vip_title">VIP Status</h1>
+        <p data-translate="vip_subtitle">Exclusive signals, priority support and access to closed community of elite traders</p>
+        <ul class="feature-list">
+            <li data-translate="regular_signals">Regular signals: 5-10/day</li>
+            <li data-translate="vip_signals">VIP signals: 20+/day</li>
+            <li data-translate="vip_accuracy">VIP accuracy: up to 95%</li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" data-nav="welcome-screen">&lt;</button>
+            <button class="btn btn-primary" data-nav="start-earning-screen" data-translate="next_btn">Next ></button>
+        </div>
+    </div>
+    
+    <!-- 3. Экран "Начни зарабатывать" -->
+    <div id="start-earning-screen" class="screen">
+        <h1 data-translate="earning_title">Start Earning</h1>
+        <p data-translate="earning_subtitle">Join thousands of successful traders and start getting stable profit today</p>
+        <ul class="feature-list">
+            <li data-translate="profit">Profit: up to 95%</li>
+            <li data-translate="speed">Speed: 1-15 min.</li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" data-nav="vip-status-screen">&lt;</button>
+            <button class="btn btn-primary" data-nav="registration-screen" data-translate="start_trading_btn">Start Trading ></button>
+        </div>
     </div>
 
-    <div class="card page" id="page4">
-      <button class="secondary" onclick="nextPage(3)" id="backBtn3"></button>
-      <h1 id="reg_title"></h1>
-      <h2>Pocket Option</h2>
-      <p id="reg_desc"></p>
-      <ul>
-        <li id="reg_li1"></li>
-        <li id="reg_li2"></li>
-        <li id="reg_li3"></li>
-      </ul>
-      <a href="https://pocketoption.com/ref/YOUR_REF_LINK" target="_blank">
-        <button id="registerBtn"></button>
-      </a>
+    <!-- 4. Экран регистрации -->
+    <div id="registration-screen" class="screen">
+        <h1 data-translate="reg_title">Registration in Pocket Option</h1>
+        <p data-translate="reg_subtitle">To receive signals, you need to register with a reliable broker</p>
+        <ul class="feature-list">
+            <li data-translate="licensed_broker">Licensed broker</li>
+            <li data-translate="fast_payouts">Fast payouts</li>
+            <li data-translate="min_deposit">Minimum deposit $10</li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" data-nav="start-earning-screen">&lt;</button>
+            <!-- Эта кнопка будет открывать реферальную ссылку -->
+            <a href="#" id="register-link" class="btn btn-primary" data-translate="register_btn">Register ></a>
+        </div>
     </div>
 
-    <div class="card page" id="afterReg">
-      <h1 id="after_reg_title"></h1>
-      <p id="after_reg_desc"></p>
+    <!-- 5. Экран после регистрации (ожидание депозита) -->
+    <div id="post-reg-screen" class="screen">
+        <h1 data-translate="post_reg_title">Awesome! Let's start</h1>
+        <p data-translate="post_reg_subtitle">And remember, with any amount you can reach great heights! Now make a deposit. I will check the deposit, don't mess with me.</p>
+        <p>⏳</p>
+    </div>
+    
+    <!-- 6. Экран после депозита -->
+    <div id="post-deposit-screen" class="screen">
+        <h1 data-translate="post_dep_title">Super, your deposit has been credited.</h1>
+        <p>
+            <span data-translate="post_dep_point_a">This is your starting point A - </span>
+            <b id="deposit-amount">$0</b>
+        </p>
+        <p>
+            <span data-translate="post_dep_profit_projection">In 5-10 signals, you can make </span>
+            <b id="profit-projection">X3.3 from point A</b>
+        </p>
+        <p data-translate="post_dep_encouragement">Don't be afraid of losses, everyone has them. In the long run, you will definitely earn!</p>
+        
+        <button class="btn btn-primary" data-nav="vip-coming-soon-screen" data-translate="vip_signal_btn">VIP Signal</button>
+        <button class="btn btn-secondary" data-nav="simple-signal-search-screen" data-translate="simple_signal_btn">Simple Signal</button>
     </div>
 
-    <div class="card page" id="afterDep">
-      <h1 id="after_dep_title"></h1>
-      <p id="after_dep_desc"></p>
-      <p id="depositPoint"></p>
-      <p id="after_dep_tip"></p>
-      <p id="after_dep_tip2"></p>
-      <button onclick="vipSignal()" id="vipBtn"></button>
-      <p class="info" id="vip_info"></p>
-      <button onclick="simpleSignal()" id="simpleBtn"></button>
-      <p class="info" id="simple_info"></p>
+    <!-- 7. Экран "В разработке" для VIP -->
+    <div id="vip-coming-soon-screen" class="screen">
+        <h1 data-translate="coming_soon_title">In Development</h1>
+        <p data-translate="coming_soon_subtitle">The VIP signals feature is currently under development. Stay tuned!</p>
+        <button class="btn btn-secondary" data-nav="post-deposit-screen">&lt; <span data-translate="back_btn">Back</span></button>
     </div>
 
-    <div class="card page" id="vipPage">
-      <h1 id="vip_in_progress"></h1>
-      <button class="secondary" onclick="nextPage('afterDep')" id="backBtnVip"></button>
+    <!-- 8. Экран поиска простого сигнала -->
+    <div id="simple-signal-search-screen" class="screen">
+        <h1 data-translate="searching_title">Searching for a signal ⏳⏳⏳</h1>
+        <p data-translate="searching_subtitle">Get ready, go to the platform, you will need to act quickly. I will send you the currency pair, then the expiration time and the signal itself (up or down). Are you ready?</p>
+        <button class="btn btn-secondary" data-nav="post-deposit-screen">&lt; <span data-translate="back_btn">Back</span></button>
     </div>
 
-    <div class="card page" id="simpleSignalPage">
-      <h1 id="simple_search"></h1>
-      <p id="simple_prepare"></p>
-      <button class="secondary" onclick="nextPage('afterDep')" id="backBtnSimple"></button>
-    </div>
-  </div>
 
-  <!-- Скрипты -->
-  <script>
-  // ==== Тексты напрямую скопированы из предыдущего варианта ====
-  const TEXTS = {
-    en: {
-      p1_title: "Premium Signals",
-      p1_sub: "Pocket Option",
-      p1_desc: "Get accurate trading signals from professional analysts with up to 95% accuracy",
-      traders: "👥 1000+ Traders",
-      accuracy: "📈 95% Accuracy",
-      support: "⏰ 24/7 Support",
-      startBtn: "Start ➡",
-      back: "⬅ Back",
-      next: "Next ➡",
-      vip_title: "VIP Status",
-      vip_desc: "Exclusive signals, priority support, and access to an elite trading community",
-      vip_regular: "Regular signals: 5–10/day",
-      vip_signals: "VIP signals: 20+/day",
-      vip_accuracy: "VIP accuracy: up to 95%",
-      earn_title: "Start Earning",
-      earn_desc: "Join thousands of traders and start getting profit today",
-      profit: "Profit: up to 95%",
-      speed: "Speed: 1–15 min.",
-      startTrading: "Start Trading ➡",
-      reg_title: "Registration",
-      reg_desc: "Register with a reliable broker to receive signals:",
-      reg_li1: "✅ Licensed broker",
-      reg_li2: "⚡ Fast payouts",
-      reg_li3: "💵 Minimum deposit $10",
-      registerBtn: "Register ➡",
-      after_reg_title: "Awesome! 🚀",
-      after_reg_desc: "Now make a deposit. I’ll check it 😉",
-      after_dep_title: "Great! 🎉",
-      after_dep_desc: "Your deposit is credited.",
-      after_dep_tip: "In 5–10 signals you can make ×3.3 from point A",
-      after_dep_tip2: "Losses happen, but long-term you’ll profit!",
-      vipBtn: "🔥 VIP Signal",
-      vip_info: "VIP signals are the most reliable way to earn.",
-      simpleBtn: "⚡ Simple Signal",
-      simple_info: "You’ll have 30s to prepare. I’ll send pair + direction.",
-      vip_in_progress: "VIP section under construction 🛠",
-      simple_search: "Searching for signal ⏳",
-      simple_prepare: "Prepare your platform, act fast!"
-    },
-    ru: {
-      p1_title: "Премиум Сигналы",
-      p1_sub: "Pocket Option",
-      p1_desc: "Получай торговые сигналы от аналитиков с точностью до 95%",
-      traders: "👥 1000+ Трейдеров",
-      accuracy: "📈 95% Точность",
-      support: "⏰ Поддержка 24/7",
-      startBtn: "Старт ➡",
-      back: "⬅ Назад",
-      next: "Далее ➡",
-      vip_title: "VIP Статус",
-      vip_desc: "Эксклюзивные сигналы, приоритетная поддержка и закрытое сообщество",
-      vip_regular: "Обычные сигналы: 5–10/д",
-      vip_signals: "VIP сигналы: 20+/д",
-      vip_accuracy: "Точность VIP: до 95%",
-      earn_title: "Начни Зарабатывать",
-      earn_desc: "Присоединяйся к тысячам трейдеров и начни прибыль",
-      profit: "Прибыль: до 95%",
-      speed: "Скорость: 1–15 мин.",
-      startTrading: "Торговать ➡",
-      reg_title: "Регистрация",
-      reg_desc: "Зарегистрируйся у надежного брокера, чтобы получать сигналы:",
-      reg_li1: "✅ Лицензированный брокер",
-      reg_li2: "⚡ Быстрые выплаты",
-      reg_li3: "💵 Мин. депозит 10$",
-      registerBtn: "Регистрация ➡",
-      after_reg_title: "Классно! 🚀",
-      after_reg_desc: "Теперь сделай депозит. Я проверю 😉",
-      after_dep_title: "Супер! 🎉",
-      after_dep_desc: "Твой депозит зачислен.",
-      after_dep_tip: "За 5–10 сигналов можно сделать ×3.3 от точки А",
-      after_dep_tip2: "Не бойся минусов — в долгосроке заработаешь!",
-      vipBtn: "🔥 VIP Сигнал",
-      vip_info: "VIP сигналы — самые надёжные.",
-      simpleBtn: "⚡ Простой сигнал",
-      simple_info: "У тебя будет 30 секунд. Пришлю пару и направление.",
-      vip_in_progress: "VIP раздел в разработке 🛠",
-      simple_search: "Ищу сигнал ⏳",
-      simple_prepare: "Подготовься к сделке!"
-    }
-  };
+<script>
+    // Объект с переводами для всех текстов на странице
+    const translations = {
+        'ru': {
+            loading: 'Загрузка...',
+            welcome_title: 'Премиум Сигналы для Pocket Option',
+            welcome_subtitle: 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
+            traders: 'Трейдеры',
+            accuracy: 'точность',
+            support: 'Поддержка',
+            start_btn: 'Начать >',
+            vip_title: 'VIP Статус',
+            vip_subtitle: 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров',
+            regular_signals: 'Обычные сигналы: 5-10/день',
+            vip_signals: 'VIP сигналы: 20+/день',
+            vip_accuracy: 'VIP точность: до 95%',
+            next_btn: 'Далее >',
+            earning_title: 'Начни Зарабатывать',
+            earning_subtitle: 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня',
+            profit: 'Прибыль: до 95%',
+            speed: 'Скорость: 1-15 мин.',
+            start_trading_btn: 'Начать Торговать >',
+            reg_title: 'Регистрация в Pocket Option',
+            reg_subtitle: 'Для получения сигналов вам необходимо зарегистрироваться у надежного брокера',
+            licensed_broker: 'Лицензированный брокер',
+            fast_payouts: 'Быстрые выплаты',
+            min_deposit: 'Минимальный депозит $10',
+            register_btn: 'Регистрация >',
+            post_reg_title: 'Классно! Стартуем',
+            post_reg_subtitle: 'И помни, что с любой суммой можно достичь высот! Теперь сделай депозит. Я проверю зачисление, не шути со мной.',
+            post_dep_title: 'Супер, твой депозит пополнен.',
+            post_dep_point_a: 'Вот твоя точка А - ',
+            post_dep_profit_projection: 'За 5-10 сигналов, можно сделать ',
+            post_dep_encouragement: 'Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
+            vip_signal_btn: 'ВИП сигнал',
+            simple_signal_btn: 'Простой сигнал',
+            coming_soon_title: 'В разработке',
+            coming_soon_subtitle: 'Функция ВИП сигналов сейчас в процессе создания. Оставайтесь на связи!',
+            back_btn: 'Назад',
+            searching_title: 'Я в поиске сигнала ⏳⏳⏳',
+            searching_subtitle: 'Подготовься, зайди на платформу, надо будет действовать быстро. Я тебе пришлю валютную пару, потом время экспирации и сам сигнал (вверх или вниз). Готов?',
+        },
+        'en': {
+            loading: 'Loading...',
+            welcome_title: 'Premium Signals for Pocket Option',
+            welcome_subtitle: 'Get accurate trading signals from professional analysts with up to 95% accuracy',
+            traders: 'Traders',
+            accuracy: 'accuracy',
+            support: 'Support',
+            start_btn: 'Start >',
+            vip_title: 'VIP Status',
+            vip_subtitle: 'Exclusive signals, priority support and access to closed community of elite traders',
+            regular_signals: 'Regular signals: 5-10/day',
+            vip_signals: 'VIP signals: 20+/day',
+            vip_accuracy: 'VIP accuracy: up to 95%',
+            next_btn: 'Next >',
+            earning_title: 'Start Earning',
+            earning_subtitle: 'Join thousands of successful traders and start getting stable profit today',
+            profit: 'Profit: up to 95%',
+            speed: 'Speed: 1-15 min.',
+            start_trading_btn: 'Start Trading >',
+            reg_title: 'Registration in Pocket Option',
+            reg_subtitle: 'To receive signals, you need to register with a reliable broker',
+            licensed_broker: 'Licensed broker',
+            fast_payouts: 'Fast payouts',
+            min_deposit: 'Minimum deposit $10',
+            register_btn: 'Register >',
+            post_reg_title: 'Awesome! Let\'s start',
+            post_reg_subtitle: 'And remember, with any amount you can reach great heights! Now make a deposit. I will check the deposit, don\'t mess with me.',
+            post_dep_title: 'Super, your deposit has been credited.',
+            post_dep_point_a: 'This is your starting point A - ',
+            post_dep_profit_projection: 'In 5-10 signals, you can make ',
+            post_dep_encouragement: 'Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!',
+            vip_signal_btn: 'VIP Signal',
+            simple_signal_btn: 'Simple Signal',
+            coming_soon_title: 'In Development',
+            coming_soon_subtitle: 'The VIP signals feature is currently under development. Stay tuned!',
+            back_btn: 'Back',
+            searching_title: 'Searching for a signal ⏳⏳⏳',
+            searching_subtitle: 'Get ready, go to the platform, you will need to act quickly. I will send you the currency pair, then the expiration time and the signal itself (up or down). Are you ready?',
+        }
+    };
 
-  const lang = "{{ lang }}"; // Flask подставит ru/en
-  function t(key){ return TEXTS[lang][key] || key; }
+    // Ожидаем, пока DOM полностью загрузится
+    document.addEventListener("DOMContentLoaded", function() {
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // Сообщаем Telegram, что приложение готово
+        tg.expand(); // Растягиваем приложение на весь экран
 
-  function fillTexts(){
-    for (const id in TEXTS[lang]) {
-      if (document.getElementById(id)) document.getElementById(id).innerText = t(id);
-    }
-  }
+        // !!! ВАЖНО: Вставьте сюда свою реферальную ссылку
+        const REFERRAL_LINK = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START"; 
 
-  function nextPage(id){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(typeof id==="number" ? "page"+id : id).classList.add('active');
-  }
+        const user = tg.initDataUnsafe?.user;
+        if (!user) {
+            document.body.innerHTML = "Could not verify user.";
+            return;
+        }
 
-  function vipSignal(){ nextPage("vipPage"); }
-  function simpleSignal(){ nextPage("simpleSignalPage"); }
+        const chat_id = user.id;
+        const lang = user.language_code && user.language_code.startsWith('ru') ? 'ru' : 'en';
+        
+        // Применяем переводы ко всем элементам с атрибутом data-translate
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+        
+        const screens = document.querySelectorAll('.screen');
+        const navButtons = document.querySelectorAll('[data-nav]');
+        const registerLink = document.getElementById('register-link');
+        
+        // Устанавливаем реферальную ссылку с ID пользователя
+        registerLink.href = `${REFERRAL_LINK}${chat_id}`;
+        
+        // Открытие ссылок через Telegram
+        registerLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            tg.openLink(this.href);
+        });
 
-  async function checkUserData(){
-    const tg = window.Telegram.WebApp;
-    const chatId = tg.initDataUnsafe.user?.id;
-    if (!chatId) return;
-    const res = await fetch(`/user/${chatId}/data`);
-    const data = await res.json();
-    if (data.is_registered){
-      nextPage("afterReg");
-      const dep = data.events.find(ev => ev[0]==="dep" || ev[0]==="FTD");
-      if (dep){ 
-        nextPage("afterDep");
-        const sum = dep[1];
-        document.getElementById("depositPoint").innerText = 
-          (lang==="ru" ? "Точка A — $" : "Point A — $") + sum;
-      }
-    }
-  }
+        // Функция для показа нужного экрана
+        function showScreen(screenId) {
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            const activeScreen = document.getElementById(screenId);
+            if (activeScreen) {
+                activeScreen.classList.add('active');
+            }
+        }
 
-  fillTexts();
-  checkUserData();
-  </script>
+        // Навигация по кнопкам (вперед/назад)
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetScreenId = button.getAttribute('data-nav');
+                showScreen(targetScreenId);
+            });
+        });
+
+        // Главная функция обновления интерфейса на основе данных с сервера
+        function updateUI(data) {
+            const { is_registered, events } = data;
+            
+            // Ищем первый депозит (FTD)
+            const ftdEvent = events.find(e => e[0] === 'FTD' || e[0] === 'dep');
+
+            if (ftdEvent) {
+                // Если есть депозит, показываем финальный экран
+                const depositSum = ftdEvent[1]; // sumdep
+                document.getElementById('deposit-amount').textContent = `$${depositSum}`;
+                document.getElementById('profit-projection').textContent = `(X3.3 = $${(depositSum * 3.3).toFixed(2)})`;
+                showScreen('post-deposit-screen');
+            } else if (is_registered) {
+                // Если есть регистрация, но нет депозита
+                showScreen('post-reg-screen');
+            } else {
+                // Если пользователь еще не зарегистрирован, показываем первый экран онбординга
+                // (если пользователь уже прошел онбординг, он сам вернется на нужный экран кнопками)
+                if(!document.querySelector('.screen.active') || document.getElementById('loading-screen').classList.contains('active')) {
+                   showScreen('welcome-screen');
+                }
+            }
+        }
+        
+        // Функция для получения данных пользователя с бэкенда
+        async function fetchUserData() {
+            try {
+                const response = await fetch(`/user/${chat_id}/data`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                updateUI(data);
+            } catch (error) {
+                console.error("Failed to fetch user data:", error);
+                // Можно показать экран с ошибкой
+            }
+        }
+
+        // Первоначальный запуск
+        applyTranslations();
+        fetchUserData();
+
+        // Запускаем периодическую проверку статуса пользователя (каждые 5 секунд)
+        // Это позволит автоматически обновить экран после регистрации или депозита
+        setInterval(fetchUserData, 5000);
+    });
+</script>
 </body>
 </html>
