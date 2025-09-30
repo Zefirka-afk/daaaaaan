@@ -132,12 +132,32 @@
             </div>
         </div>
     </div>
-    <!-- Поиск сигнала -->
-    <div id="searching-view" class="view status-view">
-        <div class="card">
-            <p class="spinner">⏳</p>
-            <h1 class="title" data-translate-key="search_title"></h1>
-            <p class="description" data-translate-key="search_desc"></p>
+
+    <!-- НОВЫЙ БЛОК: Процесс получения сигнала -->
+    <div id="signal-active-view" class="view">
+        <div class="card signal-card">
+            <div id="signal-stage-1">
+                <p class="spinner">⏳</p>
+                <h1 class="title" data-translate-key="search_title"></h1>
+                <p class="description" data-translate-key="search_desc"></p>
+            </div>
+
+            <div id="signal-stage-2" style="display: none;">
+                <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
+            </div>
+
+            <div id="signal-stage-3" style="display: none;">
+                <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
+                <p class="signal-step" id="signal-pair"></p>
+                <p class="signal-step" id="signal-status-exp-soon" data-translate-key="signal_exp_soon"></p>
+                <p class="signal-step" id="signal-expiration" style="display: none;"></p>
+                <p class="signal-step" id="signal-direction" style="display: none;"></p>
+                <p class="signal-step signal-result" id="signal-result" style="display: none;"></p>
+            </div>
+            
+            <div class="nav-buttons full-width" id="signal-back-container" style="display:none; margin-top: 30px;">
+                <button class="back-button" id="btn-signal-back" data-translate-key="back_to_menu_btn"></button>
+            </div>
         </div>
     </div>
 
@@ -159,6 +179,7 @@
             'start_btn': 'Начать >',
             'next_btn': 'Далее >',
             'back_btn': '< Назад',
+            'back_to_menu_btn': '< Вернуться в меню',
             // Onboarding 1
             'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
             'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
@@ -180,7 +201,16 @@
             'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'У тебя будет 30 секунд, чтобы подготовиться. Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
             // Other screens
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
-            'search_title': 'Я в поиске сигнала ⏳', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро.',
+            // Signal Flow
+            'search_title': 'Я в поиске сигнала ⏳⏳⏳', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро',
+            'signal_get_btn': 'Получить сигнал',
+            'signal_ready': 'Готово!',
+            'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>',
+            'signal_exp_soon': 'СЕЙЧАС скажу время экспирации',
+            'signal_exp_time': 'Время экспирации <b>{exp}</b>',
+            'signal_buy': 'ПОКУПАЙ 🟢🟢🟢',
+            'signal_sell': 'ПРОДАВАЙ 🔴🔴🔴',
+            'signal_win': 'WIN 🏆',
         },
         'en': {
             'loading': 'Loading data...',
@@ -188,6 +218,7 @@
             'start_btn': 'Start >',
             'next_btn': 'Next >',
             'back_btn': '< Back',
+            'back_to_menu_btn': '< Back to menu',
             // Onboarding 1
             'onb1_title': 'Premium Signals', 'onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy',
             'onb1_stat1': 'Traders', 'onb1_stat2': 'Accuracy', 'onb1_stat3': 'Support',
@@ -209,9 +240,20 @@
             'simple_signal_title': 'Simple Signal', 'simple_signal_desc': 'You will have 30 seconds to prepare. I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?',
             // Other screens
             'wip_title': 'Work in Progress', 'wip_desc': 'This feature will be available soon.',
-            'search_title': 'Searching for a signal ⏳', 'search_desc': 'Get ready, go to the platform, you will need to act quickly.',
+            // Signal Flow
+            'search_title': 'Searching for a signal ⏳⏳⏳', 'search_desc': 'Get ready, go to the platform, you will need to act quickly',
+            'signal_get_btn': 'Get Signal',
+            'signal_ready': 'Ready!',
+            'signal_pair_select': 'Choose currency pair <b>{pair}</b>',
+            'signal_exp_soon': 'I will tell you the expiration time NOW',
+            'signal_exp_time': 'Expiration time <b>{exp}</b>',
+            'signal_buy': 'BUY 🟢🟢🟢',
+            'signal_sell': 'SELL 🔴🔴🔴',
+            'signal_win': 'WIN 🏆',
         }
     };
+
+    let userLang = 'en'; // Default language
 
     function applyTranslations(lang, data = {}) {
         const t = TRANSLATIONS[lang];
@@ -234,6 +276,108 @@
             viewElement.classList.add('active');
         }
     }
+    
+    // ===============================================
+    // ========= НОВАЯ ЛОГИКА ДЛЯ СИГНАЛОВ =========
+    // ===============================================
+    function startSignalFlow() {
+        showView('signal-active-view');
+
+        // Сброс состояния до начального
+        const stage1 = document.getElementById('signal-stage-1');
+        const stage2 = document.getElementById('signal-stage-2');
+        const stage3 = document.getElementById('signal-stage-3');
+        stage1.style.display = 'block';
+        stage2.style.display = 'none';
+        stage3.style.display = 'none';
+        document.getElementById('signal-back-container').style.display = 'none';
+        document.getElementById('signal-result').style.display = 'none';
+        
+        // Получаем элементы для обновления
+        const signalStatusReady = document.getElementById('signal-status-ready');
+        const signalPair = document.getElementById('signal-pair');
+        const signalStatusExpSoon = document.getElementById('signal-status-exp-soon');
+        const signalExpiration = document.getElementById('signal-expiration');
+        const signalDirection = document.getElementById('signal-direction');
+        const signalResult = document.getElementById('signal-result');
+        const getSignalBtn = document.getElementById('btn-get-signal');
+
+        // --- Этап 1: Ожидание 10 секунд ---
+        setTimeout(() => {
+            stage1.style.display = 'none';
+            stage2.style.display = 'block';
+        }, 10000);
+
+        // --- Этап 2: Нажатие кнопки "Получить сигнал" ---
+        getSignalBtn.onclick = () => {
+            stage2.style.display = 'none';
+            stage3.style.display = 'block';
+            
+            // Показываем первые шаги
+            signalStatusReady.style.display = 'block';
+            signalPair.style.display = 'block';
+            signalStatusExpSoon.style.display = 'block';
+            
+            // Скрываем последующие шаги
+            signalExpiration.style.display = 'none';
+            signalDirection.style.display = 'none';
+            signalResult.style.display = 'none';
+
+            // --- "Парсинг" и генерация данных ---
+            // В реальности парсинг с сайта невозможен из-за CORS и авторизации.
+            // Поэтому мы симулируем получение данных.
+            const currencyPairs = ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/CAD", "EUR/GBP", "USD/CHF"];
+            const expirations = ["M1", "M2", "S10", "S30", "S60"];
+            const directions = ["buy", "sell"];
+            const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            
+            const selectedPair = getRandomItem(currencyPairs);
+            const selectedExp = getRandomItem(expirations);
+            const selectedDir = getRandomItem(directions);
+            
+            // Устанавливаем текст для пары
+            signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', selectedPair);
+
+            // --- Этап 3: Появление времени экспирации через 7 секунд ---
+            setTimeout(() => {
+                signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', selectedExp);
+                signalExpiration.style.display = 'block';
+
+                // --- Этап 4: Появление направления через 6 секунд ---
+                setTimeout(() => {
+                    signalStatusExpSoon.style.display = 'none'; // Скрываем "сейчас скажу"
+                    let dirText = '';
+                    if (selectedDir === 'buy') {
+                        dirText = TRANSLATIONS[userLang]['signal_buy'];
+                        signalDirection.className = 'signal-step buy-signal';
+                    } else {
+                        dirText = TRANSLATIONS[userLang]['signal_sell'];
+                        signalDirection.className = 'signal-step sell-signal';
+                    }
+                    signalDirection.innerHTML = dirText;
+                    signalDirection.style.display = 'block';
+                    
+                    // --- Этап 5: Появление результата через время экспирации ---
+                    let expirationInMs = 0;
+                    const timeValue = parseInt(selectedExp.substring(1));
+                    if (selectedExp.startsWith('M')) {
+                        expirationInMs = timeValue * 60 * 1000;
+                    } else if (selectedExp.startsWith('S')) {
+                        expirationInMs = timeValue * 1000;
+                    }
+
+                    setTimeout(() => {
+                        signalResult.innerHTML = TRANSLATIONS[userLang]['signal_win'];
+                        signalResult.style.display = 'block';
+                        document.getElementById('signal-back-container').style.display = 'block';
+                    }, expirationInMs);
+
+                }, 6000);
+
+            }, 7000);
+        };
+    }
+
 
     function setupNavigation() {
         // Onboarding
@@ -245,8 +389,9 @@
         document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view');
         // Signals
         document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
-        document.getElementById('btn-simple-signal').onclick = () => showView('searching-view');
+        document.getElementById('btn-simple-signal').onclick = startSignalFlow; // <--- ИЗМЕНЕНО
         document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
+        document.getElementById('btn-signal-back').onclick = () => showView('post-deposit-view'); // <--- НОВОЕ
     }
     
     async function main() {
@@ -258,7 +403,7 @@
 
         const user = tg.initDataUnsafe.user;
         const userId = user.id;
-        const userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
+        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; // <--- Глобальная переменная
         document.documentElement.lang = userLang;
         
         // Apply translations first
