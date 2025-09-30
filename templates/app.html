@@ -365,7 +365,7 @@
         const registerLink = document.getElementById('register-link');
         
         // Устанавливаем реферальную ссылку с ID пользователя
-        registerLink.href = `${REFERRAL_LINK}subid=${chat_id}`;
+        registerLink.href = `&{REFERRAL_LINK}subid=&{chat_id}`;
         
         // Открытие ссылок через Telegram
         registerLink.addEventListener('click', function(e) {
@@ -443,4 +443,5 @@
 </script>
 </body>
 </html>
+
 
