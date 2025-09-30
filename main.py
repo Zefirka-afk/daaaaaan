@@ -4,58 +4,32 @@ import threading
 from flask import Flask, request, render_template, jsonify
 import telebot
 
-# ===================================================================
-# =========                   КОНФИГУРАЦИЯ                    =========
-# ===================================================================
-# !!! ВАЖНО: Вставьте сюда свой токен, полученный от @BotFather
-TOKEN = "8441945670:AAFgJi1TX-GD2xNDbUUxNj5SySBLPtFd-5c" 
+# ========= Конфиги =========
+# ВАЖНО: В реальном проекте храните токен в переменных окружения!
+TOKEN = "8183205134:AAEJ95MtbBfYQXOej4ZBxb3GRyS1oz56qlY"
+REGISTER_LINK = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START"
+# URL вашего веб-приложения. Для локального теста используйте ngrok, для прода - Render/Heroku/etc.
+WEB_APP_URL = "https://your-domain.onrender.com" # ЗАМЕНИТЕ НА СВОЙ АДРЕС
 
-# !!! ВАЖНО: Вставьте сюда основной URL вашего приложения с Render
-# Пример: "https://your-app-name.onrender.com"
-WEB_APP_URL = "https://daaaaaan.onrender.com"
-
-# ===================================================================
-# =========                   ПЕРЕВОДЫ (TEXTS)                =========
-# ===================================================================
-TEXTS = {
-    'ru': {
-        'welcome': "Привет 👋 Я бот для трейдинга!\n\nНажми на кнопку <b>Меню</b> слева внизу, чтобы открыть свой личный кабинет.",
-        'my_id': "Твой Telegram ID: <b>{id}</b>",
-        'reg_success': "✅ <b>Регистрация подтверждена!</b>\nВаш личный кабинет в приложении обновлен.",
-        'ftd_success': "💰 <b>Первый депозит!</b>\nВы внесли <b>${sum}</b>. Данные в кабинете обновлены.",
-        'dep_success': "➕ <b>Пополнение</b>\nВы пополнили счет на <b>${sum}</b>.",
-        'wdr_request': "💵 <b>Запрос на вывод</b>\nСумма: <b>${sum}</b>. Статус: {status}",
-        'new_event': "🔔 <b>Новое событие:</b> {event}"
-    },
-    'en': {
-        'welcome': "Hello 👋 I'm a trading bot!\n\nPress the <b>Menu</b> button in the bottom left to open your personal cabinet.",
-        'my_id': "Your Telegram ID: <b>{id}</b>",
-        'reg_success': "✅ <b>Registration confirmed!</b>\nYour personal cabinet has been updated.",
-        'ftd_success': "💰 <b>First deposit!</b>\nYou've deposited <b>${sum}</b>. Your cabinet is updated.",
-        'dep_success': "➕ <b>Deposit</b>\nYou have topped up your account with <b>${sum}</b>.",
-        'wdr_request': "💵 <b>Withdrawal request</b>\nAmount: <b>${sum}</b>. Status: {status}",
-        'new_event': "🔔 <b>New event:</b> {event}"
-    }
-}
-# Временное хранилище для языка пользователя.
-user_langs = {}
-
-# ===================================================================
-# =========      ИНИЦИАЛИЗАЦИЯ БОТА И ВЕБ-СЕРВЕРА           =========
-# ===================================================================
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 app = Flask(__name__)
 
-# ===================================================================
-# =========            ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ           =========
-# ===================================================================
+# ========= Временные данные =========
+# Храним язык пользователя. В проде лучше использовать базу данных типа Redis.
+user_data = {}
+
+# ========= База данных (без изменений) =========
 def init_db():
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS postbacks (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    event TEXT, subid TEXT, trader_id TEXT,
-                    sumdep REAL, wdr_sum REAL, status TEXT,
+                    event TEXT,
+                    subid TEXT,
+                    trader_id TEXT,
+                    sumdep REAL,
+                    wdr_sum REAL,
+                    status TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )""")
     conn.commit()
@@ -70,91 +44,118 @@ def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=Non
     conn.commit()
     conn.close()
 
-# ===================================================================
-# =========                  ЛОГИКА ТЕЛЕГРАМ-БОТА             =========
-# ===================================================================
+# ========= Логика бота =========
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    lang_code = message.from_user.language_code
-    lang = 'ru' if lang_code and lang_code.startswith('ru') else 'en'
-    user_langs[message.chat.id] = lang
+    # Запоминаем язык пользователя
+    lang = "ru" if (message.from_user.language_code or "").startswith("ru") else "en"
+    user_data[message.chat.id] = {"lang": lang}
 
-    # УБИРАЕМ большую кнопку ReplyKeyboardMarkup. 
-    # Теперь пользователь будет использовать кнопку "Меню", настроенную в @BotFather.
-    bot.send_message(message.chat.id, TEXTS[lang]['welcome'])
+    # Создаем кнопку для запуска Mini App
+    markup = telebot.types.InlineKeyboardMarkup()
+    web_app_info = telebot.types.WebAppInfo(WEB_APP_URL)
+    app_button = telebot.types.InlineKeyboardButton(
+        text="🚀 Открыть кабинет" if lang == "ru" else "🚀 Open App",
+        web_app=web_app_info
+    )
+    markup.add(app_button)
+    
+    bot.send_message(
+        message.chat.id,
+        "👋 Привет! Нажми кнопку ниже, чтобы начать." if lang == "ru" else "👋 Hello! Press the button below to start.",
+        reply_markup=markup
+    )
 
-@bot.message_handler(commands=['myid'])
-def my_id(message):
-    lang = user_langs.get(message.chat.id, 'en')
-    bot.send_message(message.chat.id, TEXTS[lang]['my_id'].format(id=message.chat.id))
+# ========= Flask: эндпоинты для Mini App =========
 
-# ===================================================================
-# =========            ЛОГИКА ВЕБ-СЕРВЕРА (FLASK)             =========
-# ===================================================================
+# 1. Отдает главную HTML страницу
 @app.route("/")
 def index():
-    return "Web server for Telegram Mini App is running."
+    return render_template("index.html")
 
-# Упрощенный маршрут. Язык теперь определяется на стороне фронтенда (в app.html).
-@app.route("/app")
-def app_page():
-    return render_template("app.html")
-
-@app.route("/user/<int:chat_id>/data")
-def user_data_api(chat_id):
+# 2. API: Mini App будет запрашивать этот эндпоинт, чтобы понять, что показывать пользователю
+@app.route("/get_user_status/<int:chat_id>")
+def get_user_status(chat_id):
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
     c = conn.cursor()
-    c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),))
-    is_registered = c.fetchone() is not None
-    events = []
-    if is_registered:
-        c.execute("SELECT event, sumdep, wdr_sum, status, created_at FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),))
-        events = c.fetchall()
-    conn.close()
-    return jsonify({"is_registered": is_registered, "events": events})
 
+    # Проверяем наличие депозита
+    c.execute("SELECT sumdep FROM postbacks WHERE subid = ? AND event IN ('FTD', 'dep') ORDER BY created_at ASC LIMIT 1", (str(chat_id),))
+    deposit_row = c.fetchone()
+
+    # Проверяем наличие регистрации
+    c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),))
+    reg_row = c.fetchone()
+    
+    conn.close()
+
+    status = "unregistered"
+    deposit_amount = 0
+
+    if deposit_row:
+        status = "deposited"
+        deposit_amount = deposit_row[0]
+    elif reg_row:
+        status = "registered"
+    
+    # Получаем язык пользователя
+    lang = user_data.get(chat_id, {}).get("lang", "en")
+    
+    # Формируем персональную ссылку для регистрации
+    referral_link = f"{REGISTER_LINK}&sub_id1={chat_id}"
+
+    return jsonify({
+        "status": status,
+        "deposit_amount": deposit_amount,
+        "lang": lang,
+        "referral_link": referral_link
+    })
+
+
+# ========= Flask: обработка постбеков (без изменений) =========
 @app.route("/postback", methods=["GET", "POST"])
 def partner_postback():
-    data = request.args
-    event, subid = data.get("event"), data.get("subid")
-    trader_id, sumdep = data.get("trader_id"), data.get("sumdep")
-    wdr_sum, status = data.get("wdr_sum"), data.get("status")
-
-    if not subid: return "No subid provided", 400
-    try: chat_id = int(subid)
-    except (ValueError, TypeError): return "Invalid subid", 400
+    event = request.args.get("event")
+    subid = request.args.get("subid")
+    trader_id = request.args.get("trader_id")
+    sumdep = request.args.get("sumdep")
     
-    save_postback(event, subid, trader_id, sumdep, wdr_sum, status)
+    if not subid: return "No subid"
+    try: chat_id = int(subid)
+    except: return "Invalid subid"
 
-    lang = user_langs.get(chat_id, 'en')
-    message_text = ""
-    if event == "reg": message_text = TEXTS[lang]['reg_success']
-    elif event == "FTD": message_text = TEXTS[lang]['ftd_success'].format(sum=sumdep)
-    elif event == "dep": message_text = TEXTS[lang]['dep_success'].format(sum=sumdep)
-    elif event == "wdr": message_text = TEXTS[lang]['wdr_request'].format(sum=wdr_sum, status=status)
-    else: message_text = TEXTS[lang]['new_event'].format(event=event)
+    # Сохраняем событие в БД
+    save_postback(event, subid, trader_id, sumdep)
 
-    if message_text:
-        try: bot.send_message(chat_id, message_text)
-        except Exception as e: print(f"Failed to send message to {chat_id}: {e}")
+    # Отправляем уведомление пользователю
+    lang = user_data.get(chat_id, {}).get("lang", "en")
 
-    return "OK", 200
+    if event == "reg":
+        if lang == "ru":
+            bot.send_message(chat_id, f"✅ Регистрация подтверждена! Trader ID: {trader_id}\n\nТеперь вернитесь в приложение, чтобы продолжить.")
+        else:
+            bot.send_message(chat_id, f"✅ Registration confirmed! Trader ID: {trader_id}\n\nPlease return to the app to continue.")
+    
+    elif event == "FTD":
+        if lang == "ru":
+            bot.send_message(chat_id, f"💰 Ваш первый депозит на ${sumdep} зачислен! Trader ID: {trader_id}\n\nОтлично, теперь можно начинать!")
+        else:
+            bot.send_message(chat_id, f"💰 Your first deposit of ${sumdep} is confirmed! Trader ID: {trader_id}\n\nGreat, now you can start!")
 
-# ===================================================================
-# =========                   ЗАПУСК ПРИЛОЖЕНИЯ               =========
-# ===================================================================
+    return "OK"
+
+# ========= Запуск =========
 if __name__ == "__main__":
     init_db()
-    
-    def run_bot():
-        print("Starting bot polling...")
-        bot.delete_webhook(drop_pending_updates=True)
-        bot.infinity_polling(skip_pending=True)
 
-    threading.Thread(target=run_bot, daemon=True).start()
-    
+    # Запускаем бота в отдельном потоке
+    threading.Thread(target=bot.infinity_polling, daemon=True).start()
+
+    # Запускаем Flask-сервер
+    # Для продакшена используйте Gunicorn или другой WSGI-сервер
     port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=True) # debug=True для разработки
+
 
 
 
