@@ -4,102 +4,159 @@
   <meta charset="UTF-8">
   <title>Pocket Option Signals</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f5f6fa; margin: 0; padding: 0;}
-    .page { display: none; padding: 20px;}
-    .active { display: block; }
-    h1,h2 { margin-top: 10px; }
+    body { 
+      font-family: "Segoe UI", Arial, sans-serif; 
+      background: linear-gradient(180deg, #f0f4f9, #dce3f0); 
+      margin: 0; 
+      padding: 0;
+      color: #222;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    h1 { margin: 10px 0; font-size: 26px; color: #2a2f45; }
+    h2 { margin: 8px 0; font-size: 20px; font-weight: 500; color: #4c5673; }
+    p { font-size: 16px; line-height: 1.5; margin: 8px 0; }
+
     button { 
-      background: #0084ff; 
+      display: inline-block;
+      background: linear-gradient(135deg, #007bff, #4da3ff);
       color: white; 
       border: none; 
-      padding: 12px 24px; 
-      border-radius: 8px; 
+      padding: 14px 28px; 
+      border-radius: 10px; 
       font-size: 16px; 
-      margin: 10px;
+      font-weight: bold;
+      margin: 12px 6px;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    button.secondary { background: #888; }
-    .info { font-size: 14px; margin-top: 8px; color: #333; }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+    }
+    button.secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    .info {
+      font-size: 14px; 
+      color: #555;
+      margin-top: 4px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+    ul li {
+      font-size: 15px;
+      padding: 6px 0;
+    }
   </style>
 </head>
 <body>
-  <!-- Страницы -->
-  <div class="page active" id="page1">
-    <h1 id="p1_title"></h1>
-    <h2 id="p1_sub"></h2>
-    <p id="p1_desc"></p>
-    <p id="traders"></p>
-    <p id="accuracy"></p>
-    <p id="support"></p>
-    <button onclick="nextPage(2)" id="startBtn"></button>
+  <!-- Контейнер -->
+  <div class="container">
+    <!-- Карточки (страницы) -->
+    <div class="card page active" id="page1">
+      <h1 id="p1_title"></h1>
+      <h2 id="p1_sub"></h2>
+      <p id="p1_desc"></p>
+      <p id="traders"></p>
+      <p id="accuracy"></p>
+      <p id="support"></p>
+      <button onclick="nextPage(2)" id="startBtn"></button>
+    </div>
+
+    <div class="card page" id="page2">
+      <button class="secondary" onclick="nextPage(1)" id="backBtn1"></button>
+      <h1 id="vip_title"></h1>
+      <h2>Pocket Option</h2>
+      <p id="vip_desc"></p>
+      <p id="vip_regular"></p>
+      <p id="vip_signals"></p>
+      <p id="vip_accuracy"></p>
+      <button onclick="nextPage(3)" id="nextBtn1"></button>
+    </div>
+
+    <div class="card page" id="page3">
+      <button class="secondary" onclick="nextPage(2)" id="backBtn2"></button>
+      <h1 id="earn_title"></h1>
+      <h2>Pocket Option</h2>
+      <p id="earn_desc"></p>
+      <p id="profit"></p>
+      <p id="speed"></p>
+      <button onclick="nextPage(4)" id="nextBtn2"></button>
+    </div>
+
+    <div class="card page" id="page4">
+      <button class="secondary" onclick="nextPage(3)" id="backBtn3"></button>
+      <h1 id="reg_title"></h1>
+      <h2>Pocket Option</h2>
+      <p id="reg_desc"></p>
+      <ul>
+        <li id="reg_li1"></li>
+        <li id="reg_li2"></li>
+        <li id="reg_li3"></li>
+      </ul>
+      <a href="https://pocketoption.com/ref/YOUR_REF_LINK" target="_blank">
+        <button id="registerBtn"></button>
+      </a>
+    </div>
+
+    <div class="card page" id="afterReg">
+      <h1 id="after_reg_title"></h1>
+      <p id="after_reg_desc"></p>
+    </div>
+
+    <div class="card page" id="afterDep">
+      <h1 id="after_dep_title"></h1>
+      <p id="after_dep_desc"></p>
+      <p id="depositPoint"></p>
+      <p id="after_dep_tip"></p>
+      <p id="after_dep_tip2"></p>
+      <button onclick="vipSignal()" id="vipBtn"></button>
+      <p class="info" id="vip_info"></p>
+      <button onclick="simpleSignal()" id="simpleBtn"></button>
+      <p class="info" id="simple_info"></p>
+    </div>
+
+    <div class="card page" id="vipPage">
+      <h1 id="vip_in_progress"></h1>
+      <button class="secondary" onclick="nextPage('afterDep')" id="backBtnVip"></button>
+    </div>
+
+    <div class="card page" id="simpleSignalPage">
+      <h1 id="simple_search"></h1>
+      <p id="simple_prepare"></p>
+      <button class="secondary" onclick="nextPage('afterDep')" id="backBtnSimple"></button>
+    </div>
   </div>
 
-  <div class="page" id="page2">
-    <button class="secondary" onclick="nextPage(1)" id="backBtn1"></button>
-    <h1 id="vip_title"></h1>
-    <h2>Pocket Option</h2>
-    <p id="vip_desc"></p>
-    <p id="vip_regular"></p>
-    <p id="vip_signals"></p>
-    <p id="vip_accuracy"></p>
-    <button onclick="nextPage(3)" id="nextBtn1"></button>
-  </div>
-
-  <div class="page" id="page3">
-    <button class="secondary" onclick="nextPage(2)" id="backBtn2"></button>
-    <h1 id="earn_title"></h1>
-    <h2>Pocket Option</h2>
-    <p id="earn_desc"></p>
-    <p id="profit"></p>
-    <p id="speed"></p>
-    <button onclick="nextPage(4)" id="nextBtn2"></button>
-  </div>
-
-  <div class="page" id="page4">
-    <button class="secondary" onclick="nextPage(3)" id="backBtn3"></button>
-    <h1 id="reg_title"></h1>
-    <h2>Pocket Option</h2>
-    <p id="reg_desc"></p>
-    <ul style="text-align:left; display:inline-block;">
-      <li id="reg_li1"></li>
-      <li id="reg_li2"></li>
-      <li id="reg_li3"></li>
-    </ul>
-    <a href="https://pocketoption.com/ref/YOUR_REF_LINK" target="_blank">
-      <button id="registerBtn"></button>
-    </a>
-  </div>
-
-  <div class="page" id="afterReg">
-    <h1 id="after_reg_title"></h1>
-    <p id="after_reg_desc"></p>
-  </div>
-
-  <div class="page" id="afterDep">
-    <h1 id="after_dep_title"></h1>
-    <p id="after_dep_desc"></p>
-    <p id="depositPoint"></p>
-    <p id="after_dep_tip"></p>
-    <p id="after_dep_tip2"></p>
-    <button onclick="vipSignal()" id="vipBtn"></button>
-    <p class="info" id="vip_info"></p>
-    <button onclick="simpleSignal()" id="simpleBtn"></button>
-    <p class="info" id="simple_info"></p>
-  </div>
-
-  <div class="page" id="vipPage">
-    <h1 id="vip_in_progress"></h1>
-    <button onclick="nextPage('afterDep')" id="backBtnVip"></button>
-  </div>
-
-  <div class="page" id="simpleSignalPage">
-    <h1 id="simple_search"></h1>
-    <p id="simple_prepare"></p>
-    <button onclick="nextPage('afterDep')" id="backBtnSimple"></button>
-  </div>
-
+  <!-- Скрипты -->
   <script>
+  // ==== Тексты напрямую скопированы из предыдущего варианта ====
   const TEXTS = {
     en: {
       p1_title: "Premium Signals",
@@ -109,188 +166,117 @@
       accuracy: "📈 95% Accuracy",
       support: "⏰ 24/7 Support",
       startBtn: "Start ➡",
-      back: "< Back",
+      back: "⬅ Back",
       next: "Next ➡",
-
       vip_title: "VIP Status",
       vip_desc: "Exclusive signals, priority support, and access to an elite trading community",
       vip_regular: "Regular signals: 5–10/day",
       vip_signals: "VIP signals: 20+/day",
       vip_accuracy: "VIP accuracy: up to 95%",
-
       earn_title: "Start Earning",
-      earn_desc: "Join thousands of successful traders and start getting stable profit today",
+      earn_desc: "Join thousands of traders and start getting profit today",
       profit: "Profit: up to 95%",
       speed: "Speed: 1–15 min.",
       startTrading: "Start Trading ➡",
-
       reg_title: "Registration",
-      reg_desc: "To receive signals, register with a reliable broker:",
+      reg_desc: "Register with a reliable broker to receive signals:",
       reg_li1: "✅ Licensed broker",
       reg_li2: "⚡ Fast payouts",
       reg_li3: "💵 Minimum deposit $10",
       registerBtn: "Register ➡",
-
-      after_reg_title: "Awesome! Let's start 🚀",
-      after_reg_desc: "Remember, with any amount you can achieve heights! Now make a deposit, I’ll check it 😉",
-
+      after_reg_title: "Awesome! 🚀",
+      after_reg_desc: "Now make a deposit. I’ll check it 😉",
       after_dep_title: "Great! 🎉",
       after_dep_desc: "Your deposit is credited.",
-      after_dep_tip: "In 5–10 signals you can make ×3.3 from your point A",
-      after_dep_tip2: "Don’t be afraid of losses. In the long run you’ll definitely profit!",
+      after_dep_tip: "In 5–10 signals you can make ×3.3 from point A",
+      after_dep_tip2: "Losses happen, but long-term you’ll profit!",
       vipBtn: "🔥 VIP Signal",
-      vip_info: "VIP signals are the most reliable way to earn. Here you get the best ones.",
+      vip_info: "VIP signals are the most reliable way to earn.",
       simpleBtn: "⚡ Simple Signal",
-      simple_info: "You’ll have 30 seconds to prepare. I'll send currency pair, expiration and direction.",
-
-      vip_in_progress: "VIP section is under development 🛠",
+      simple_info: "You’ll have 30s to prepare. I’ll send pair + direction.",
+      vip_in_progress: "VIP section under construction 🛠",
       simple_search: "Searching for signal ⏳",
-      simple_prepare: "Prepare, go to the platform, you’ll need to act fast",
-      back_simple: "⬅ Back"
+      simple_prepare: "Prepare your platform, act fast!"
     },
     ru: {
       p1_title: "Премиум Сигналы",
       p1_sub: "Pocket Option",
-      p1_desc: "Получай точные торговые сигналы от профессиональных аналитиков с точностью до 95%",
+      p1_desc: "Получай торговые сигналы от аналитиков с точностью до 95%",
       traders: "👥 1000+ Трейдеров",
       accuracy: "📈 95% Точность",
-      support: "⏰ Круглосуточная поддержка",
+      support: "⏰ Поддержка 24/7",
       startBtn: "Старт ➡",
-      back: "< Назад",
+      back: "⬅ Назад",
       next: "Далее ➡",
-
       vip_title: "VIP Статус",
-      vip_desc: "Эксклюзивные сигналы, приоритетная поддержка и доступ в закрытое сообщество трейдеров",
-      vip_regular: "Обычные сигналы: 5–10/день",
-      vip_signals: "VIP сигналы: 20+/день",
+      vip_desc: "Эксклюзивные сигналы, приоритетная поддержка и закрытое сообщество",
+      vip_regular: "Обычные сигналы: 5–10/д",
+      vip_signals: "VIP сигналы: 20+/д",
       vip_accuracy: "Точность VIP: до 95%",
-
-      earn_title: "Начни зарабатывать",
-      earn_desc: "Присоединяйся к тысячам успешных трейдеров и начни получать стабильную прибыль уже сегодня",
+      earn_title: "Начни Зарабатывать",
+      earn_desc: "Присоединяйся к тысячам трейдеров и начни прибыль",
       profit: "Прибыль: до 95%",
       speed: "Скорость: 1–15 мин.",
       startTrading: "Торговать ➡",
-
       reg_title: "Регистрация",
-      reg_desc: "Чтобы получать сигналы, зарегистрируйся у надежного брокера:",
+      reg_desc: "Зарегистрируйся у надежного брокера, чтобы получать сигналы:",
       reg_li1: "✅ Лицензированный брокер",
       reg_li2: "⚡ Быстрые выплаты",
-      reg_li3: "💵 Минимальный депозит 10$",
+      reg_li3: "💵 Мин. депозит 10$",
       registerBtn: "Регистрация ➡",
-
-      after_reg_title: "Классно! Стартуем 🚀",
-      after_reg_desc: "И помни, что с любой суммой можно достичь высот! Теперь сделай депозит, я проверю 😉",
-
+      after_reg_title: "Классно! 🚀",
+      after_reg_desc: "Теперь сделай депозит. Я проверю 😉",
       after_dep_title: "Супер! 🎉",
       after_dep_desc: "Твой депозит зачислен.",
-      after_dep_tip: "За 5–10 сигналов можно сделать ×3.3 от твоей точки А",
-      after_dep_tip2: "Не бойся потерь, они есть у всех. В долгосроке заработаешь обязательно!",
+      after_dep_tip: "За 5–10 сигналов можно сделать ×3.3 от точки А",
+      after_dep_tip2: "Не бойся минусов — в долгосроке заработаешь!",
       vipBtn: "🔥 VIP Сигнал",
-      vip_info: "VIP сигналы — самый надежный способ заработка. Здесь лучшие сигналы.",
+      vip_info: "VIP сигналы — самые надёжные.",
       simpleBtn: "⚡ Простой сигнал",
-      simple_info: "У тебя будет 30 секунд, чтобы подготовиться. Я пришлю пару, время и направление.",
-
+      simple_info: "У тебя будет 30 секунд. Пришлю пару и направление.",
       vip_in_progress: "VIP раздел в разработке 🛠",
       simple_search: "Ищу сигнал ⏳",
-      simple_prepare: "Подготовься, зайди на платформу, надо будет действовать быстро",
-      back_simple: "⬅ Назад"
+      simple_prepare: "Подготовься к сделке!"
     }
   };
 
-  const lang = "{{ lang }}"; // Flask подставит ru или en
-
+  const lang = "{{ lang }}"; // Flask подставит ru/en
   function t(key){ return TEXTS[lang][key] || key; }
 
-  function fillStaticTexts() {
-    // Page1
-    document.getElementById("p1_title").innerText = t("p1_title");
-    document.getElementById("p1_sub").innerText = t("p1_sub");
-    document.getElementById("p1_desc").innerText = t("p1_desc");
-    document.getElementById("traders").innerText = t("traders");
-    document.getElementById("accuracy").innerText = t("accuracy");
-    document.getElementById("support").innerText = t("support");
-    document.getElementById("startBtn").innerText = t("startBtn");
-
-    // Page2
-    document.getElementById("backBtn1").innerText = t("back");
-    document.getElementById("vip_title").innerText = t("vip_title");
-    document.getElementById("vip_desc").innerText = t("vip_desc");
-    document.getElementById("vip_regular").innerText = t("vip_regular");
-    document.getElementById("vip_signals").innerText = t("vip_signals");
-    document.getElementById("vip_accuracy").innerText = t("vip_accuracy");
-    document.getElementById("nextBtn1").innerText = t("next");
-
-    // Page3
-    document.getElementById("backBtn2").innerText = t("back");
-    document.getElementById("earn_title").innerText = t("earn_title");
-    document.getElementById("earn_desc").innerText = t("earn_desc");
-    document.getElementById("profit").innerText = t("profit");
-    document.getElementById("speed").innerText = t("speed");
-    document.getElementById("nextBtn2").innerText = t("startTrading");
-
-    // Page4
-    document.getElementById("backBtn3").innerText = t("back");
-    document.getElementById("reg_title").innerText = t("reg_title");
-    document.getElementById("reg_desc").innerText = t("reg_desc");
-    document.getElementById("reg_li1").innerText = t("reg_li1");
-    document.getElementById("reg_li2").innerText = t("reg_li2");
-    document.getElementById("reg_li3").innerText = t("reg_li3");
-    document.getElementById("registerBtn").innerText = t("registerBtn");
-
-    // afterReg
-    document.getElementById("after_reg_title").innerText = t("after_reg_title");
-    document.getElementById("after_reg_desc").innerText = t("after_reg_desc");
-
-    // afterDep
-    document.getElementById("after_dep_title").innerText = t("after_dep_title");
-    document.getElementById("after_dep_desc").innerText = t("after_dep_desc");
-    document.getElementById("after_dep_tip").innerText = t("after_dep_tip");
-    document.getElementById("after_dep_tip2").innerText = t("after_dep_tip2");
-    document.getElementById("vipBtn").innerText = t("vipBtn");
-    document.getElementById("vip_info").innerText = t("vip_info");
-    document.getElementById("simpleBtn").innerText = t("simpleBtn");
-    document.getElementById("simple_info").innerText = t("simple_info");
-
-    // VIP + Simple pages
-    document.getElementById("vip_in_progress").innerText = t("vip_in_progress");
-    document.getElementById("backBtnVip").innerText = t("back");
-    document.getElementById("simple_search").innerText = t("simple_search");
-    document.getElementById("simple_prepare").innerText = t("simple_prepare");
-    document.getElementById("backBtnSimple").innerText = t("back");
+  function fillTexts(){
+    for (const id in TEXTS[lang]) {
+      if (document.getElementById(id)) document.getElementById(id).innerText = t(id);
+    }
   }
 
-  // Управление переходами
-  function nextPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  function nextPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(typeof id==="number" ? "page"+id : id).classList.add('active');
   }
 
   function vipSignal(){ nextPage("vipPage"); }
   function simpleSignal(){ nextPage("simpleSignalPage"); }
 
-  async function checkUserData() {
+  async function checkUserData(){
     const tg = window.Telegram.WebApp;
     const chatId = tg.initDataUnsafe.user?.id;
     if (!chatId) return;
     const res = await fetch(`/user/${chatId}/data`);
     const data = await res.json();
-    if (data.is_registered) {
+    if (data.is_registered){
       nextPage("afterReg");
       const dep = data.events.find(ev => ev[0]==="dep" || ev[0]==="FTD");
-      if (dep) {
+      if (dep){ 
         nextPage("afterDep");
         const sum = dep[1];
         document.getElementById("depositPoint").innerText = 
-          (lang==="ru" ? "Вот твоя точка A — $" : "Your point A — $") + sum;
+          (lang==="ru" ? "Точка A — $" : "Point A — $") + sum;
       }
     }
   }
 
-  fillStaticTexts();
+  fillTexts();
   checkUserData();
   </script>
 </body>
 </html>
-
-
-
