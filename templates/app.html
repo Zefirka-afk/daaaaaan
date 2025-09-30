@@ -3,127 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Trading Cabinet</title>
+    <title>Pocket pro</title> <!-- Изменил название -->
+    
+    <!-- Подключаем Telegram Web App JS -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --tg-bg: var(--tg-theme-secondary-bg-color, #18222d);
-            --tg-text: var(--tg-theme-text-color, #ffffff);
-            --tg-hint: var(--tg-theme-hint-color, #ababad);
-            --tg-button: var(--tg-theme-button-color, #5288c1);
-            --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-            
-            --glass-bg: rgba(36, 51, 69, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --accent-green: #28a745;
-            --accent-blue: #007bff;
-            --accent-orange: #fd7e14;
-        }
 
-        @keyframes gradient-animation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            color: var(--tg-text);
-            background: linear-gradient(-45deg, #0e1621, #18222d, #0d2a45, #232526);
-            background-size: 400% 400%;
-            animation: gradient-animation 15s ease infinite;
-            padding: 20px;
-            padding-top: max(20px, env(safe-area-inset-top));
-            min-height: 100vh;
-            box-sizing: border-box;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        body.ready {
-            opacity: 1;
-        }
-
-        .view { display: none; }
-        .view.active { display: block; }
-        
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        #loader-view, #error-view { text-align: center; padding-top: 60px; }
-        #error-view p { color: var(--tg-hint); line-height: 1.6; font-size: 16px; }
-
-        #registration-view {
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding-top: 40px;
-            animation: fadeIn 0.5s ease-out;
-        }
-        .welcome-card {
-            padding: 30px 25px;
-            width: 100%; max-width: 350px;
-            box-sizing: border-box;
-        }
-        .welcome-icon { margin-bottom: 20px; color: var(--tg-button); }
-        .welcome-card h1 { font-size: 24px; font-weight: 700; margin: 0 0 12px; }
-        .welcome-card p { color: var(--tg-hint); margin: 0 0 30px; line-height: 1.6; }
-        .register-button {
-            width: 100%; padding: 15px;
-            font-size: 17px; font-weight: 600;
-            color: var(--tg-button-text);
-            background: linear-gradient(45deg, var(--tg-button), #6ab3f3);
-            border: none; border-radius: 12px; cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .register-button:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 10px rgba(82, 136, 193, 0.5);
-        }
-
-        .header {
-            font-size: 28px; font-weight: 700;
-            margin-bottom: 25px;
-            animation: fadeIn 0.3s ease-out;
-        }
-        #events-list { list-style: none; padding: 0; margin: 0; }
-        .event-card {
-            display: flex; align-items: center;
-            padding: 15px; margin-bottom: 12px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        .event-icon {
-            flex-shrink: 0; margin-right: 15px; width: 44px; height: 44px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        }
-        .event-icon svg { width: 24px; height: 24px; }
-        .event-details { flex-grow: 1; }
-        .event-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; }
-        .event-info { font-size: 14px; color: var(--tg-hint); }
-        .event-date { font-size: 13px; color: var(--tg-hint); margin-left: auto; text-align: right; white-space: nowrap; }
-        
-        .icon-reg { background-color: rgba(0, 123, 255, 0.15); color: #6ab3f3; }
-        .icon-ftd, .icon-dep { background-color: rgba(40, 167, 69, 0.15); color: #5dd27a; }
-        .icon-wdr { background-color: rgba(253, 126, 20, 0.15); color: #fdb44b; }
-
-        #empty-state { text-align: center; padding: 60px 20px; color: var(--tg-hint); animation: fadeIn 0.5s; }
-        #empty-state p { margin-top: 15px; font-size: 16px; line-height: 1.6; }
-    </style>
+    <!-- !!! ВАЖНО: Подключаем наш внешний CSS файл !!! -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+    <!-- Весь остальной HTML и JS код остается без изменений -->
     <div id="app-container" style="display: none;">
         <div id="loader-view" class="view">
+            <!-- Можно добавить сюда SVG-анимацию загрузки, если нужно -->
         </div>
         <div id="registration-view" class="view">
             <div class="welcome-card glass-card">
@@ -150,6 +43,7 @@
     </div>
 
 <script>
+    // Весь ваш JavaScript код остается здесь без изменений
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -310,7 +204,6 @@
 
 </body>
 </html>
-
 
 
 
