@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Pocket pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <!-- ДОБАВЛЯЕМ ШРИФТ ИЗ GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -32,7 +29,7 @@
         </div>
     </div>
 
-    <!-- БЛОК 1: ОНБОРДИНГ ДО РЕГИСТРАЦИИ -->
+    <!-- БЛОК 1: ОНБОРДИНГ (остается без изменений) -->
     <div id="onboarding-1-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="onb1_title"></h1>
@@ -95,7 +92,7 @@
         </div>
     </div>
 
-    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ (ОЖИДАНИЕ ДЕПОЗИТА) -->
+    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ (остается без изменений) -->
     <div id="post-reg-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="postreg_title"></h1>
@@ -104,7 +101,7 @@
         </div>
     </div>
 
-    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (ВЫБОР СИГНАЛА) -->
+    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (остается без изменений) -->
     <div id="post-deposit-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="postdep_title"></h1>
@@ -133,7 +130,7 @@
         </div>
     </div>
     
-    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ -->
+    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ (остается без изменений) -->
     <div id="wip-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="wip_title"></h1>
@@ -152,27 +149,41 @@
                 <h1 class="title" data-translate-key="search_title"></h1>
                 <p class="description" data-translate-key="search_desc"></p>
             </div>
-
             <div id="signal-stage-2" style="display: none;">
                 <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
             </div>
-
             <div id="signal-stage-3" style="display: none;">
                 <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
                 <p class="signal-step" id="signal-status-exp-soon" data-translate-key="signal_exp_soon"></p>
                 <p class="signal-step" id="signal-expiration" style="display: none;"></p>
                 <p class="signal-step" id="signal-direction" style="display: none;"></p>
+                
                 <div id="signal-result-container" style="display: none;">
                     <div class="trophy-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="currentColor" d="M20.2 6c-1.3 0-2.4 1.1-2.4 2.4V11h-3.3c-.6-2.5-2.9-4.4-5.6-4.4S3.7 8.5 3.1 11H0v2h3.1c.5 2.5 2.9 4.4 5.6 4.4s5.1-1.9 5.6-4.4h3.3v2.6c0 1.3 1.1 2.4 2.4 2.4s2.4-1.1 2.4-2.4V8.4C22.6 7.1 21.5 6 20.2 6zM8.7 13.4c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm10.7 0c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4z"/></svg>
                     </div>
                     <p class="signal-step signal-result" id="signal-result" data-translate-key="signal_win"></p>
+                    
+                    <!-- НОВЫЙ БЛОК КНОПОК ПОСЛЕ ПОБЕДЫ -->
+                    <div id="signal-win-buttons" style="display: none;">
+                        <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
+                        <button class="action-button vip" id="btn-goto-vip-from-win" data-translate-key="want_vip_btn"></button>
+                        <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
+                    </div>
                 </div>
             </div>
-            
-            <div class="nav-buttons full-width" id="signal-back-container" style="display:none; margin-top: 30px;">
-                <button class="back-button" id="btn-signal-back" data-translate-key="back_to_menu_btn"></button>
+        </div>
+    </div>
+    
+    <!-- НОВЫЙ ЭКРАН ДЛЯ ПРОИГРЫША -->
+    <div id="loss-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="loss_title"></h1>
+            <p class="description" data-translate-key="loss_desc"></p>
+            <div class="nav-buttons-vertical">
+                <button class="main-button" id="btn-next-from-loss" data-translate-key="next_signal_btn"></button>
+                <button class="secondary-button" id="btn-vip-from-loss" data-translate-key="want_vip_btn"></button>
             </div>
         </div>
     </div>
@@ -180,8 +191,6 @@
 </div>
 
 <script>
-    // === ВЕСЬ ВАШ JAVASCRIPT КОД ОСТАЕТСЯ БЕЗ ИЗМЕНЕНИЙ ===
-    // === ОН СОВМЕСТИМ С НОВЫМ ДИЗАЙНОМ ===
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -198,28 +207,19 @@
             'next_btn': 'Далее >',
             'back_btn': '< Назад',
             'back_to_menu_btn': '< Вернуться в меню',
-            // Onboarding 1
             'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
             'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
-            // Onboarding 2
             'onb2_title': 'VIP Статус', 'onb2_desc': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров',
             'onb2_feat1': 'Обычные сигналы: 5-10/день', 'onb2_feat2': 'VIP сигналы: 20+/день', 'onb2_feat3': 'Точность VIP: до 95%',
-            // Onboarding 3
             'onb3_title': 'Начните зарабатывать', 'onb3_desc': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня',
             'onb3_feat1': 'Прибыль: до 95%', 'onb3_feat2': 'Скорость: 1-15 мин.', 'onb3_btn': 'Начать торговать >',
-            // Onboarding 4
             'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера',
             'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >',
-            // Post-Reg
             'postreg_title': 'Классно! Стартуем', 'postreg_desc': 'И помни, что с любой суммой можно достичь высот!', 'postreg_warn': 'Теперь сделай депозит. Я проверю зачисление депозита, не шути со мной.',
-            // Post-Deposit
             'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>{deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>{profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
-            // Signal choice
             'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.',
             'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'У тебя будет 30 секунд, чтобы подготовиться. Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
-            // Other screens
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
-            // Signal Flow
             'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро',
             'signal_get_btn': 'Получить сигнал',
             'signal_ready': 'Готово!',
@@ -229,36 +229,21 @@
             'signal_buy': 'ПОКУПАЙ 🟢',
             'signal_sell': 'ПРОДАВАЙ 🔴',
             'signal_win': 'ПОБЕДА!',
+            // Новые переводы
+            'next_signal_btn': 'Следующий!',
+            'want_vip_btn': 'Хочу ВИП сигнал',
+            'i_lost_btn': 'Я проиграл',
+            'loss_title': 'Хм, странно! А я выиграл',
+            'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
         },
         'en': {
-            'loading': 'Loading data...',
-            'error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.',
-            'start_btn': 'Start >',
-            'next_btn': 'Next >',
-            'back_btn': '< Back',
-            'back_to_menu_btn': '< Back to menu',
-            'onb1_title': 'Premium Signals', 'onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy',
-            'onb1_stat1': 'Traders', 'onb1_stat2': 'Accuracy', 'onb1_stat3': 'Support',
-            'onb2_title': 'VIP Status', 'onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders',
-            'onb2_feat1': 'Regular signals: 5-10/day', 'onb2_feat2': 'VIP signals: 20+/day', 'onb2_feat3': 'VIP accuracy: up to 95%',
-            'onb3_title': 'Start Earning', 'onb3_desc': 'Join thousands of successful traders and start getting stable profit today',
-            'onb3_feat1': 'Profit: up to 95%', 'onb3_feat2': 'Speed: 1-15 min.', 'onb3_btn': 'Start Trading >',
-            'onb4_title': 'Registration in Pocket Option', 'onb4_desc': 'To receive signals, you need to register with a reliable broker',
-            'onb4_feat1': 'Licensed broker', 'onb4_feat2': 'Fast payouts', 'onb4_feat3': 'Minimum deposit $10', 'onb4_btn': 'Register >',
-            'postreg_title': 'Awesome! Let\'s start', 'postreg_desc': 'And remember, you can reach great heights with any amount!', 'postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.',
-            'postdep_title': 'Super, your deposit is funded!', 'postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>', 'postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!',
-            'vip_signal_title': '👑 VIP Signal', 'vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.',
-            'simple_signal_title': 'Simple Signal', 'simple_signal_desc': 'You will have 30 seconds to prepare. I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?',
-            'wip_title': 'Work in Progress', 'wip_desc': 'This feature will be available soon.',
-            'search_title': 'Searching for a signal', 'search_desc': 'Get ready, go to the platform, you will need to act quickly',
-            'signal_get_btn': 'Get Signal',
-            'signal_ready': 'Ready!',
-            'signal_pair_select': 'Choose currency pair <b>{pair}</b>',
-            'signal_exp_soon': 'I will tell you the expiration time NOW',
-            'signal_exp_time': 'Expiration time <b>{exp}</b>',
-            'signal_buy': 'BUY 🟢',
-            'signal_sell': 'SELL 🔴',
-            'signal_win': 'WIN!',
+            'loading': 'Loading data...','error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.','start_btn': 'Start >','next_btn': 'Next >','back_btn': '< Back','back_to_menu_btn': '< Back to menu','onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy','onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support','onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders','onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%','onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today','onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >','onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >','postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!','postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.','postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!','vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'You will have 30 seconds to prepare. I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?','wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_soon': 'I will tell you the expiration time NOW','signal_exp_time': 'Expiration time <b>{exp}</b>','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴','signal_win': 'WIN!',
+            // New translations
+            'next_signal_btn': 'Next Signal!',
+            'want_vip_btn': 'I want a VIP signal',
+            'i_lost_btn': 'I lost',
+            'loss_title': 'Hmm, strange! But I won',
+            'loss_desc': 'You must have done something wrong. It often happens that people place bets at the wrong time. Try again! Be more careful next time',
         }
     };
 
@@ -289,17 +274,18 @@
     function startSignalFlow() {
         showView('signal-active-view');
 
+        // Сброс состояния
         const stage1 = document.getElementById('signal-stage-1');
         const stage2 = document.getElementById('signal-stage-2');
         const stage3 = document.getElementById('signal-stage-3');
-        const backContainer = document.getElementById('signal-back-container');
         const resultContainer = document.getElementById('signal-result-container');
+        const winButtons = document.getElementById('signal-win-buttons');
 
         stage1.style.display = 'block';
         stage2.style.display = 'none';
         stage3.style.display = 'none';
-        backContainer.style.display = 'none';
         resultContainer.style.display = 'none';
+        winButtons.style.display = 'none';
 
         const signalStatusReady = document.getElementById('signal-status-ready');
         const signalPair = document.getElementById('signal-pair');
@@ -363,7 +349,7 @@
 
                     setTimeout(() => {
                         resultContainer.style.display = 'block';
-                        backContainer.style.display = 'block';
+                        winButtons.style.display = 'flex'; // Показываем кнопки
                     }, expirationInMs);
 
                 }, 6000);
@@ -382,7 +368,13 @@
         document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
         document.getElementById('btn-simple-signal').onclick = startSignalFlow;
         document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
-        document.getElementById('btn-signal-back').onclick = () => showView('post-deposit-view');
+        
+        // Новая навигация
+        document.getElementById('btn-next-signal').onclick = startSignalFlow;
+        document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view');
+        document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
+        document.getElementById('btn-next-from-loss').onclick = startSignalFlow;
+        document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view');
     }
     
     async function main() {
