@@ -3,6 +3,8 @@ import sqlite3
 import threading
 from flask import Flask, request, render_template, jsonify
 import telebot
+import random
+import time
 
 # ===================================================================
 # ========= КОНФИГУРАЦИЯ =========
