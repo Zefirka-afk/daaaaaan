@@ -5,10 +5,10 @@ from flask import Flask, request, render_template, jsonify
 import telebot
 
 # ===================================================================
-# ========= КОНФИГУРАЦИЯ ========
+# ========= КОНФИГУРАЦИЯ =========
 # ===================================================================
 # !!! ВАЖНО: Вставьте сюда свой токен, полученный от @BotFather
-TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"   # <-- ЗАМЕНИТЕ ВАШИМ ТОКЕНОМ
+TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"  # <-- ЗАМЕНИТЕ ВАШИМ ТОКЕНОМ
 
 # !!! ВАЖНО: Вставьте сюда основной URL вашего приложения с Render
 # Пример: "https://your-app-name.onrender.com"
@@ -45,7 +45,6 @@ user_langs = {}
 # ========= ИНИЦИАЛИЗАЦИЯ БОТА И ВЕБ-СЕРВЕРА =========
 # ===================================================================
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
-# !!! ВАЖНОЕ ИСПРАВЛЕНИЕ: Используйте __name__ для правильной работы Flask
 app = Flask(__name__) 
 
 # ===================================================================
@@ -80,9 +79,6 @@ def start_message(message):
     lang_code = message.from_user.language_code
     lang = 'ru' if lang_code and lang_code.startswith('ru') else 'en'
     user_langs[message.chat.id] = lang
-    
-    # УБИРАЕМ большую кнопку ReplyKeyboardMarkup. 
-    # Теперь пользователь будет использовать кнопку "Меню", настроенную в @BotFather.
     bot.send_message(message.chat.id, TEXTS[lang]['welcome'])
 
 @bot.message_handler(commands=['myid'])
@@ -97,7 +93,6 @@ def my_id(message):
 def index():
     return "Web server for Telegram Mini App is running."
 
-# Упрощенный маршрут. Язык теперь определяется на стороне фронтенда (в app.html).
 @app.route("/app")
 def app_page():
     return render_template("app.html")
@@ -105,19 +100,14 @@ def app_page():
 @app.route("/user/<int:chat_id>/data")
 def user_data_api(chat_id):
     conn = sqlite3.connect("postbacks.db", check_same_thread=False)
-    conn.row_factory = sqlite3.Row # Для удобного доступа к колонкам
+    conn.row_factory = sqlite3.Row 
     c = conn.cursor()
     
-    # Проверяем, есть ли запись о регистрации
     c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),))
     is_registered = c.fetchone() is not None
     
-    events = []
-    # Если зарегистрирован, получаем все события
-    if is_registered:
-        c.execute("SELECT event, sumdep, wdr_sum, status, created_at FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),))
-        # Преобразуем строки в списки для JSON
-        events = [list(row) for row in c.fetchall()]
+    c.execute("SELECT event, sumdep, wdr_sum, status, created_at FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),))
+    events = [list(row) for row in c.fetchall()]
         
     conn.close()
     return jsonify({"is_registered": is_registered, "events": events})
@@ -159,12 +149,53 @@ def partner_postback():
     return "OK", 200
 
 # ===================================================================
+# ========= ТЕСТОВЫЙ МАРШРУТ ДЛЯ ИМИТАЦИИ ДЕПОЗИТА =========
+# ===================================================================
+@app.route("/test_deposit")
+def add_test_deposit():
+    # Получаем ID пользователя и сумму из параметров URL
+    # Пример: /test_deposit?chat_id=1234567&sum=50
+    chat_id_str = request.args.get("chat_id")
+    sum_str = request.args.get("sum", "50") # Сумма по умолчанию 50, если не указана
+
+    if not chat_id_str:
+        return "Ошибка: Пожалуйста, укажите 'chat_id' в параметрах URL.", 400
+
+    try:
+        chat_id = int(chat_id_str)
+        deposit_sum = float(sum_str)
+    except ValueError:
+        return "Ошибка: 'chat_id' и 'sum' должны быть числами.", 400
+
+    # Используем нашу существующую функцию, чтобы сохранить фейковый депозит в базу данных
+    # Имитируем событие 'FTD' (First Time Deposit)
+    save_postback(
+        event="FTD",
+        subid=str(chat_id),
+        trader_id="test_trader_001", # ID трейдера может быть любым для теста
+        sumdep=deposit_sum,
+        wdr_sum=None,
+        status="approved"
+    )
+
+    # Оповещаем пользователя в боте, как будто это реальный депозит
+    try:
+        lang = user_langs.get(chat_id, 'en')
+        message_text = TEXTS[lang]['ftd_success'].format(sum=deposit_sum)
+        bot.send_message(chat_id, message_text)
+    except Exception as e:
+        print(f"Не удалось отправить тестовое сообщение {chat_id}: {e}")
+
+    # Возвращаем подтверждение в браузер
+    return f"Успешно создан тестовый депозит в размере ${deposit_sum} для пользователя с ID {chat_id}.<br>Закройте и снова откройте Mini App, чтобы увидеть изменения.", 200
+
+
+# ===================================================================
 # ========= ЗАПУСК ПРИЛОЖЕНИЯ =========
 # ===================================================================
 if __name__ == "__main__":
     init_db()
 
-    # Запускаем бота в отдельном потоке
     def run_bot():
         print("Starting bot polling...")
         bot.delete_webhook(drop_pending_updates=True)
@@ -172,9 +203,5 @@ if __name__ == "__main__":
 
     threading.Thread(target=run_bot, daemon=True).start()
 
-    # Запускаем веб-сервер
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
-
-
-
