@@ -136,16 +136,19 @@
     <!-- НОВЫЙ БЛОК: Процесс получения сигнала -->
     <div id="signal-active-view" class="view">
         <div class="card signal-card">
+            <!-- Этап 1: Поиск -->
             <div id="signal-stage-1">
                 <p class="spinner">⏳</p>
                 <h1 class="title" data-translate-key="search_title"></h1>
                 <p class="description" data-translate-key="search_desc"></p>
             </div>
 
+            <!-- Этап 2: Кнопка -->
             <div id="signal-stage-2" style="display: none;">
                 <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
             </div>
 
+            <!-- Этап 3: Выдача сигнала -->
             <div id="signal-stage-3" style="display: none;">
                 <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
@@ -155,6 +158,7 @@
                 <p class="signal-step signal-result" id="signal-result" style="display: none;"></p>
             </div>
             
+            <!-- Кнопка "Назад" -->
             <div class="nav-buttons full-width" id="signal-back-container" style="display:none; margin-top: 30px;">
                 <button class="back-button" id="btn-signal-back" data-translate-key="back_to_menu_btn"></button>
             </div>
@@ -249,7 +253,7 @@
             'signal_exp_time': 'Expiration time <b>{exp}</b>',
             'signal_buy': 'BUY 🟢🟢🟢',
             'signal_sell': 'SELL 🔴🔴🔴',
-            'signal_win': 'WIN 🏆',
+            'signal_win': 'WIN! 🏆',
         }
     };
 
@@ -291,9 +295,8 @@
         stage2.style.display = 'none';
         stage3.style.display = 'none';
         document.getElementById('signal-back-container').style.display = 'none';
-        document.getElementById('signal-result').style.display = 'none';
         
-        // Получаем элементы для обновления
+        // Получаем все элементы для обновления, чтобы не искать их каждый раз
         const signalStatusReady = document.getElementById('signal-status-ready');
         const signalPair = document.getElementById('signal-pair');
         const signalStatusExpSoon = document.getElementById('signal-status-exp-soon');
@@ -313,21 +316,17 @@
             stage2.style.display = 'none';
             stage3.style.display = 'block';
             
-            // Показываем первые шаги
+            // Показываем первые шаги и скрываем последующие
             signalStatusReady.style.display = 'block';
             signalPair.style.display = 'block';
             signalStatusExpSoon.style.display = 'block';
-            
-            // Скрываем последующие шаги
             signalExpiration.style.display = 'none';
             signalDirection.style.display = 'none';
             signalResult.style.display = 'none';
 
-            // --- "Парсинг" и генерация данных ---
-            // В реальности парсинг с сайта невозможен из-за CORS и авторизации.
-            // Поэтому мы симулируем получение данных.
+            // --- "Парсинг" и генерация случайных данных ---
             const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC", "GBP/USD OTC", "EUR/USD OTC"];
-            const expirations = ["M1", "M2", "S15", "S30", "S60"];
+            const expirations = ["M1", "M2", "S10", "S30", "S60"];
             const directions = ["buy", "sell"];
             const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
             
@@ -335,7 +334,7 @@
             const selectedExp = getRandomItem(expirations);
             const selectedDir = getRandomItem(directions);
             
-            // Устанавливаем текст для пары
+            // Устанавливаем текст для валютной пары
             signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', selectedPair);
 
             // --- Этап 3: Появление времени экспирации через 7 секунд ---
@@ -345,7 +344,7 @@
 
                 // --- Этап 4: Появление направления через 6 секунд ---
                 setTimeout(() => {
-                    signalStatusExpSoon.style.display = 'none'; // Скрываем "сейчас скажу"
+                    signalStatusExpSoon.style.display = 'none'; // Скрываем "СЕЙЧАС скажу..."
                     let dirText = '';
                     if (selectedDir === 'buy') {
                         dirText = TRANSLATIONS[userLang]['signal_buy'];
@@ -359,11 +358,12 @@
                     
                     // --- Этап 5: Появление результата через время экспирации ---
                     let expirationInMs = 0;
-                    const timeValue = parseInt(selectedExp.substring(1));
+                    const timeValue = parseInt(selectedExp.substring(1)); // Получаем число из строки (M1 -> 1)
+                    
                     if (selectedExp.startsWith('M')) {
-                        expirationInMs = timeValue * 60 * 1000;
+                        expirationInMs = timeValue * 60 * 1000; // Минуты в миллисекунды
                     } else if (selectedExp.startsWith('S')) {
-                        expirationInMs = timeValue * 1000;
+                        expirationInMs = timeValue * 1000; // Секунды в миллисекунды
                     }
 
                     setTimeout(() => {
@@ -372,9 +372,9 @@
                         document.getElementById('signal-back-container').style.display = 'block';
                     }, expirationInMs);
 
-                }, 6000);
+                }, 6000); // 6 секунд
 
-            }, 7000);
+            }, 7000); // 7 секунд
         };
     }
 
@@ -389,9 +389,9 @@
         document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view');
         // Signals
         document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
-        document.getElementById('btn-simple-signal').onclick = startSignalFlow; // <--- ИЗМЕНЕНО
+        document.getElementById('btn-simple-signal').onclick = startSignalFlow; // <--- ЗАПУСКАЕМ НАШ НОВЫЙ СЦЕНАРИЙ
         document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
-        document.getElementById('btn-signal-back').onclick = () => showView('post-deposit-view'); // <--- НОВОЕ
+        document.getElementById('btn-signal-back').onclick = () => showView('post-deposit-view'); // <--- ДОБАВЛЕНА КНОПКА "НАЗАД" С ЭКРАНА СИГНАЛА
     }
     
     async function main() {
@@ -403,14 +403,12 @@
 
         const user = tg.initDataUnsafe.user;
         const userId = user.id;
-        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; // <--- Глобальная переменная
+        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
         document.documentElement.lang = userLang;
         
-        // Apply translations first
         applyTranslations(userLang);
         setupNavigation();
         
-        // Setup Register button
         document.getElementById('btn-register').onclick = () => {
             const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
             tg.openLink(personalLink);
