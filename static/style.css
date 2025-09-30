@@ -123,7 +123,7 @@ b { color: var(--color-accent); font-weight: 600; }
     width: 100%;
 }
 .main-button {
-    width: 65%;
+    width: 100%; /* Changed from 65% for better consistency */
     padding: 15px 20px;
     font-size: 17px;
     font-weight: 600;
@@ -191,7 +191,6 @@ b { color: var(--color-accent); font-weight: 600; }
     animation: fadeInUp 0.5s ease-out forwards;
     opacity: 0;
 }
-/* Задержки анимации для последовательного появления */
 #signal-status-ready { animation-delay: 0.2s; }
 #signal-pair { animation-delay: 0.4s; }
 #signal-status-exp-soon { animation-delay: 0.6s; }
@@ -218,4 +217,56 @@ b { color: var(--color-accent); font-weight: 600; }
 .trophy-icon svg {
     color: var(--color-gold);
     filter: drop-shadow(0 0 10px var(--color-gold));
+}
+
+/* --- 12. НОВЫЕ СТИЛИ ДЛЯ КНОПОК ПОСЛЕ ПОБЕДЫ И ПРОИГРЫША --- */
+#signal-win-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    animation: fadeInUp 0.5s 0.5s ease-out forwards;
+    opacity: 0;
+}
+.action-button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.action-button:hover {
+    border-color: var(--color-accent);
+    color: var(--text-primary);
+    background: rgba(0, 170, 255, 0.1);
+}
+.action-button.vip { color: var(--color-gold); }
+.action-button.lost { color: var(--color-red); }
+
+.nav-buttons-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+.secondary-button {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.secondary-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent);
 }
