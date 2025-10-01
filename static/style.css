@@ -270,10 +270,3 @@ b { color: var(--color-accent); font-weight: 600; }
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--color-accent);
 }
-
-/* <-- НОВЫЙ СТИЛЬ ДЛЯ ПРОИГРЫША --> */
-.signal-result.loss {
-    color: var(--color-red);
-    text-shadow: 0 0 15px var(--color-red);
-    animation: none; /* Отключаем анимацию свечения для проигрыша */
-}
