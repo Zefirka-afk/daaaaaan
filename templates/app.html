@@ -14,7 +14,7 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН0: ЗАГРУЗКА -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active">
         <div class="card">
             <div class="spinner"></div>
@@ -144,8 +144,14 @@
     <!-- Процесс получения сигнала -->
     <div id="signal-active-view" class="view">
         <div class="card signal-card">
-            <div id="signal-stage-1"><p class="emoji-spinner">⏳</p><h1 class="title" data-translate-key="search_title"></h1><p class="description" data-translate-key="search_desc"></p></div>
-            <div id="signal-stage-2" style="display: none;"><button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button></div>
+            <div id="signal-stage-1">
+                <p class="emoji-spinner">⏳</p>
+                <h1 class="title" data-translate-key="search_title"></h1>
+                <p class="description" data-translate-key="search_desc"></p>
+            </div>
+            <div id="signal-stage-2" style="display: none;">
+                <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
+            </div>
             <div id="signal-stage-3" style="display: none;">
                 <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
@@ -161,11 +167,9 @@
                 <div id="signal-result-container" style="display: none;">
                     <p class="signal-step signal-result" id="signal-result-win" data-translate-key="signal_win"></p>
                     <div id="signal-win-buttons" style="display: none;">
-                        <div class="button-row">
-                            <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
-                            <button class="action-button vip" id="btn-goto-vip" data-translate-key="want_vip_btn"></button>
-                        </div>
-                        <button class="action-button lost full-width" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
+                        <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
+                        <button class="action-button vip" id="btn-goto-vip" data-translate-key="want_vip_btn"></button>
+                        <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
                     </div>
                 </div>
             </div>
@@ -214,7 +218,9 @@
             'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл',
             'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
         },
-        'en': { /* ... здесь должны быть ваши английские переводы ... */ }
+        'en': {
+            'loading': 'Loading data...','error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.','start_btn': 'Start >','next_btn': 'Next >','back_btn': '< Back','onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy','onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support','onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders','onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%','onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today','onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >','onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >','postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!','postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.','postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!','vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?','wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_soon': 'I will tell you the expiration time NOW','signal_exp_time': 'Expiration time <b>{exp}</b>','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴','signal_confirm_prompt': 'Press when you are ready to act!','signal_confirm_btn': 'I\'m Ready!','signal_win': 'WIN! 🏆','signal_loss': 'LOSS... 📉','next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal',
+        }
     };
 
     let userLang = 'en';
@@ -297,7 +303,7 @@
 
                         setTimeout(() => {
                             document.getElementById('signal-result-container').style.display = 'block';
-                            document.getElementById('signal-win-buttons').style.display = 'block'; 
+                            document.getElementById('signal-win-buttons').style.display = 'flex';
                         }, expirationInMs);
 
                     }, 6000);
