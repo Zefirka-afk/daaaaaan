@@ -155,9 +155,10 @@
             <div id="signal-stage-3" style="display: none;">
                 <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
-                <p class="signal-step" id="signal-expiration"></p>
+                <!-- НОВЫЙ/ВОЗВРАЩЕННЫЙ ЭЛЕМЕНТ -->
+                <p class="signal-step" id="signal-exp-soon" data-translate-key="signal_exp_soon"></p>
+                <p class="signal-step" id="signal-expiration" style="display: none;"></p>
 
-                <!-- НОВЫЙ БЛОК: Кнопка подтверждения -->
                 <div id="signal-confirmation-container" style="display: none; margin-top: 20px;">
                     <button class="main-button" id="btn-confirm-ready" data-translate-key="confirm_ready_btn"></button>
                 </div>
@@ -165,9 +166,7 @@
                 <p class="signal-step" id="signal-direction" style="display: none;"></p>
                 
                 <div id="signal-result-container" style="display: none;">
-                    <div class="trophy-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="currentColor" d="M20.2 6c-1.3 0-2.4 1.1-2.4 2.4V11h-3.3c-.6-2.5-2.9-4.4-5.6-4.4S3.7 8.5 3.1 11H0v2h3.1c.5 2.5 2.9 4.4 5.6 4.4s5.1-1.9 5.6-4.4h3.3v2.6c0 1.3 1.1 2.4 2.4 2.4s2.4-1.1 2.4-2.4V8.4C22.6 7.1 21.5 6 20.2 6zM8.7 13.4c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm10.7 0c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4z"/></svg>
-                    </div>
+                    <!-- ИЗМЕНЕНИЕ: УДАЛЕН БЛОК С ИКОНКОЙ ТРОФЕЯ -->
                     <p class="signal-step signal-result" id="signal-result" data-translate-key="signal_win"></p>
                     
                     <div id="signal-win-buttons" style="display: none;">
@@ -223,34 +222,37 @@
             'postreg_title': 'Классно! Стартуем', 'postreg_desc': 'И помни, что с любой суммой можно достичь высот!', 'postreg_warn': 'Теперь сделай депозит. Я проверю зачисление депозита, не шути со мной.',
             'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>{deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>{profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
             'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.',
-            'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Будь готов!', // Немного изменен текст
+            'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Будь готов!',
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
             'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро',
             'signal_get_btn': 'Получить сигнал',
             'signal_ready': 'Готово!',
             'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>',
             'signal_exp_time': 'Время экспирации <b>{exp}</b>',
+            // НОВЫЙ КЛЮЧ
+            'signal_exp_soon': 'СЕЙЧАС скажу время экспирации',
             'signal_buy': 'ПОКУПАЙ 🟢',
             'signal_sell': 'ПРОДАВАЙ 🔴',
-            'signal_win': 'ПОБЕДА!',
+            'signal_win': 'ПОБЕДА',
             'next_signal_btn': 'Следующий!',
             'want_vip_btn': 'Хочу ВИП сигнал',
             'i_lost_btn': 'Я проиграл',
             'loss_title': 'Хм, странно! А я выиграл',
             'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
-            // НОВЫЙ КЛЮЧ ПЕРЕВОДА
-            'confirm_ready_btn': 'Я готов ставить!',
+            'confirm_ready_btn': 'Я готов!',
         },
         'en': {
-            'loading': 'Loading data...','error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.','start_btn': 'Start >','next_btn': 'Next >','back_btn': '< Back','back_to_menu_btn': '< Back to menu','onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy','onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support','onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders','onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%','onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today','onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >','onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >','postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!','postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.','postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!','vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Be ready!', // Slightly changed text
-            'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴','signal_win': 'WIN!',
+            'loading': 'Loading data...','error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.','start_btn': 'Start >','next_btn': 'Next >','back_btn': '< Back','back_to_menu_btn': '< Back to menu','onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy','onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support','onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders','onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%','onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today','onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >','onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >','postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!','postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.','postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!','vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Be ready!',
+            'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>',
+            // NEW KEY
+            'signal_exp_soon': 'I will tell you the expiration time NOW',
+            'signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴','signal_win': 'VICTORY',
             'next_signal_btn': 'Next Signal!',
             'want_vip_btn': 'I want a VIP signal',
             'i_lost_btn': 'I lost',
             'loss_title': 'Hmm, strange! But I won',
             'loss_desc': 'You must have done something wrong. It often happens that people place bets at the wrong time. Try again! Be more careful next time',
-            // NEW TRANSLATION KEY
-            'confirm_ready_btn': 'I\'m ready to trade!',
+            'confirm_ready_btn': 'I\'m ready!',
         }
     };
 
@@ -290,29 +292,28 @@
         const stage3 = document.getElementById('signal-stage-3');
         const resultContainer = document.getElementById('signal-result-container');
         const winButtons = document.getElementById('signal-win-buttons');
-        const confirmationContainer = document.getElementById('signal-confirmation-container'); // Новый элемент
+        const confirmationContainer = document.getElementById('signal-confirmation-container');
 
         stage1.style.display = 'block';
         stage2.style.display = 'none';
         stage3.style.display = 'none';
         resultContainer.style.display = 'none';
         winButtons.style.display = 'none';
-        confirmationContainer.style.display = 'none'; // Скрываем по умолчанию
+        confirmationContainer.style.display = 'none';
 
         const signalStatusReady = document.getElementById('signal-status-ready');
         const signalPair = document.getElementById('signal-pair');
+        const signalStatusExpSoon = document.getElementById('signal-exp-soon'); // Новый элемент
         const signalExpiration = document.getElementById('signal-expiration');
         const signalDirection = document.getElementById('signal-direction');
         const getSignalBtn = document.getElementById('btn-get-signal');
-        const confirmReadyBtn = document.getElementById('btn-confirm-ready'); // Новая кнопка
+        const confirmReadyBtn = document.getElementById('btn-confirm-ready');
 
-        // Этап 1: Поиск сигнала
         setTimeout(() => {
             stage1.style.display = 'none';
             stage2.style.display = 'block';
-        }, 5000); // Уменьшил время для удобства
+        }, 5000);
 
-        // Этап 2: Пользователь нажимает "Получить сигнал"
         getSignalBtn.onclick = () => {
             stage2.style.display = 'none';
             stage3.style.display = 'block';
@@ -320,12 +321,12 @@
             // Сбрасываем и скрываем все шаги внутри stage3
             signalStatusReady.style.display = 'none';
             signalPair.style.display = 'none';
+            signalStatusExpSoon.style.display = 'none';
             signalExpiration.style.display = 'none';
             confirmationContainer.style.display = 'none';
             signalDirection.style.display = 'none';
             resultContainer.style.display = 'none';
 
-            // ИЗМЕНЕНИЕ 1: Новый список времен экспирации
             const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC", "GBP/USD OTC", "EUR/USD OTC"];
             const expirations = ["S15", "S20", "S25", "S30", "S45"];
             const directions = ["buy", "sell"];
@@ -335,7 +336,7 @@
             const selectedExp = getRandomItem(expirations);
             const selectedDir = getRandomItem(directions);
             
-            // Показываем информацию по шагам
+            // ИЗМЕНЕНИЕ: Новая последовательность появления сообщений
             // Шаг 1: Готово!
             setTimeout(() => {
                 signalStatusReady.style.display = 'block';
@@ -346,24 +347,22 @@
                 signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', selectedPair);
                 signalPair.style.display = 'block';
             }, 1500);
+            
+            // Шаг 3: Сообщение "СЕЙЧАС скажу..."
+            setTimeout(() => {
+                signalStatusExpSoon.style.display = 'block';
+            }, 3000);
 
-            // Шаг 3: Время экспирации
+            // Шаг 4: Через 7 секунд после шага 3, показываем время и кнопку
             setTimeout(() => {
                 signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', selectedExp);
                 signalExpiration.style.display = 'block';
-            }, 3000);
-
-            // Шаг 4: Показываем кнопку "Я готов ставить"
-            setTimeout(() => {
                 confirmationContainer.style.display = 'block';
-            }, 4000);
+            }, 10000); // 3000ms (шаг 3) + 7000ms (задержка)
 
-            // ИЗМЕНЕНИЕ 2: Логика после нажатия на кнопку подтверждения
             confirmReadyBtn.onclick = () => {
-                // Скрываем кнопку подтверждения
                 confirmationContainer.style.display = 'none';
 
-                // Немедленно показываем направление (ПОКУПАЙ/ПРОДАВАЙ)
                 let dirText = '';
                 if (selectedDir === 'buy') {
                     dirText = TRANSLATIONS[userLang]['signal_buy'];
@@ -375,13 +374,12 @@
                 signalDirection.innerHTML = dirText;
                 signalDirection.style.display = 'block';
                 
-                // ИЗМЕНЕНИЕ 3: Запускаем таймер экспирации ТОЛЬКО СЕЙЧАС
                 const timeValue = parseInt(selectedExp.substring(1));
-                const expirationInMs = timeValue * 1000; // Все значения теперь в секундах
+                const expirationInMs = timeValue * 1000;
 
                 setTimeout(() => {
                     resultContainer.style.display = 'block';
-                    winButtons.style.display = 'flex'; // Показываем кнопки результата
+                    winButtons.style.display = 'flex';
                 }, expirationInMs);
             };
         };
