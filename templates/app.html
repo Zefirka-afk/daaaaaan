@@ -14,7 +14,7 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН0: ЗАГРУЗКА -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active">
         <div class="card">
             <div class="spinner"></div>
@@ -144,14 +144,8 @@
     <!-- Процесс получения сигнала -->
     <div id="signal-active-view" class="view">
         <div class="card signal-card">
-            <div id="signal-stage-1">
-                <p class="emoji-spinner">⏳</p>
-                <h1 class="title" data-translate-key="search_title"></h1>
-                <p class="description" data-translate-key="search_desc"></p>
-            </div>
-            <div id="signal-stage-2" style="display: none;">
-                <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
-            </div>
+            <div id="signal-stage-1"><p class="emoji-spinner">⏳</p><h1 class="title" data-translate-key="search_title"></h1><p class="description" data-translate-key="search_desc"></p></div>
+            <div id="signal-stage-2" style="display: none;"><button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button></div>
             <div id="signal-stage-3" style="display: none;">
                 <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
@@ -167,9 +161,11 @@
                 <div id="signal-result-container" style="display: none;">
                     <p class="signal-step signal-result" id="signal-result-win" data-translate-key="signal_win"></p>
                     <div id="signal-win-buttons" style="display: none;">
-                        <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
-                        <button class="action-button vip" id="btn-goto-vip" data-translate-key="want_vip_btn"></button>
-                        <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
+                        <div class="button-row">
+                            <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
+                            <button class="action-button vip" id="btn-goto-vip" data-translate-key="want_vip_btn"></button>
+                        </div>
+                        <button class="action-button lost full-width" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
                     </div>
                 </div>
             </div>
@@ -301,7 +297,7 @@
 
                         setTimeout(() => {
                             document.getElementById('signal-result-container').style.display = 'block';
-                            document.getElementById('signal-win-buttons').style.display = 'flex';
+                            document.getElementById('signal-win-buttons').style.display = 'block'; 
                         }, expirationInMs);
 
                     }, 6000);
