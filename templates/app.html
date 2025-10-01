@@ -261,6 +261,375 @@
                 el.innerHTML = text;
             }
         });
+    }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Pocket pro</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ЭЛЕМЕНТЫ ДЛЯ ВИЗУАЛЬНЫХ ЭФФЕКТОВ -->
+<canvas id="confetti-canvas"></canvas>
+
+<div class="app-wrapper">
+
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
+    <div id="loader-view" class="view active">
+        <div class="card">
+            <div class="spinner"></div>
+            <p data-translate-key="loading"></p>
+        </div>
+    </div>
+    
+    <!-- ЭКРАН 0.1: ОШИБКА -->
+    <div id="error-view" class="view">
+        <div class="card">
+            <p data-translate-key="error_text"></p>
+        </div>
+    </div>
+
+    <!-- БЛОК 1: ОНБОРДИНГ -->
+    <div id="onboarding-1-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb1_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb1_desc"></p>
+            <div class="stats-container">
+                <div class="stat-item"><div class="value">1000+</div><div class="label" data-translate-key="onb1_stat1"></div></div>
+                <div class="stat-item"><div class="value">95%</div><div class="label" data-translate-key="onb1_stat2"></div></div>
+                <div class="stat-item"><div class="value">24/7</div><div class="label" data-translate-key="onb1_stat3"></div></div>
+            </div>
+            <div class="nav-buttons full-width">
+                <button class="main-button" id="btn-onb1-next" data-translate-key="start_btn"></button>
+            </div>
+        </div>
+    </div>
+    <div id="onboarding-2-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb2_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb2_desc"></p>
+            <ul class="features-list">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat1"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat2"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat3"></span></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb2-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb2-next" data-translate-key="next_btn"></button>
+            </div>
+        </div>
+    </div>
+    <div id="onboarding-3-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb3_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb3_desc"></p>
+             <ul class="features-list">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat1"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat2"></span></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb3-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb3-next" data-translate-key="onb3_btn"></button>
+            </div>
+        </div>
+    </div>
+    <div id="onboarding-4-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb4_title"></h1>
+            <p class="description" data-translate-key="onb4_desc"></p>
+            <ul class="features-list">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat1"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat2"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat3"></span></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb4-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-register" data-translate-key="onb4_btn"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ -->
+    <div id="post-reg-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="postreg_title"></h1>
+            <p class="description" data-translate-key="postreg_desc"></p>
+            <p class="description" data-translate-key="postreg_warn"></p>
+        </div>
+    </div>
+
+    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА -->
+    <div id="post-deposit-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="postdep_title"></h1>
+            <p class="description" data-translate-key="postdep_desc"></p>
+            <p class="description" data-translate-key="postdep_profit"></p>
+            <div class="signal-buttons">
+                <button class="signal-button" id="btn-vip-signal">
+                    <div class="signal-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg>
+                    </div>
+                    <div class="signal-text">
+                        <h3 data-translate-key="vip_signal_title"></h3>
+                        <p data-translate-key="vip_signal_desc"></p>
+                    </div>
+                </button>
+                <button class="signal-button" id="btn-simple-signal">
+                    <div class="signal-icon">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                    </div>
+                    <div class="signal-text">
+                        <h3 data-translate-key="simple_signal_title"></h3>
+                        <p data-translate-key="simple_signal_desc"></p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ -->
+    <div id="wip-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="wip_title"></h1>
+            <p class="description" data-translate-key="wip_desc"></p>
+            <div class="nav-buttons full-width">
+                 <button class="back-button" id="btn-wip-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Процесс получения сигнала -->
+    <div id="signal-active-view" class="view">
+        <svg id="chart-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
+            <path id="chart-path" d="M0,80 C50,50 150,120 250,80 S450,30 500,90" fill="none" stroke-width="2"/>
+        </svg>
+        <div class="card signal-card">
+            <div id="signal-stage-1">
+                <p class="emoji-spinner">⏳</p>
+                <h1 class="title" data-translate-key="search_title"></h1>
+                <p class="description" data-translate-key="search_desc"></p>
+            </div>
+            <div id="signal-stage-2" style="display: none;">
+                <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
+            </div>
+            <div id="signal-stage-3" style="display: none;">
+                <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
+                <p class="signal-step" id="signal-pair"></p>
+                <p class="signal-step" id="signal-status-exp-soon" data-translate-key="signal_exp_soon"></p>
+                <p class="signal-step" id="signal-expiration" style="display: none;"></p>
+                <p class="signal-step" id="signal-direction" style="display: none;"></p>
+                
+                <div id="signal-result-container" style="display: none;">
+                    <div class="trophy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="currentColor" d="M20.2 6c-1.3 0-2.4 1.1-2.4 2.4V11h-3.3c-.6-2.5-2.9-4.4-5.6-4.4S3.7 8.5 3.1 11H0v2h3.1c.5 2.5 2.9 4.4 5.6 4.4s5.1-1.9 5.6-4.4h3.3v2.6c0 1.3 1.1 2.4 2.4 2.4s2.4-1.1 2.4-2.4V8.4C22.6 7.1 21.5 6 20.2 6zM8.7 13.4c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4zm10.7 0c-1.3 0-2.4-1.1-2.4-2.4s1.1-2.4 2.4-2.4 2.4 1.1 2.4 2.4-1.1 2.4-2.4 2.4z"/></svg>
+                    </div>
+                    <p class="signal-step signal-result" id="signal-result" data-translate-key="signal_win"></p>
+                    
+                    <div id="signal-win-buttons" style="display: none;">
+                        <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
+                        <button class="action-button vip" id="btn-goto-vip-from-win" data-translate-key="want_vip_btn"></button>
+                        <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ЭКРАН ПРОИГРЫША -->
+    <div id="loss-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="loss_title"></h1>
+            <p class="description" data-translate-key="loss_desc"></p>
+            <div class="nav-buttons-vertical">
+                <button class="main-button" id="btn-next-from-loss" data-translate-key="next_signal_btn"></button>
+                <button class="secondary-button" id="btn-vip-from-loss" data-translate-key="want_vip_btn"></button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.setHeaderColor('#12171f');
+    tg.setBackgroundColor('#12171f');
+
+    // === ЛОГИКА ВИЗУАЛОВ ===
+    
+    function setBackgroundGlow(color) {
+        document.body.classList.remove('glow-green', 'glow-red');
+        if (color) {
+            document.body.classList.add(`glow-${color}`);
+        }
+    }
+    
+    const chartSVG = document.getElementById('chart-svg');
+    function setChartState(state) {
+        chartSVG.classList.remove('buy', 'sell');
+        if (state) {
+            chartSVG.classList.add(state);
+        }
+    }
+
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function triggerConfetti() {
+        canvas.style.display = 'block';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: canvas.width / 2,
+                y: canvas.height,
+                radius: Math.random() * 3 + 2,
+                color: `hsl(${Math.random() * 60 + 30}, 100%, 70%)`,
+                vx: (Math.random() - 0.5) * 10,
+                vy: Math.random() * -20 - 10,
+                alpha: 1,
+            });
+        }
+        animateConfetti();
+    }
+    
+    let animationFrameId;
+    function animateConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, index) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.4;
+            p.alpha -= 0.01;
+            if (p.alpha <= 0) {
+                particles.splice(index, 1);
+            } else {
+                ctx.globalAlpha = p.alpha;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            }
+        });
+        if (particles.length > 0) {
+            animationFrameId = requestAnimationFrame(animateConfetti);
+        } else {
+            canvas.style.display = 'none';
+        }
+    }
+    
+    function resetAllVisuals() {
+        setBackgroundGlow(null);
+        setChartState(null);
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+        }
+        particles = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'none';
+    }
+    
+    // === ОСНОВНАЯ ЛОГИКА ПРИЛОЖЕНИЯ ===
+
+    const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
+    const TRANSLATIONS = {
+        'ru': {
+            'loading': 'Загрузка данных...',
+            'error_text': 'Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
+            'start_btn': 'Начать >',
+            'next_btn': 'Далее >',
+            'back_btn': '< Назад',
+            'back_to_menu_btn': '< Вернуться в меню',
+            'onb1_title': 'Premium сигналы', 'onb1_desc': 'Получайте точные торговые сигналы от профессиональных аналитиков с точностью до 95%',
+            'onb1_stat1': 'Трейдеры', 'onb1_stat2': 'Точность', 'onb1_stat3': 'Поддержка',
+            'onb2_title': 'VIP Статус', 'onb2_desc': 'Эксклюзивные сигналы, приоритетная поддержка и доступ к закрытому сообществу элитных трейдеров',
+            'onb2_feat1': 'Обычные сигналы: 5-10/день', 'onb2_feat2': 'VIP сигналы: 20+/день', 'onb2_feat3': 'Точность VIP: до 95%',
+            'onb3_title': 'Начните зарабатывать', 'onb3_desc': 'Присоединяйтесь к тысячам успешных трейдеров и начните получать стабильную прибыль уже сегодня',
+            'onb3_feat1': 'Прибыль: до 95%', 'onb3_feat2': 'Скорость: 1-15 мин.', 'onb3_btn': 'Начать торговать >',
+            'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера',
+            'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >',
+            'postreg_title': 'Классно! Стартуем', 'postreg_desc': 'И помни, что с любой суммой можно достичь высот!', 'postreg_warn': 'Теперь сделай депозит. Я проверю зачисление депозита, не шути со мной.',
+            'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>{deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>{profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!',
+            'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге. Здесь выдаются лучшие сигналы.',
+            'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'У тебя будет 30 секунд, чтобы подготовиться. Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Готов?',
+            'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
+            'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро',
+            'signal_get_btn': 'Получить сигнал',
+            'signal_ready': 'Готово!',
+            'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>',
+            'signal_exp_soon': 'СЕЙЧАС скажу время экспирации',
+            'signal_exp_time': 'Время экспирации <b>{exp}</b>',
+            'signal_buy': 'ПОКУПАЙ 🟢',
+            'signal_sell': 'ПРОДАВАЙ 🔴',
+            'signal_win': 'ПОБЕДА!',
+            'next_signal_btn': 'Следующий!',
+            'want_vip_btn': 'Хочу ВИП сигнал',
+            'i_lost_btn': 'Я проиграл',
+            'loss_title': 'Хм, странно! А я выиграл',
+            'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
+        },
+        'en': {
+            'loading': 'Loading data...',
+            'error_text': 'Error: User not identified. Please open the app via the "Menu" button in the bot.',
+            'start_btn': 'Start >',
+            'next_btn': 'Next >',
+            'back_btn': '< Back',
+            'back_to_menu_btn': '< Back to menu',
+            'onb1_title': 'Premium Signals','onb1_desc': 'Get accurate trading signals from professional analysts with up to 95% accuracy',
+            'onb1_stat1': 'Traders','onb1_stat2': 'Accuracy','onb1_stat3': 'Support',
+            'onb2_title': 'VIP Status','onb2_desc': 'Exclusive signals, priority support and access to a closed community of elite traders',
+            'onb2_feat1': 'Regular signals: 5-10/day','onb2_feat2': 'VIP signals: 20+/day','onb2_feat3': 'VIP accuracy: up to 95%',
+            'onb3_title': 'Start Earning','onb3_desc': 'Join thousands of successful traders and start getting stable profit today',
+            'onb3_feat1': 'Profit: up to 95%','onb3_feat2': 'Speed: 1-15 min.','onb3_btn': 'Start Trading >',
+            'onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker',
+            'onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >',
+            'postreg_title': 'Awesome! Let\'s start','postreg_desc': 'And remember, you can reach great heights with any amount!',
+            'postreg_warn': 'Now make a deposit. I will check the deposit, don\'t mess with me.',
+            'postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>{deposit_sum}</b>',
+            'postdep_profit': 'In 5-10 signals, you can make ~<b>{profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!',
+            'vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading. The best signals are given here.',
+            'simple_signal_title': 'Simple Signal','simple_signal_desc': 'You will have 30 seconds to prepare. I will send you the currency pair, expiration time, and the signal itself (up or down). Ready?',
+            'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.',
+            'search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly',
+            'signal_get_btn': 'Get Signal','signal_ready': 'Ready!',
+            'signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_soon': 'I will tell you the expiration time NOW',
+            'signal_exp_time': 'Expiration time <b>{exp}</b>',
+            'signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴',
+            'signal_win': 'WIN!',
+            'next_signal_btn': 'Next Signal!',
+            'want_vip_btn': 'I want a VIP signal',
+            'i_lost_btn': 'I lost',
+            'loss_title': 'Hmm, strange! But I won',
+            'loss_desc': 'You must have done something wrong. It often happens that people place bets at the wrong time. Try again! Be more careful next time',
+        }
+    };
+
+    let userLang = 'en';
+
+    function applyTranslations(lang, data = {}) {
+        const t = TRANSLATIONS[lang];
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (t[key]) {
+                let text = t[key];
+                for(const dataKey in data) {
+                    text = text.replace(`{${dataKey}}`, data[dataKey]);
+                }
+                el.innerHTML = text;
+            }
+        });
     }
 
     function showView(viewId) {
@@ -272,9 +641,9 @@
     }
     
     function startSignalFlow() {
+        resetAllVisuals();
         showView('signal-active-view');
 
-        // Сброс состояния
         const stage1 = document.getElementById('signal-stage-1');
         const stage2 = document.getElementById('signal-stage-2');
         const stage3 = document.getElementById('signal-stage-3');
@@ -287,12 +656,12 @@
         resultContainer.style.display = 'none';
         winButtons.style.display = 'none';
 
+        const getSignalBtn = document.getElementById('btn-get-signal');
         const signalStatusReady = document.getElementById('signal-status-ready');
         const signalPair = document.getElementById('signal-pair');
         const signalStatusExpSoon = document.getElementById('signal-status-exp-soon');
         const signalExpiration = document.getElementById('signal-expiration');
         const signalDirection = document.getElementById('signal-direction');
-        const getSignalBtn = document.getElementById('btn-get-signal');
 
         setTimeout(() => {
             stage1.style.display = 'none';
@@ -311,7 +680,7 @@
             resultContainer.style.display = 'none';
 
             const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC", "GBP/USD OTC", "EUR/USD OTC"];
-            const expirations = ["M1", "M2", "S10", "S30", "S15"];
+            const expirations = ["M1", "M2", "S10", "S30", "S60"];
             const directions = ["buy", "sell"];
             const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
             
@@ -331,9 +700,13 @@
                     if (selectedDir === 'buy') {
                         dirText = TRANSLATIONS[userLang]['signal_buy'];
                         signalDirection.className = 'signal-step buy-signal';
+                        setBackgroundGlow('green');
+                        setChartState('buy');
                     } else {
                         dirText = TRANSLATIONS[userLang]['signal_sell'];
                         signalDirection.className = 'signal-step sell-signal';
+                        setBackgroundGlow('red');
+                        setChartState('sell');
                     }
                     signalDirection.innerHTML = dirText;
                     signalDirection.style.display = 'block';
@@ -348,8 +721,9 @@
                     }
 
                     setTimeout(() => {
+                        triggerConfetti();
                         resultContainer.style.display = 'block';
-                        winButtons.style.display = 'flex'; // Показываем кнопки
+                        winButtons.style.display = 'flex';
                     }, expirationInMs);
 
                 }, 6000);
@@ -369,7 +743,6 @@
         document.getElementById('btn-simple-signal').onclick = startSignalFlow;
         document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
         
-        // Новая навигация
         document.getElementById('btn-next-signal').onclick = startSignalFlow;
         document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view');
         document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
@@ -428,6 +801,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', main);
+
 </script>
 
 </body>
