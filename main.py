@@ -6,15 +6,11 @@ import telebot
 import random
 import time
 
-# ========================================================
-# = КОНФИГУРАЦИЯ =
 # ===================================================================
-# !!! ВАЖНО: Вставьте сюда свой токен, полученный от @BotFather
-TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"  # <-- ЗАМЕНИТЕ ВАШИМ ТОКЕНОМ
-
-# !!! ВАЖНО: Вставьте сюда основной URL вашего приложения с Render
-# Пример: "https://your-app-name.onrender.com"
-WEB_APP_URL = "https://daaaaaan.onrender.com" # <-- ЗАМЕНИТЕ ВАШИМ URL
+# ========= КОНФИГУРАЦИЯ =
+# ===================================================================
+TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"
+WEB_APP_URL = "https://daaaaaan.onrender.com"
 
 # ===================================================================
 # ========= ПЕРЕВОДЫ (TEXTS) =========
@@ -40,9 +36,6 @@ TEXTS = {
     }
 }
 
-# Временное хранилище для языка пользователя.
-user_langs = {}
-
 # ===================================================================
 # ========= ИНИЦИАЛИЗАЦИЯ БОТА И ВЕБ-СЕРВЕРА =========
 # ===================================================================
@@ -52,8 +45,10 @@ app = Flask(__name__)
 # ===================================================================
 # ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
 # ===================================================================
+DB_NAME = "data.db"
+
 def init_db():
-    conn = sqlite3.connect("postbacks.db", check_same_thread=False)
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS postbacks (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,11 +56,15 @@ def init_db():
         sumdep REAL, wdr_sum REAL, status TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )""")
+    c.execute("""CREATE TABLE IF NOT EXISTS users (
+        chat_id INTEGER PRIMARY KEY,
+        lang TEXT
+    )""")
     conn.commit()
     conn.close()
 
 def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=None):
-    conn = sqlite3.connect("postbacks.db", check_same_thread=False)
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     c = conn.cursor()
     c.execute("""INSERT INTO postbacks (event, subid, trader_id, sumdep, wdr_sum, status)
         VALUES (?, ?, ?, ?, ?, ?)""",
@@ -80,12 +79,26 @@ def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=Non
 def start_message(message):
     lang_code = message.from_user.language_code
     lang = 'ru' if lang_code and lang_code.startswith('ru') else 'en'
-    user_langs[message.chat.id] = lang
+    
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
+    c = conn.cursor()
+    c.execute("""
+        INSERT INTO users (chat_id, lang) VALUES (?, ?)
+        ON CONFLICT(chat_id) DO UPDATE SET lang=excluded.lang
+    """, (message.chat.id, lang))
+    conn.commit()
+    conn.close()
+    
     bot.send_message(message.chat.id, TEXTS[lang]['welcome'])
 
 @bot.message_handler(commands=['myid'])
 def my_id(message):
-    lang = user_langs.get(message.chat.id, 'en')
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
+    c = conn.cursor()
+    c.execute("SELECT lang FROM users WHERE chat_id = ?", (message.chat.id,))
+    result = c.fetchone()
+    conn.close()
+    lang = result[0] if result else 'en'
     bot.send_message(message.chat.id, TEXTS[lang]['my_id'].format(id=message.chat.id))
 
 # ===================================================================
@@ -101,7 +114,7 @@ def app_page():
 
 @app.route("/user/<int:chat_id>/data")
 def user_data_api(chat_id):
-    conn = sqlite3.connect("postbacks.db", check_same_thread=False)
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
     
@@ -133,7 +146,14 @@ def partner_postback():
 
     save_postback(event, subid, trader_id, sumdep, wdr_sum, status)
 
-    lang = user_langs.get(chat_id, 'en')
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
+    c = conn.cursor()
+    c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,))
+    result = c.fetchone()
+    conn.close()
+    
+    lang = result[0] if result else 'en'
+    
     message_text = ""
     
     if event == "reg": message_text = TEXTS[lang]['reg_success']
@@ -151,14 +171,55 @@ def partner_postback():
     return "OK", 200
 
 # ===================================================================
-# ========= ТЕСТОВЫЙ МАРШРУТ ДЛЯ ИМИТАЦИИ ДЕПОЗИТА =========
+# ========= ТЕСТОВЫЕ МАРШРУТЫ =========
 # ===================================================================
+
+# НОВЫЙ МАРШРУТ ДЛЯ ТЕСТА РЕГИСТРАЦИИ
+@app.route("/test_registration")
+def add_test_registration():
+    # Пример использования: /test_registration?chat_id=1234567
+    chat_id_str = request.args.get("chat_id")
+
+    if not chat_id_str:
+        return "Ошибка: Пожалуйста, укажите 'chat_id' в параметрах URL.", 400
+
+    try:
+        chat_id = int(chat_id_str)
+    except ValueError:
+        return "Ошибка: 'chat_id' должен быть числом.", 400
+
+    # Имитируем событие 'reg'
+    save_postback(
+        event="reg",
+        subid=str(chat_id),
+        trader_id=f"test_trader_{chat_id}", # Генерируем уникальный тестовый ID трейдера
+        sumdep=None,
+        wdr_sum=None,
+        status=None
+    )
+
+    # Оповещаем пользователя в боте
+    try:
+        conn = sqlite3.connect(DB_NAME, check_same_thread=False)
+        c = conn.cursor()
+        c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,))
+        result = c.fetchone()
+        conn.close()
+        lang = result[0] if result else 'en'
+        
+        message_text = TEXTS[lang]['reg_success']
+        bot.send_message(chat_id, message_text)
+    except Exception as e:
+        print(f"Не удалось отправить тестовое сообщение о регистрации {chat_id}: {e}")
+
+    return f"Успешно создана тестовая регистрация для пользователя с ID {chat_id}.<br>Закройте и снова откройте Mini App, чтобы увидеть изменения.", 200
+
+
 @app.route("/test_deposit")
 def add_test_deposit():
-    # Получаем ID пользователя и сумму из параметров URL
     # Пример: /test_deposit?chat_id=1234567&sum=50
     chat_id_str = request.args.get("chat_id")
-    sum_str = request.args.get("sum", "50") # Сумма по умолчанию 50, если не указана
+    sum_str = request.args.get("sum", "50")
 
     if not chat_id_str:
         return "Ошибка: Пожалуйста, укажите 'chat_id' в параметрах URL.", 400
@@ -169,26 +230,29 @@ def add_test_deposit():
     except ValueError:
         return "Ошибка: 'chat_id' и 'sum' должны быть числами.", 400
 
-    # Используем нашу существующую функцию, чтобы сохранить фейковый депозит в базу данных
-    # Имитируем событие 'FTD' (First Time Deposit)
+    # Имитируем событие 'FTD'
     save_postback(
         event="FTD",
         subid=str(chat_id),
-        trader_id="test_trader_001", # ID трейдера может быть любым для теста
+        trader_id=f"test_trader_{chat_id}",
         sumdep=deposit_sum,
         wdr_sum=None,
         status="approved"
     )
 
-    # Оповещаем пользователя в боте, как будто это реальный депозит
     try:
-        lang = user_langs.get(chat_id, 'en')
+        conn = sqlite3.connect(DB_NAME, check_same_thread=False)
+        c = conn.cursor()
+        c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,))
+        result = c.fetchone()
+        conn.close()
+        lang = result[0] if result else 'en'
+        
         message_text = TEXTS[lang]['ftd_success'].format(sum=deposit_sum)
         bot.send_message(chat_id, message_text)
     except Exception as e:
-        print(f"Не удалось отправить тестовое сообщение {chat_id}: {e}")
+        print(f"Не удалось отправить тестовое сообщение о депозите {chat_id}: {e}")
 
-    # Возвращаем подтверждение в браузер
     return f"Успешно создан тестовый депозит в размере ${deposit_sum} для пользователя с ID {chat_id}.<br>Закройте и снова откройте Mini App, чтобы увидеть изменения.", 200
 
 
