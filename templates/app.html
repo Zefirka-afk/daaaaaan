@@ -14,7 +14,9 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН 0: ЗАГРУКА -->
+    <!-- Все блоки до "Процесс получения сигнала" остаются без изменений -->
+    
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active">
         <div class="card">
             <div class="spinner"></div>
@@ -22,14 +24,14 @@
         </div>
     </div>
     
-    <!-- ЭКРАН 0.1: ОШИКА -->
+    <!-- ЭКРАН 0.1: ОШИБКА -->
     <div id="error-view" class="view">
         <div class="card">
             <p data-translate-key="error_text"></p>
         </div>
     </div>
 
-    <!-- БЛОК 1: ОНБОРДИНГ (без изменений) -->
+    <!-- БЛОК 1: ОНБОРДИНГ -->
     <div id="onboarding-1-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="onb1_title"></h1>
@@ -92,7 +94,7 @@
         </div>
     </div>
 
-    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ (без изменений) -->
+    <!-- БЛОК 2: ПОСЛЕ РЕГИСТРАЦИИ -->
     <div id="post-reg-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="postreg_title"></h1>
@@ -101,7 +103,7 @@
         </div>
     </div>
 
-    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (без изменений) -->
+    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА -->
     <div id="post-deposit-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="postdep_title"></h1>
@@ -130,7 +132,7 @@
         </div>
     </div>
     
-    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ (без изменений) -->
+    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ -->
     <div id="wip-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="wip_title"></h1>
@@ -153,9 +155,9 @@
                 <button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button>
             </div>
             <div id="signal-stage-3" style="display: none;">
-                <p class="signal-step" id="signal-status-ready"></p>
+                <p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p>
                 <p class="signal-step" id="signal-pair"></p>
-                <p class="signal-step" id="signal-exp-soon"></p>
+                <p class="signal-step" id="signal-exp-soon" data-translate-key="signal_exp_soon"></p>
                 <p class="signal-step" id="signal-expiration" style="display: none;"></p>
 
                 <div id="signal-confirmation-container" style="display: none; margin-top: 20px;">
@@ -165,7 +167,10 @@
                 <p class="signal-step" id="signal-direction" style="display: none;"></p>
                 
                 <div id="signal-result-container" style="display: none;">
-                    <p class="signal-step signal-result" id="signal-result" data-translate-key="signal_win"></p>
+                    <!-- ========================================================== -->
+                    <!-- ========= ИСПРАВЛЕНИЕ 1: УБРАН КЛАСС "signal-step" ======== -->
+                    <!-- ========================================================== -->
+                    <p class="signal-result" id="signal-result" data-translate-key="signal_win"></p>
                     
                     <div id="signal-win-buttons" style="display: none;">
                         <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
@@ -177,7 +182,7 @@
         </div>
     </div>
     
-    <!-- Экран проигрыша (без изменений) -->
+    <!-- Экран проигрыша -->
     <div id="loss-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="loss_title"></h1>
@@ -200,6 +205,7 @@
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
     
+    // Переводы остаются без изменений
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...',
@@ -284,14 +290,12 @@
         const resultContainer = document.getElementById('signal-result-container');
         const winButtons = document.getElementById('signal-win-buttons');
         const confirmationContainer = document.getElementById('signal-confirmation-container');
-
-        // Получаем все элементы для управления видимостью
+        
         const signalStatusReady = document.getElementById('signal-status-ready');
         const signalPair = document.getElementById('signal-pair');
         const signalStatusExpSoon = document.getElementById('signal-exp-soon');
         const signalExpiration = document.getElementById('signal-expiration');
         const signalDirection = document.getElementById('signal-direction');
-        const signalResult = document.getElementById('signal-result'); // <--- Важный элемент
         const getSignalBtn = document.getElementById('btn-get-signal');
         const confirmReadyBtn = document.getElementById('btn-confirm-ready');
 
@@ -302,8 +306,7 @@
         resultContainer.style.display = 'none';
         winButtons.style.display = 'none';
         confirmationContainer.style.display = 'none';
-        signalResult.style.display = 'none'; // <--- Сбрасываем и его
-
+        
         setTimeout(() => {
             stage1.style.display = 'none';
             stage2.style.display = 'block';
@@ -361,12 +364,11 @@
                 const expirationInMs = timeValue * 1000;
 
                 setTimeout(() => {
-                    resultContainer.style.display = 'block';
                     // ==========================================================
-                    // ========= ИСПРАВЛЕНИЕ ЗДЕСЬ =========
+                    // ========= ИСПРАВЛЕНИЕ 2: Упрощенный код показа =========
                     // ==========================================================
-                    signalResult.style.display = 'block'; // Явно показываем текст "ПОБЕДА"
-                    winButtons.style.display = 'flex';
+                    resultContainer.style.display = 'block'; // Показываем весь контейнер
+                    winButtons.style.display = 'flex';      // Показываем кнопки
                 }, expirationInMs);
             };
         };
@@ -445,5 +447,3 @@
 
 </body>
 </html>
-
-
