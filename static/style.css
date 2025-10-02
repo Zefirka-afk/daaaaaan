@@ -207,12 +207,24 @@ b { color: var(--color-accent); font-weight: 600; }
 .sell-signal { color: var(--color-red); text-shadow: 0 0 15px var(--color-red); }
 
 #signal-result-container { animation: fadeInUp 0.7s 0.2s ease-out forwards; opacity: 0; }
+/* --- Стало так --- */
 .signal-result {
     font-size: 36px;
     font-weight: 700;
-    margin: 20px 0 25px 0; /* Было margin-top: 10px; -> стало так */
-    color: var(--color-gold);
-    animation: pulseGlow 2s infinite ease-in-out;
+    margin: 20px 0 25px 0;
+    /* Убираем цвет и анимацию по умолчанию */
+}
+
+/* Новый класс для победы */
+.signal-result.win {
+    color: var(--color-green);
+    text-shadow: 0 0 20px rgba(0, 230, 118, 0.7); /* Зеленое свечение */
+}
+
+/* Новый класс для проигрыша */
+.signal-result.loss {
+    color: var(--color-red);
+    text-shadow: 0 0 20px rgba(255, 61, 106, 0.7); /* Красное свечение */
 }
 .trophy-icon svg {
     color: var(--color-gold);
@@ -270,4 +282,14 @@ b { color: var(--color-accent); font-weight: 600; }
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--color-accent);
 }
+/* Добавь этот блок в конец файла */
+#signal-loss-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    animation: fadeInUp 0.5s 0.5s ease-out forwards;
+    opacity: 0;
+}
+
 
