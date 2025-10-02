@@ -13,9 +13,9 @@
 <body>
 
 <div class="app-wrapper">
-
-    <!-- Все блоки до "Процесс получения сигн" остаются без изменений -->
     
+    <!-- Все view (экраны) остаются без изменений -->
+
     <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active">
         <div class="card">
@@ -168,15 +168,11 @@
                 
                 <div id="signal-result-container" style="display: none;">
                     <p class="signal-result" id="signal-result"></p>
-                    
-                    <!-- Кнопки для ПОБЕДЫ -->
                     <div id="signal-win-buttons" style="display: none;">
                         <button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button>
                         <button class="action-button vip" id="btn-goto-vip-from-win" data-translate-key="want_vip_btn"></button>
                         <button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button>
                     </div>
-
-                    <!-- НОВЫЙ БЛОК: Кнопки для ПРОИГРЫША -->
                     <div id="signal-loss-buttons" style="display: none;">
                         <button class="action-button" id="btn-next-from-loss-result" data-translate-key="next_signal_btn"></button>
                         <button class="action-button vip" id="btn-vip-from-loss-result" data-translate-key="want_vip_btn"></button>
@@ -186,7 +182,7 @@
         </div>
     </div>
     
-    <!-- Экран проигрыша (если пользователь сам нажал "Я проиграл") -->
+    <!-- Экран проигрыша -->
     <div id="loss-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="loss_title"></h1>
@@ -200,6 +196,12 @@
 
 </div>
 
+<!-- ========================================================== -->
+<!-- ========= НОВЫЙ ЭЛЕМЕНТ: КНОПКА FAQ ======================= -->
+<!-- ========================================================== -->
+<button id="faq-button" class="faq-button">?</button>
+
+
 <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
@@ -209,6 +211,7 @@
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
     
+    // Переводы остаются без изменений
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя. Пожалуйста, откройте приложение через кнопку "Меню" в боте.',
@@ -231,7 +234,7 @@
             'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>',
             'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴',
             'signal_win': 'ПОБЕДА',
-            'signal_loss': 'ПРОИГРЫШ', // Новый ключ
+            'signal_loss': 'ПРОИГРЫШ',
             'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл',
             'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так. Часто бывает так, что люди ставят не вовремя. Попробуй еще раз! Впредь будь внимательнее',
             'confirm_ready_btn': 'Я готов!',
@@ -243,7 +246,7 @@
             'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>',
             'signal_exp_soon': 'I will tell you the expiration time NOW','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴',
             'signal_win': 'VICTORY',
-            'signal_loss': 'LOSS', // New key
+            'signal_loss': 'LOSS',
             'next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal','i_lost_btn': 'I lost',
             'loss_title': 'Hmm, strange! But I won','loss_desc': 'You must have done something wrong. It often happens that people place bets at the wrong time. Try again! Be more careful next time',
             'confirm_ready_btn': 'I\'m ready!',
@@ -272,17 +275,38 @@
         if (viewElement) {
             viewElement.classList.add('active');
         }
+
+        // ==========================================================
+        // ========= НОВАЯ ЛОГИКА УПРАВЛЕНИЯ КНОПКОЙ FAQ ============
+        // ==========================================================
+        const faqButton = document.getElementById('faq-button');
+        // Экраны, на которых кнопка должна быть видна
+        const visibleOnViews = [
+            'post-deposit-view',
+            'wip-view',
+            'loss-view'
+            // 'signal-active-view' будет обрабатываться отдельно
+        ];
+
+        if (visibleOnViews.includes(viewId)) {
+            faqButton.classList.add('visible');
+        } else {
+            faqButton.classList.remove('visible');
+        }
     }
     
     function startSignalFlow() {
         showView('signal-active-view');
+        
+        // Прячем кнопку FAQ в начале процесса
+        document.getElementById('faq-button').classList.remove('visible');
 
         const stage1 = document.getElementById('signal-stage-1');
         const stage2 = document.getElementById('signal-stage-2');
         const stage3 = document.getElementById('signal-stage-3');
         const resultContainer = document.getElementById('signal-result-container');
         const winButtons = document.getElementById('signal-win-buttons');
-        const lossButtons = document.getElementById('signal-loss-buttons'); // Новый элемент
+        const lossButtons = document.getElementById('signal-loss-buttons');
         const confirmationContainer = document.getElementById('signal-confirmation-container');
         
         const signalStatusReady = document.getElementById('signal-status-ready');
@@ -290,7 +314,7 @@
         const signalStatusExpSoon = document.getElementById('signal-exp-soon');
         const signalExpiration = document.getElementById('signal-expiration');
         const signalDirection = document.getElementById('signal-direction');
-        const signalResult = document.getElementById('signal-result'); // Элемент для текста ПОБЕДА/ПРОИГРЫШ
+        const signalResult = document.getElementById('signal-result');
         const getSignalBtn = document.getElementById('btn-get-signal');
         const confirmReadyBtn = document.getElementById('btn-confirm-ready');
 
@@ -306,9 +330,14 @@
         setTimeout(() => {
             stage1.style.display = 'none';
             stage2.style.display = 'block';
+            // Показываем кнопку FAQ на этапе ожидания нажатия "Получить сигнал"
+            document.getElementById('faq-button').classList.add('visible');
         }, 5000);
 
         getSignalBtn.onclick = () => {
+            // Снова прячем кнопку, т.к. начинается активная фаза
+            document.getElementById('faq-button').classList.remove('visible');
+
             stage2.style.display = 'none';
             stage3.style.display = 'block';
             
@@ -359,24 +388,21 @@
                 const expirationInMs = timeValue * 1000;
 
                 setTimeout(() => {
-                    // ==========================================================
-                    // ========= НОВАЯ ЛОГИКА 70/30 ЗДЕСЬ =======================
-                    // ==========================================================
-                    const isWin = Math.random() < 0.7; // 70% шанс на победу
+                    const isWin = Math.random() < 0.7; 
 
                     if (isWin) {
-                        // Сценарий ПОБЕДЫ
                         signalResult.innerHTML = TRANSLATIONS[userLang]['signal_win'];
-                        signalResult.className = 'signal-result win'; // Применяем зеленый стиль
-                        winButtons.style.display = 'flex'; // Показываем кнопки для победы
+                        signalResult.className = 'signal-result win';
+                        winButtons.style.display = 'flex';
                     } else {
-                        // Сценарий ПРОИГРЫША
                         signalResult.innerHTML = TRANSLATIONS[userLang]['signal_loss'];
-                        signalResult.className = 'signal-result loss'; // Применяем красный стиль
-                        lossButtons.style.display = 'flex'; // Показываем кнопки для проигрыша
+                        signalResult.className = 'signal-result loss';
+                        lossButtons.style.display = 'flex';
                     }
                     
-                    resultContainer.style.display = 'block'; // Показываем общий контейнер результата
+                    resultContainer.style.display = 'block';
+                    // Показываем кнопку FAQ снова, когда результат известен
+                    document.getElementById('faq-button').classList.add('visible');
                 }, expirationInMs);
             };
         };
@@ -393,18 +419,22 @@
         document.getElementById('btn-simple-signal').onclick = startSignalFlow;
         document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
         
-        // Кнопки после победы
         document.getElementById('btn-next-signal').onclick = startSignalFlow;
         document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view');
         document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
         
-        // Кнопки после проигрыша (со страницы loss-view)
         document.getElementById('btn-next-from-loss').onclick = startSignalFlow;
         document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view');
 
-        // НОВЫЕ КНОПКИ после проигрыша (со страницы результата)
         document.getElementById('btn-next-from-loss-result').onclick = startSignalFlow;
         document.getElementById('btn-vip-from-loss-result').onclick = () => showView('wip-view');
+
+        // ==========================================================
+        // ========= НОВЫЙ ОБРАБОТЧИК ДЛЯ КНОПКИ FAQ ================
+        // ==========================================================
+        document.getElementById('faq-button').onclick = () => {
+            showView('wip-view');
+        };
     }
     
     async function main() {
@@ -462,4 +492,5 @@
 
 </body>
 </html>
+
 
