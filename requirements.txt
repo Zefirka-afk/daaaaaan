@@ -2,3 +2,6 @@ Flask
 pyTelegramBotAPI
 selenium
 webdriver-manager
+telebot
+Flask-SocketIO
+eventlet
