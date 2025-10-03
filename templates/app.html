@@ -15,16 +15,68 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН 0: ЗАГЗКА -->
-    <div id="loader-view" class="view active"><div class="card"><div class="spinner"></div><p data-translate-key="loading"></p></div></div>
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
+    <div id="loader-view" class="view active">
+        <div class="card">
+            <div class="spinner"></div>
+            <p data-translate-key="loading"></p>
+        </div>
+    </div>
     
     <!-- ЭКРАН 0.1: ОШИБКА -->
-    <div id="error-view" class="view"><div class="card"><p data-translate-key="error_text"></p></div></div>
+    <div id="error-view" class="view">
+        <div class="card">
+            <p data-translate-key="error_text"></p>
+        </div>
+    </div>
 
     <!-- БЛОК 1: ОНБОРДИНГ -->
-    <div id="onboarding-1-view" class="view"><div class="card"><h1 class="title" data-translate-key="onb1_title"></h1><h2 class="subtitle">Pocket Option</h2><p class="description" data-translate-key="onb1_desc"></p><div class="stats-container"><div class="stat-item"><div class="value">1000+</div><div class="label" data-translate-key="onb1_stat1"></div></div><div class="stat-item"><div class="value">95%</div><div class="label" data-translate-key="onb1_stat2"></div></div><div class="stat-item"><div class="value">24/7</div><div class="label" data-translate-key="onb1_stat3"></div></div></div><div class="nav-buttons full-width"><button class="main-button" id="btn-onb1-next" data-translate-key="start_btn"></button></div></div></div>
-    <div id="onboarding-2-view" class="view"><div class="card"><h1 class="title" data-translate-key="onb2_title"></h1><h2 class="subtitle">Pocket Option</h2><p class="description" data-translate-key="onb2_desc"></p><ul class="features-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat1"></span></li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat2"></span></li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat3"></span></li></ul><div class="nav-buttons"><button class="back-button" id="btn-onb2-back" data-translate-key="back_btn"></button><button class="main-button" id="btn-onb2-next" data-translate-key="next_btn"></button></div></div></div>
-    <div id="onboarding-3-view" class="view"><div class="card"><h1 class="title" data-translate-key="onb3_title"></h1><h2 class="subtitle">Pocket Option</h2><p class="description" data-translate-key="onb3_desc"></p><ul class="features-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat1"></span></li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat2"></span></li></ul><div class="nav-buttons"><button class="back-button" id="btn-onb3-back" data-translate-key="back_btn"></button><button class="main-button" id="btn-onb3-next" data-translate-key="onb3_btn"></button></div></div></div>
+    <div id="onboarding-1-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb1_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb1_desc"></p>
+            <div class="stats-container">
+                <div class="stat-item"><div class="value">1000+</div><div class="label" data-translate-key="onb1_stat1"></div></div>
+                <div class="stat-item"><div class="value">95%</div><div class="label" data-translate-key="onb1_stat2"></div></div>
+                <div class="stat-item"><div class="value">24/7</div><div class="label" data-translate-key="onb1_stat3"></div></div>
+            </div>
+            <div class="nav-buttons full-width">
+                <button class="main-button" id="btn-onb1-next" data-translate-key="start_btn"></button>
+            </div>
+        </div>
+    </div>
+    <div id="onboarding-2-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb2_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb2_desc"></p>
+            <ul class="features-list">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat1"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat2"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb2_feat3"></span></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb2-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb2-next" data-translate-key="next_btn"></button>
+            </div>
+        </div>
+    </div>
+    <div id="onboarding-3-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="onb3_title"></h1>
+            <h2 class="subtitle">Pocket Option</h2>
+            <p class="description" data-translate-key="onb3_desc"></p>
+             <ul class="features-list">
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat1"></span></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb3_feat2"></span></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-onb3-back" data-translate-key="back_btn"></button>
+                <button class="main-button" id="btn-onb3-next" data-translate-key="onb3_btn"></button>
+            </div>
+        </div>
+    </div>
     
     <!-- Экран регистрации (onboarding-4-view) -->
     <div id="onboarding-4-view" class="view">
@@ -197,37 +249,120 @@
     }
 
     function setupNavigation() {
-        document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view'); document.getElementById('btn-onb2-back').onclick = () => showView('onboarding-1-view'); document.getElementById('btn-onb2-next').onclick = () => showView('onboarding-3-view'); document.getElementById('btn-onb3-back').onclick = () => showView('onboarding-2-view'); document.getElementById('btn-onb3-next').onclick = () => showView('onboarding-4-view'); document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view'); document.getElementById('btn-vip-signal').onclick = () => showView('wip-view'); document.getElementById('btn-simple-signal').onclick = startSignalFlow; document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view'); document.getElementById('btn-next-signal').onclick = startSignalFlow; document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view'); document.getElementById('btn-i-lost').onclick = () => showView('loss-view'); document.getElementById('btn-next-from-loss').onclick = startSignalFlow; document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view'); document.getElementById('btn-next-from-loss-result').onclick = startSignalFlow; document.getElementById('btn-vip-from-loss-result').onclick = () => showView('wip-view'); document.getElementById('faq-button').onclick = () => showView('wip-view');
-        const openRegisterLink = () => { const userId = tg.initDataUnsafe.user.id; const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
-        document.getElementById('btn-register').onclick = openRegisterLink; document.getElementById('btn-have-account').onclick = () => showView('have-account-view');
-        document.getElementById('btn-have-account-back').onclick = () => showView('onboarding-4-view'); document.getElementById('btn-ok-register').onclick = openRegisterLink; document.getElementById('btn-dont-want').onclick = () => showView('no-money-view');
-        document.getElementById('btn-no-money-back').onclick = () => showView('have-account-view'); document.getElementById('btn-choice-1').onclick = () => showView('bebra-view'); document.getElementById('btn-choice-2').onclick = openRegisterLink; document.getElementById('btn-choice-3').onclick = () => showView('barrier-view'); document.getElementById('btn-choice-4').onclick = openRegisterLink;
-        document.getElementById('btn-bebra-back').onclick = () => showView('no-money-view'); document.getElementById('btn-not-a-loser').onclick = openRegisterLink;
-        document.getElementById('btn-barrier-back').onclick = () => showView('no-money-view'); document.getElementById('btn-barrier-register').onclick = openRegisterLink; document.getElementById('btn-how-to-withdraw').onclick = () => showView('withdraw-wip-view');
-        document.getElementById('btn-withdraw-back').onclick = () => showView('barrier-view'); document.getElementById('btn-withdraw-register').onclick = openRegisterLink;
+        // Стандартная навигация
+        document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
+        document.getElementById('btn-onb2-back').onclick = () => showView('onboarding-1-view');
+        document.getElementById('btn-onb2-next').onclick = () => showView('onboarding-3-view');
+        document.getElementById('btn-onb3-back').onclick = () => showView('onboarding-2-view');
+        document.getElementById('btn-onb3-next').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view');
+        
+        // Навигация после входа
+        document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
+        document.getElementById('btn-simple-signal').onclick = startSignalFlow;
+        document.getElementById('btn-wip-back').onclick = () => showView('post-deposit-view');
+        
+        // Навигация после сигнала
+        document.getElementById('btn-next-signal').onclick = startSignalFlow;
+        document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view');
+        document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
+        document.getElementById('btn-next-from-loss').onclick = startSignalFlow;
+        document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view');
+        document.getElementById('btn-next-from-loss-result').onclick = startSignalFlow;
+        document.getElementById('btn-vip-from-loss-result').onclick = () => showView('wip-view');
+        
+        // FAQ
+        document.getElementById('faq-button').onclick = () => showView('wip-view');
+        
+        // Функция для открытия ссылки регистрации
+        const openRegisterLink = () => {
+            const userId = tg.initDataUnsafe.user.id;
+            const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`;
+            tg.openLink(personalLink);
+        };
+        
+        // Кнопка, которая ДЕЙСТВИТЕЛЬНО открывает ссылку
+        document.getElementById('btn-register').onclick = openRegisterLink;
+        
+        // Навигация для сценария "Уже есть аккаунт"
+        document.getElementById('btn-have-account').onclick = () => showView('have-account-view');
+        document.getElementById('btn-have-account-back').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-dont-want').onclick = () => showView('no-money-view');
+        document.getElementById('btn-no-money-back').onclick = () => showView('have-account-view');
+        document.getElementById('btn-choice-1').onclick = () => showView('bebra-view');
+        document.getElementById('btn-choice-3').onclick = () => showView('barrier-view');
+        document.getElementById('btn-bebra-back').onclick = () => showView('no-money-view');
+        document.getElementById('btn-barrier-back').onclick = () => showView('no-money-view');
+        document.getElementById('btn-how-to-withdraw').onclick = () => showView('withdraw-wip-view');
+        document.getElementById('btn-withdraw-back').onclick = () => showView('barrier-view');
+        
+        // Кнопки, которые возвращают на экран регистрации
+        document.getElementById('btn-ok-register').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-choice-2').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-choice-4').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-not-a-loser').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-barrier-register').onclick = () => showView('onboarding-4-view');
+        document.getElementById('btn-withdraw-register').onclick = () => showView('onboarding-4-view');
     }
 
     async function fetchAndUpdateView(userId) {
         try {
-            const response = await fetch(`/user/${userId}/data`); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); const hasDeposit = data.events.some(e => e[0] === 'FTD' || e[0] === 'dep');
+            const response = await fetch(`/user/${userId}/data`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            const hasDeposit = data.events.some(e => e[0] === 'FTD' || e[0] === 'dep');
+
             if (data.is_registered) {
                 if (hasDeposit) {
-                    const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); const depositAmount = parseFloat(depositEvent[1]); const profitAmount = (depositAmount * 2.5).toFixed(2);
-                    applyTranslations(userLang, { deposit_sum: `${depositAmount.toFixed(2)}`, profit_sum: `${profitAmount}` }); showView('post-deposit-view');
-                } else { showView('post-reg-view'); }
-            } else { showView('onboarding-1-view'); }
-        } catch (error) { console.error("Data loading error:", error); showView('error-view'); }
+                    const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
+                    const depositAmount = parseFloat(depositEvent[1]);
+                    const profitAmount = (depositAmount * 2.5).toFixed(2);
+                    applyTranslations(userLang, {
+                        deposit_sum: `${depositAmount.toFixed(2)}`,
+                        profit_sum: `${profitAmount}`
+                    });
+                    showView('post-deposit-view');
+                } else {
+                    showView('post-reg-view');
+                }
+            } else {
+                showView('onboarding-1-view');
+            }
+        } catch (error) {
+            console.error("Data loading error:", error);
+            showView('error-view');
+        }
     }
 
     async function main() {
-        if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) { applyTranslations('en'); showView('error-view'); return; }
-        const user = tg.initDataUnsafe.user, userId = user.id; userLang = user.language_code && user.language_code.startsWith('ru') ? 'ru' : 'en'; document.documentElement.lang = userLang;
-        applyTranslations(userLang); setupNavigation();
-        document.getElementById('btn-register').onclick = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
+        if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+            applyTranslations('en');
+            showView('error-view');
+            return;
+        }
+        const user = tg.initDataUnsafe.user;
+        const userId = user.id;
+        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
+        document.documentElement.lang = userLang;
+        
+        applyTranslations(userLang);
+        setupNavigation();
+
+        // Основная кнопка регистрации на главном экране теперь тоже управляется из setupNavigation
+        // document.getElementById('btn-register').onclick = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
+        
         await fetchAndUpdateView(userId);
+
         const socket = io();
-        socket.on('connect', () => { console.log('Connected to WebSocket server!'); socket.emit('join', { 'chat_id': userId }); });
-        socket.on('update_data', (data) => { console.log('Received update from server:', data.message); tg.HapticFeedback.notificationOccurred('success'); fetchAndUpdateView(userId); });
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server!');
+            socket.emit('join', { 'chat_id': userId });
+        });
+        socket.on('update_data', (data) => {
+            console.log('Received update from server:', data.message);
+            tg.HapticFeedback.notificationOccurred('success');
+            fetchAndUpdateView(userId);
+        });
     }
 
     document.addEventListener('DOMContentLoaded', main);
