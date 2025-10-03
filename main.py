@@ -1,24 +1,20 @@
+# ИЗМЕНЕНИЕ 1: monkey_patch() теперь в самом верху, до всех остальных импортов!
+import eventlet
+eventlet.monkey_patch()
+
 import os
 import sqlite3
 import threading
 from flask import Flask, request, render_template, jsonify
-# Импортируем SocketIO
 from flask_socketio import SocketIO, join_room
 import telebot
-# Импортируем eventlet для правильной работы WebSocket
-import eventlet
-
-# Необходимо для асинхронной работы WebSocket
-eventlet.monkey_patch()
 
 # ===================================================================
 # ========= КОНФИГУРАЦИЯ =
 # ===================================================================
 TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"
-WEB_APP_URL = "https://daaaaaan.onrender.com"  # Убедись, что этот URL правильный
-
-# Добавь сюда свой Telegram ID
-ADMIN_IDS = [6453186214]  # <-- ЗАМЕНИ НА СВОЙ ID. Можно добавить несколько через запятую.
+WEB_APP_URL = "https://daaaaaan.onrender.com"
+ADMIN_IDS = [6453186214]  # <-- Убедись, что твой ID здесь
 
 # ===================================================================
 # ========= ПЕРЕВОДЫ (TEXTS) =========
@@ -47,16 +43,15 @@ TEXTS = {
 # ===================================================================
 # ========= ИНИЦИАЛИЗАЦИЯ =========
 # ===================================================================
-bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 app = Flask(__name__)
-# Инициализируем SocketIO
 socketio = SocketIO(app, async_mode='eventlet')
+bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 
 # ===================================================================
 # ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
 # ===================================================================
 DB_NAME = "data.db"
-
+# ... (все функции для работы с БД без изменений) ...
 def init_db():
     conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     c = conn.cursor()
@@ -75,6 +70,7 @@ def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=Non
 # ===================================================================
 # ========= ЛОГИКА ТЕЛЕГРАМ-БОТА =========
 # ===================================================================
+# ... (все обработчики команд бота без изменений) ...
 @bot.message_handler(commands=['start'])
 def start_message(message):
     lang_code = message.from_user.language_code
@@ -128,50 +124,58 @@ def app_page(): return render_template("app.html")
 
 @app.route("/user/<int:chat_id>/data")
 def user_data_api(chat_id):
-    conn = sqlite3.connect(DB_NAME, check_same_thread=False)
-    conn.row_factory = sqlite3.Row
-    c = conn.cursor()
+    conn = sqlite3.connect(DB_NAME, check_same_thread=False); conn.row_factory = sqlite3.Row; c = conn.cursor()
     c.execute("INSERT INTO users (chat_id, last_seen) VALUES (?, CURRENT_TIMESTAMP) ON CONFLICT(chat_id) DO UPDATE SET last_seen=CURRENT_TIMESTAMP", (chat_id,)); conn.commit()
     c.execute("SELECT 1 FROM postbacks WHERE subid = ? AND event = 'reg' LIMIT 1", (str(chat_id),)); is_registered = c.fetchone() is not None
-    c.execute("SELECT event, sumdep, wdr_sum, status, created_at FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),)); rows = c.fetchall()
+    c.execute("SELECT event, sumdep FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),)); rows = c.fetchall()
     events = []
     for row in rows:
         event_list = list(row)
         if event_list[0] in ['FTD', 'dep'] and event_list[1] is not None:
-            try:
-                event_list[1] = f"{(float(event_list[1]) / 94 * 100):.2f}"
+            try: event_list[1] = f"{(float(event_list[1]) / 94 * 100):.2f}"
             except (ValueError, TypeError): pass
         events.append(event_list)
     conn.close()
     return jsonify({"is_registered": is_registered, "events": events})
+
+def _process_and_notify(event, subid, data):
+    """Внутренняя функция для обработки postback и отправки уведомлений."""
+    try:
+        chat_id = int(subid)
+        sumdep_raw = data.get("sumdep")
+        
+        save_postback(event, subid, data.get("trader_id"), sumdep_raw, data.get("wdr_sum"), data.get("status"))
+        socketio.emit('update_data', {'message': f'New event: {event}'}, room=str(chat_id))
+
+        conn = sqlite3.connect(DB_NAME, check_same_thread=False); c = conn.cursor()
+        c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,)); result = c.fetchone(); conn.close()
+        lang = result[0] if result else 'en'
+        
+        message_text = ""
+        if event in ["FTD", "dep"] and sumdep_raw:
+            try: display_sum = f"{(float(sumdep_raw) / 94 * 100):.2f}"
+            except (ValueError, TypeError, ZeroDivisionError): display_sum = sumdep_raw
+            message_key = 'ftd_success' if event == 'FTD' else 'dep_success'
+            message_text = TEXTS[lang][message_key].format(sum=display_sum)
+        elif event == "reg":
+            message_text = TEXTS[lang]['reg_success']
+        
+        if message_text:
+            bot.send_message(chat_id, message_text)
+    except Exception as e:
+        print(f"Error processing postback for subid {subid}: {e}")
+
 
 @app.route("/postback", methods=["GET", "POST"])
 def partner_postback():
     data = request.args
     event = data.get("event")
     subid = data.get("subid")
-    sumdep_raw = data.get("sumdep")
     if not subid: return "No subid provided", 400
-    try: chat_id = int(subid)
-    except (ValueError, TypeError): return "Invalid subid", 400
-
-    save_postback(event, subid, data.get("trader_id"), sumdep_raw, data.get("wdr_sum"), data.get("status"))
     
-    socketio.emit('update_data', {'message': 'Your data has been updated!'}, room=str(chat_id))
-
-    conn = sqlite3.connect(DB_NAME, check_same_thread=False); c = conn.cursor()
-    c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,)); result = c.fetchone(); conn.close()
-    lang = result[0] if result else 'en'
-    message_text = ""
-    if event in ["FTD", "dep"]:
-        try: display_sum = f"{(float(sumdep_raw) / 94 * 100):.2f}"
-        except (ValueError, TypeError, ZeroDivisionError): display_sum = sumdep_raw
-        message_key = 'ftd_success' if event == 'FTD' else 'dep_success'
-        message_text = TEXTS[lang][message_key].format(sum=display_sum)
-    elif event == "reg": message_text = TEXTS[lang]['reg_success']
-    if message_text:
-        try: bot.send_message(chat_id, message_text)
-        except Exception as e: print(f"Failed to send message to {chat_id}: {e}")
+    # Вызываем внутреннюю функцию
+    _process_and_notify(event, subid, data)
+    
     return "OK", 200
 
 # ===================================================================
@@ -194,31 +198,19 @@ def handle_join(data):
 @app.route("/test_registration")
 def add_test_registration():
     chat_id_str = request.args.get("chat_id")
-    if not chat_id_str: return "Ошибка: Пожалуйста, укажите 'chat_id' в параметрах URL.", 400
-    try: chat_id = int(chat_id_str)
-    except ValueError: return "Ошибка: 'chat_id' должен быть числом.", 400
-    import requests
-    try:
-        requests.get(f"{request.url_root}postback", params={'event': 'reg', 'subid': chat_id}, timeout=3)
-    except requests.exceptions.RequestException as e:
-        print(f"Test registration request failed: {e}")
-    return f"Тестовая регистрация для ID {chat_id} инициирована.", 200
+    if not chat_id_str: return "Ошибка: Укажите 'chat_id'.", 400
+    # ИЗМЕНЕНИЕ 2: Вызываем внутреннюю функцию напрямую
+    _process_and_notify('reg', chat_id_str, {})
+    return f"Тестовая регистрация для ID {chat_id_str} инициирована.", 200
 
 @app.route("/test_deposit")
 def add_test_deposit():
     chat_id_str = request.args.get("chat_id")
     sum_str = request.args.get("sum", "94")
-    if not chat_id_str: return "Ошибка: Пожалуйста, укажите 'chat_id' в параметрах URL.", 400
-    try:
-        chat_id = int(chat_id_str)
-        raw_deposit_sum = float(sum_str)
-    except ValueError: return "Ошибка: 'chat_id' и 'sum' должны быть числами.", 400
-    import requests
-    try:
-        requests.get(f"{request.url_root}postback", params={'event': 'FTD', 'subid': chat_id, 'sumdep': raw_deposit_sum}, timeout=3)
-    except requests.exceptions.RequestException as e:
-        print(f"Test deposit request failed: {e}")
-    return f"Тестовый депозит для ID {chat_id} инициирован.", 200
+    if not chat_id_str: return "Ошибка: Укажите 'chat_id'.", 400
+    # ИЗМЕНЕНИЕ 2: Вызываем внутреннюю функцию напрямую
+    _process_and_notify('FTD', chat_id_str, {'sumdep': sum_str})
+    return f"Тестовый депозит для ID {chat_id_str} инициирован.", 200
 
 # ===================================================================
 # ========= ЗАПУСК ПРИЛОЖЕНИЯ =========
@@ -232,5 +224,6 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     # Запускаем приложение через socketio.run
-    socketio.run(app, host="0.0.0.0", port=port)
+    socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
 
