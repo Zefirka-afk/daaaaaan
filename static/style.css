@@ -321,5 +321,31 @@ b { color: var(--color-accent); font-weight: 600; }
     transform: scale(1);
     pointer-events: auto;
 }
+/* --- 14. Стили для кнопок выбора --- */
+.choice-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.choice-button {
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.choice-button:hover {
+    border-color: var(--color-accent);
+    color: var(--text-primary);
+    background: rgba(0, 170, 255, 0.1);
+}
 
 
