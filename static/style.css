@@ -225,6 +225,8 @@ b { color: var(--color-accent); font-weight: 600; }
     flex-grow: 1;
 }
 
+/* ... все предыдущие стили до блока 17 ... */
+
 /* --- 17. Стили для экрана шагов --- */
 .step-label {
     font-size: 13px;
@@ -237,8 +239,8 @@ b { color: var(--color-accent); font-weight: 600; }
 .roman-numeral {
     font-size: 80px;
     font-weight: 700;
-    color: rgba(240, 244, 248, 0.5); /* Полупрозрачный основной цвет текста */
-    margin: -10px 0 0 0; /* Отрицательный отступ для прижатия */
+    color: rgba(240, 244, 248, 0.5);
+    margin: -10px 0 0 0;
     line-height: 1;
 }
 .step-title {
@@ -261,5 +263,19 @@ b { color: var(--color-accent); font-weight: 600; }
     color: var(--text-secondary);
 }
 #onboarding-3-view .back-button {
-    margin-right: auto; /* Кнопка "назад" будет слева */
+    margin-right: auto;
+}
+
+/* --- 18. Стили для экрана успеха регистрации --- */
+.success-emoji {
+    font-size: 60px;
+    margin-bottom: 15px;
+    animation: fadeInUp 0.5s ease-out; /* Добавим анимацию появления */
+}
+
+#reg-success-view .description {
+    max-width: 300px; /* Чтобы текст не был слишком широким */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
 }
