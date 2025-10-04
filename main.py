@@ -1,4 +1,3 @@
-# ИЗМЕНЕНИЕ 1: monkey_patch() теперь в самом верху, до всех остальных импортов!
 import eventlet
 eventlet.monkey_patch()
 
@@ -14,14 +13,18 @@ import telebot
 # ===================================================================
 TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"
 WEB_APP_URL = "https://daaaaaan.onrender.com"
-ADMIN_IDS = [6453186214]  # <-- Убедись, что твой ID здесь
+ADMIN_IDS = [6453186214]
 
 # ===================================================================
 # ========= ПЕРЕВОДЫ (TEXTS) =========
 # ===================================================================
 TEXTS = {
     'ru': {
-        'welcome': "Привет 👋 Я бот для трейдинга!\n\nНажми на кнопку <b>Меню</b> слева внизу, чтобы открыть свой личный кабинет.",
+        'welcome': (
+            "👋 Добро пожаловать в лучший торговый ИИ на данный момент.\n\n"
+            "🤖 Я создан для одного: помогать людям зарабатывать деньги.\n\n"
+            "Нажмите <b>СТАРТ</b> в левом нижнем углу, чтобы начать."
+        ),
         'my_id': "Твой Telegram ID: <b>{id}</b>",
         'reg_success': "✅ <b>Регистрация подтверждена!</b>\nВаш личный кабинет в приложении обновлен.",
         'ftd_success': "💰 <b>Первый депозит!</b>\nВы внесли <b>${sum}</b>. Данные в кабинете обновлены.",
@@ -30,7 +33,11 @@ TEXTS = {
         'new_event': "🔔 <b>Новое событие:</b> {event}"
     },
     'en': {
-        'welcome': "Hello 👋 I'm a trading bot!\n\nPress the <b>Menu</b> button in the bottom left to open your personal cabinet.",
+        'welcome': (
+            "👋 Welcome to the best trading AI at the moment.\n\n"
+            "🤖 I was created for one purpose: to help people make money.\n\n"
+            "Press <b>START</b> in the bottom left corner to begin."
+        ),
         'my_id': "Your Telegram ID: <b>{id}</b>",
         'reg_success': "✅ <b>Registration confirmed!</b>\nYour personal cabinet has been updated.",
         'ftd_success': "💰 <b>First deposit!</b>\nYou've deposited <b>${sum}</b>. Your cabinet is updated.",
@@ -51,7 +58,6 @@ bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 # ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
 # ===================================================================
 DB_NAME = "data.db"
-# ... (все функции для работы с БД без изменений) ...
 def init_db():
     conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     c = conn.cursor()
@@ -70,7 +76,6 @@ def save_postback(event, subid, trader_id, sumdep=None, wdr_sum=None, status=Non
 # ===================================================================
 # ========= ЛОГИКА ТЕЛЕГРАМ-БОТА =========
 # ===================================================================
-# ... (все обработчики команд бота без изменений) ...
 @bot.message_handler(commands=['start'])
 def start_message(message):
     lang_code = message.from_user.language_code
@@ -100,7 +105,7 @@ def show_stats(message):
         c = conn.cursor()
         c.execute("SELECT COUNT(chat_id) FROM users"); total_users = c.fetchone()[0]
         c.execute("SELECT COUNT(chat_id) FROM users WHERE last_seen >= datetime('now', '-1 hour')"); hourly_users = c.fetchone()[0]
-        c.execute("SELECT COUNT(*) FROM postbacks WHERE event = 'reg'"); total_regs = c.fetchone()[0]
+        c.execute("SELECT COUNT(DISTINCT subid) FROM postbacks WHERE event = 'reg'"); total_regs = c.fetchone()[0]
         c.execute("SELECT COUNT(*) FROM postbacks WHERE event = 'FTD' OR event = 'dep'"); total_deposits = c.fetchone()[0]
         conn.close()
         stats_text = (f"<b>📊 Статистика бота</b>\n\n"
@@ -139,7 +144,6 @@ def user_data_api(chat_id):
     return jsonify({"is_registered": is_registered, "events": events})
 
 def _process_and_notify(event, subid, data):
-    """Внутренняя функция для обработки postback и отправки уведомлений."""
     try:
         chat_id = int(subid)
         sumdep_raw = data.get("sumdep")
@@ -165,17 +169,13 @@ def _process_and_notify(event, subid, data):
     except Exception as e:
         print(f"Error processing postback for subid {subid}: {e}")
 
-
 @app.route("/postback", methods=["GET", "POST"])
 def partner_postback():
     data = request.args
     event = data.get("event")
     subid = data.get("subid")
     if not subid: return "No subid provided", 400
-    
-    # Вызываем внутреннюю функцию
     _process_and_notify(event, subid, data)
-    
     return "OK", 200
 
 # ===================================================================
@@ -199,7 +199,6 @@ def handle_join(data):
 def add_test_registration():
     chat_id_str = request.args.get("chat_id")
     if not chat_id_str: return "Ошибка: Укажите 'chat_id'.", 400
-    # ИЗМЕНЕНИЕ 2: Вызываем внутреннюю функцию напрямую
     _process_and_notify('reg', chat_id_str, {})
     return f"Тестовая регистрация для ID {chat_id_str} инициирована.", 200
 
@@ -208,7 +207,6 @@ def add_test_deposit():
     chat_id_str = request.args.get("chat_id")
     sum_str = request.args.get("sum", "94")
     if not chat_id_str: return "Ошибка: Укажите 'chat_id'.", 400
-    # ИЗМЕНЕНИЕ 2: Вызываем внутреннюю функцию напрямую
     _process_and_notify('FTD', chat_id_str, {'sumdep': sum_str})
     return f"Тестовый депозит для ID {chat_id_str} инициирован.", 200
 
@@ -223,7 +221,4 @@ if __name__ == "__main__":
         bot.infinity_polling(skip_pending=True)
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
-    # Запускаем приложение через socketio.run
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
-
-
