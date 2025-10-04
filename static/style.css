@@ -179,6 +179,8 @@ b { color: var(--color-accent); font-weight: 600; }
     opacity: 0.6;
 }
 
+/* ... все предыдущие стили до блока 16 ... */
+
 /* --- 16. Стили для экрана туториала --- */
 .tutorial-title {
     font-size: 28px;
@@ -190,17 +192,17 @@ b { color: var(--color-accent); font-weight: 600; }
 .tutorial-blocks {
     display: flex;
     flex-direction: column;
-    gap: 25px; /* Расстояние между блоками */
+    gap: 25px;
     margin-bottom: 35px;
 }
 .tutorial-block {
     display: flex;
-    align-items: flex-start; /* Выравнивание по верху */
+    align-items: flex-start;
     text-align: left;
-    gap: 15px; /* Расстояние между кружком и текстом */
+    gap: 15px;
 }
 .number-circle {
-    flex-shrink: 0; /* Чтобы кружок не сжимался */
+    flex-shrink: 0;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -214,12 +216,50 @@ b { color: var(--color-accent); font-weight: 600; }
 }
 .tutorial-block p {
     margin: 0;
-    padding-top: 5px; /* Небольшой отступ для выравнивания текста с кружком */
+    padding-top: 5px;
     color: var(--text-secondary);
     line-height: 1.6;
     font-size: 15px;
 }
-/* Кнопка "Я готов" занимает больше места */
 #btn-tutorial-ready {
     flex-grow: 1;
+}
+
+/* --- 17. Стили для экрана шагов --- */
+.step-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+.roman-numeral {
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(240, 244, 248, 0.5); /* Полупрозрачный основной цвет текста */
+    margin: -10px 0 0 0; /* Отрицательный отступ для прижатия */
+    line-height: 1;
+}
+.step-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 10px 0 25px 0;
+}
+.side-note {
+    background: rgba(0, 170, 255, 0.1);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0 0 30px 0;
+}
+.side-note p {
+    text-align: left;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+#onboarding-3-view .back-button {
+    margin-right: auto; /* Кнопка "назад" будет слева */
 }
