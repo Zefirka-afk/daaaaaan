@@ -347,5 +347,35 @@ b { color: var(--color-accent); font-weight: 600; }
     color: var(--text-primary);
     background: rgba(0, 170, 255, 0.1);
 }
+/* --- 15. Стили для нового первого экрана --- */
+.custom-header {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.version-tag {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 5px 0 30px 0;
+}
+
+.ai-users-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-accent);
+    margin: 30px 0;
+}
+
+.footer-credit {
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
 
 
