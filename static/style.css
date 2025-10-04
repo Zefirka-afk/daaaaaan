@@ -1,4 +1,4 @@
-/* --- 1. Шриные --- */
+/* --- 1. Шрифты и переменные --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
@@ -65,6 +65,8 @@ b { color: var(--color-accent); font-weight: 600; }
 .stats-container {
     display: flex;
     justify-content: space-around;
+    align-items: flex-start; /* Выравнивание по верху */
+    gap: 10px; /* Добавим небольшой зазор между блоками */
     margin: 30px 0;
     padding: 15px 0;
     border-top: 1px solid var(--border-color);
@@ -73,8 +75,11 @@ b { color: var(--color-accent); font-weight: 600; }
 
 /* --- ИСПРАВЛЕНИЕ ЗДЕСЬ --- */
 .stat-item {
-    flex: 1; /* Это заставит каждый блок занять равное пространство */
-    padding: 0 5px; /* Небольшой отступ, чтобы текст не прилипал к краям */
+    width: 33.33%; /* Задаем каждому блоку треть ширины */
+    word-wrap: break-word; /* Заставляем длинные слова переноситься */
+    -webkit-hyphens: auto; /* Включаем переносы для Safari */
+    -ms-hyphens: auto; /* Включаем переносы для IE/Edge */
+    hyphens: auto; /* Включаем переносы для остальных браузеров */
 }
 
 .stat-item .value { font-size: 22px; font-weight: 600; }
@@ -147,7 +152,3 @@ b { color: var(--color-accent); font-weight: 600; }
 .version-tag { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin: 5px 0 30px 0; }
 .ai-users-text { font-size: 16px; font-weight: 500; color: var(--color-accent); margin: 30px 0; }
 .footer-credit { margin-top: 30px; font-size: 12px; color: var(--text-secondary); opacity: 0.6; }
-
-
-
-
