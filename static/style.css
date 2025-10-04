@@ -18,31 +18,9 @@
 }
 
 /* --- 2. Анимации --- */
-@keyframes gradient-animation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 30px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-@keyframes pulseGlow {
-    0%, 100% { 
-        transform: scale(1);
-        text-shadow: 0 0 10px var(--color-gold), 0 0 20px var(--color-gold); 
-    }
-    50% { 
-        transform: scale(1.05);
-        text-shadow: 0 0 20px var(--color-gold), 0 0 40px var(--color-gold); 
-    }
-}
+@keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 30px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes pulseGlow { 0%, 100% { transform: scale(1); text-shadow: 0 0 10px var(--color-gold), 0 0 20px var(--color-gold); } 50% { transform: scale(1.05); text-shadow: 0 0 20px var(--color-gold), 0 0 40px var(--color-gold); } }
 
 /* --- 3. Глобальные стили --- */
 body {
@@ -50,8 +28,7 @@ body {
     margin: 0;
     color: var(--text-primary);
     background-color: var(--bg-main);
-    background-image: radial-gradient(circle at 1% 1%, rgba(0, 170, 255, 0.15) 0%, transparent 40%),
-                      radial-gradient(circle at 99% 99%, rgba(0, 230, 118, 0.15) 0%, transparent 40%);
+    background-image: radial-gradient(circle at 1% 1%, rgba(0, 170, 255, 0.15) 0%, transparent 40%), radial-gradient(circle at 99% 99%, rgba(0, 230, 118, 0.15) 0%, transparent 40%);
     padding: 20px;
     min-height: 100vh;
     box-sizing: border-box;
@@ -61,16 +38,10 @@ body {
     text-align: center;
 }
 
-.app-wrapper {
-    width: 100%;
-    max-width: 400px;
-}
+.app-wrapper { width: 100%; max-width: 400px; }
 
 /* --- 4. Экраны (Views) --- */
-.view { 
-    display: none; 
-    animation: fadeInUp 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-}
+.view { display: none; animation: fadeInUp 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
 .view.active { display: block; }
 
 /* --- 5. Карточка --- */
@@ -99,283 +70,83 @@ b { color: var(--color-accent); font-weight: 600; }
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
+
+/* --- ИСПРАВЛЕНИЕ ЗДЕСЬ --- */
+.stat-item {
+    flex: 1; /* Это заставит каждый блок занять равное пространство */
+    padding: 0 5px; /* Небольшой отступ, чтобы текст не прилипал к краям */
+}
+
 .stat-item .value { font-size: 22px; font-weight: 600; }
 .stat-item .label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 
-.features-list {
-    text-align: left; list-style: none; padding: 0; margin-bottom: 30px;
-}
-.features-list li {
-    display: flex; align-items: center; margin-bottom: 15px; font-size: 16px;
-}
-.features-list svg {
-    color: var(--color-green);
-    margin-right: 12px;
-    flex-shrink: 0;
-}
+.features-list { text-align: left; list-style: none; padding: 0; margin-bottom: 30px; }
+.features-list li { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; }
+.features-list svg { color: var(--color-green); margin-right: 12px; flex-shrink: 0; }
 
 /* --- 8. Кнопки --- */
-.nav-buttons {
-    display: flex; justify-content: space-between; align-items: center; margin-top: 20px;
-}
+.nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
 .nav-buttons.full-width { flex-direction: column; }
-.nav-buttons.full-width .main-button, .nav-buttons.full-width .back-button {
-    width: 100%;
-}
-.main-button {
-    width: 100%; /* Changed from 65% for better consistency */
-    padding: 15px 20px;
-    font-size: 17px;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(45deg, var(--color-accent), #0077b3);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(0, 170, 255, 0.3);
-}
-.main-button:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--glow-shadow);
-}
-.main-button:active {
-    transform: translateY(1px) scale(0.98);
-}
-.back-button {
-    background: none; border: none; color: var(--text-secondary); font-size: 16px;
-    cursor: pointer; padding: 10px; transition: color 0.2s;
-}
+.nav-buttons.full-width .main-button, .nav-buttons.full-width .back-button { width: 100%; }
+.main-button { width: 100%; padding: 15px 20px; font-size: 17px; font-weight: 600; color: #fff; background: linear-gradient(45deg, var(--color-accent), #0077b3); border: none; border-radius: 12px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0, 170, 255, 0.3); }
+.main-button:hover { transform: translateY(-3px); box-shadow: var(--glow-shadow); }
+.main-button:active { transform: translateY(1px) scale(0.98); }
+.back-button { background: none; border: none; color: var(--text-secondary); font-size: 16px; cursor: pointer; padding: 10px; transition: color 0.2s; }
 .back-button:hover { color: var(--text-primary); }
 
 /* --- 9. Кнопки выбора сигнала --- */
 .signal-buttons { margin-top: 30px; }
-.signal-button {
-    display: flex; align-items: center; width: 100%; text-align: left;
-    box-sizing: border-box; background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: 20px; margin-bottom: 15px; cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
-}
-.signal-button:hover {
-    background-color: var(--bg-card);
-    border-color: var(--color-accent);
-    transform: translateY(-3px);
-}
+.signal-button { display: flex; align-items: center; width: 100%; text-align: left; box-sizing: border-box; background: transparent; border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 20px; margin-bottom: 15px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s, transform 0.2s; }
+.signal-button:hover { background-color: var(--bg-card); border-color: var(--color-accent); transform: translateY(-3px); }
 .signal-icon { color: var(--color-accent); margin-right: 20px; }
 .signal-text h3 { margin: 0 0 5px; font-size: 18px; font-weight: 600; color: var(--text-primary); }
 .signal-text p { margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.5; }
 
 /* --- 10. Экраны статуса --- */
-.spinner {
-    height: 48px; width: 48px; margin: 0 auto 20px auto;
-    border: 4px solid var(--border-color);
-    border-top-color: var(--color-accent);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
+.spinner { height: 48px; width: 48px; margin: 0 auto 20px auto; border: 4px solid var(--border-color); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-.emoji-spinner {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 15px;
-    animation: spin 1.5s linear infinite;
-}
+.emoji-spinner { font-size: 40px; display: block; margin-bottom: 15px; animation: spin 1.5s linear infinite; }
 
 /* --- 11. Экран сигнала --- */
 .signal-card { min-height: 300px; display: flex; flex-direction: column; justify-content: center; }
-.signal-step {
-    font-size: 18px; font-weight: 500; margin: 12px 0;
-    animation: fadeInUp 0.5s ease-out forwards;
-    opacity: 0;
-}
+.signal-step { font-size: 18px; font-weight: 500; margin: 12px 0; animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
 #signal-status-ready { animation-delay: 0.2s; }
 #signal-pair { animation-delay: 0.4s; }
-#signal-status-exp-soon { animation-delay: 0.6s; }
+#signal-exp-soon { animation-delay: 0.6s; }
 #signal-expiration { animation-delay: 0.2s; }
 #signal-direction { animation-delay: 0.2s; }
-
-.buy-signal, .sell-signal {
-    font-weight: 700;
-    font-size: 24px;
-    letter-spacing: 1px;
-    text-shadow: 0 0 15px;
-}
+.buy-signal, .sell-signal { font-weight: 700; font-size: 24px; letter-spacing: 1px; text-shadow: 0 0 15px; }
 .buy-signal { color: var(--color-green); text-shadow: 0 0 15px var(--color-green); }
 .sell-signal { color: var(--color-red); text-shadow: 0 0 15px var(--color-red); }
-
 #signal-result-container { animation: fadeInUp 0.7s 0.2s ease-out forwards; opacity: 0; }
-/* --- Стало так --- */
-.signal-result {
-    font-size: 36px;
-    font-weight: 700;
-    margin: 20px 0 25px 0;
-    /* Убираем цвет и анимацию по умолчанию */
-}
+.signal-result { font-size: 36px; font-weight: 700; margin: 20px 0 25px 0; }
+.signal-result.win { color: var(--color-green); text-shadow: 0 0 20px rgba(0, 230, 118, 0.7); }
+.signal-result.loss { color: var(--color-red); text-shadow: 0 0 20px rgba(255, 61, 106, 0.7); }
 
-/* Новый класс для победы */
-.signal-result.win {
-    color: var(--color-green);
-    text-shadow: 0 0 20px rgba(0, 230, 118, 0.7); /* Зеленое свечение */
-}
-
-/* Новый класс для проигрыша */
-.signal-result.loss {
-    color: var(--color-red);
-    text-shadow: 0 0 20px rgba(255, 61, 106, 0.7); /* Красное свечение */
-}
-.trophy-icon svg {
-    color: var(--color-gold);
-    filter: drop-shadow(0 0 10px var(--color-gold));
-}
-
-/* --- 12. НОВЫЕ СТИЛИ ДЛЯ КНОПОК ПОСЛЕ ПОБЕДЫ И ПРОИГРЫША --- */
-#signal-win-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 30px;
-    animation: fadeInUp 0.5s 0.5s ease-out forwards;
-    opacity: 0;
-}
-.action-button {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-}
-.action-button:hover {
-    border-color: var(--color-accent);
-    color: var(--text-primary);
-    background: rgba(0, 170, 255, 0.1);
-}
+/* --- 12. Кнопки после победы/проигрыша --- */
+#signal-win-buttons, #signal-loss-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; animation: fadeInUp 0.5s 0.5s ease-out forwards; opacity: 0; }
+.action-button { width: 100%; padding: 12px 20px; font-size: 16px; font-weight: 500; border-radius: 10px; cursor: pointer; transition: all 0.2s; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-secondary); }
+.action-button:hover { border-color: var(--color-accent); color: var(--text-primary); background: rgba(0, 170, 255, 0.1); }
 .action-button.vip { color: var(--color-gold); }
 .action-button.lost { color: var(--color-red); }
+.nav-buttons-vertical { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+.secondary-button { width: 100%; padding: 15px 20px; font-size: 17px; font-weight: 600; color: var(--text-primary); background: transparent; border: 1px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+.secondary-button:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--color-accent); }
 
-.nav-buttons-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 25px;
-}
-.secondary-button {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text-primary);
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.secondary-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-accent);
-}
-/* Добавь этот блок в конец файла */
-#signal-loss-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 30px;
-    animation: fadeInUp 0.5s 0.5s ease-out forwards;
-    opacity: 0;
-}
 /* --- 13. Кнопка FAQ --- */
-.faq-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: var(--color-accent);
-    color: white;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 170, 255, 0.4);
-    transition: transform 0.2s ease-in-out, opacity 0.3s;
-    z-index: 1000;
-    opacity: 0;
-    transform: scale(0);
-    pointer-events: none;
-}
+.faq-button { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background-color: var(--color-accent); color: white; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 170, 255, 0.4); transition: transform 0.2s ease-in-out, opacity 0.3s; z-index: 1000; opacity: 0; transform: scale(0); pointer-events: none; }
+.faq-button.visible { opacity: 1; transform: scale(1); pointer-events: auto; }
 
-.faq-button.visible {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-}
 /* --- 14. Стили для кнопок выбора --- */
-.choice-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 25px 0;
-}
+.choice-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+.choice-button { width: 100%; padding: 15px 10px; font-size: 18px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-secondary); }
+.choice-button:hover { border-color: var(--color-accent); color: var(--text-primary); background: rgba(0, 170, 255, 0.1); }
 
-.choice-button {
-    width: 100%;
-    padding: 15px 10px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-}
-
-.choice-button:hover {
-    border-color: var(--color-accent);
-    color: var(--text-primary);
-    background: rgba(0, 170, 255, 0.1);
-}
 /* --- 15. Стили для нового первого экрана --- */
-.custom-header {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin: 0;
-}
+.custom-header { font-size: 24px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-primary); margin: 0; }
+.version-tag { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin: 5px 0 30px 0; }
+.ai-users-text { font-size: 16px; font-weight: 500; color: var(--color-accent); margin: 30px 0; }
+.footer-credit { margin-top: 30px; font-size: 12px; color: var(--text-secondary); opacity: 0.6; }
 
-.version-tag {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin: 5px 0 30px 0;
-}
-
-.ai-users-text {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--color-accent);
-    margin: 30px 0;
-}
-
-.footer-credit {
-    margin-top: 30px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    opacity: 0.6;
-}
 
 
