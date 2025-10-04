@@ -1,4 +1,4 @@
-/* --- 1. Шрифты и переменные --- */
+/* --- 1. Шрифты иременные --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
@@ -152,3 +152,4 @@ b { color: var(--color-accent); font-weight: 600; }
 .version-tag { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin: 5px 0 30px 0; }
 .ai-users-text { font-size: 16px; font-weight: 500; color: var(--color-accent); margin: 30px 0; }
 .footer-credit { margin-top: 30px; font-size: 12px; color: var(--text-secondary); opacity: 0.6; }
+
