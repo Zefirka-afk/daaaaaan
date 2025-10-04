@@ -147,6 +147,8 @@ b { color: var(--color-accent); font-weight: 600; }
 .choice-button { width: 100%; padding: 15px 10px; font-size: 18px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: all 0.2s; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--text-secondary); }
 .choice-button:hover { border-color: var(--color-accent); color: var(--text-primary); background: rgba(0, 170, 255, 0.1); }
 
+/* ... все предыдущие стили остаются без изменений ... */
+
 /* --- 15. Стили для нового первого экрана --- */
 .custom-header {
     font-size: 24px;
@@ -175,4 +177,49 @@ b { color: var(--color-accent); font-weight: 600; }
     font-size: 12px;
     color: var(--text-secondary);
     opacity: 0.6;
+}
+
+/* --- 16. Стили для экрана туториала --- */
+.tutorial-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-green);
+    text-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+    margin-bottom: 30px;
+}
+.tutorial-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Расстояние между блоками */
+    margin-bottom: 35px;
+}
+.tutorial-block {
+    display: flex;
+    align-items: flex-start; /* Выравнивание по верху */
+    text-align: left;
+    gap: 15px; /* Расстояние между кружком и текстом */
+}
+.number-circle {
+    flex-shrink: 0; /* Чтобы кружок не сжимался */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-accent);
+}
+.tutorial-block p {
+    margin: 0;
+    padding-top: 5px; /* Небольшой отступ для выравнивания текста с кружком */
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 15px;
+}
+/* Кнопка "Я готов" занимает больше места */
+#btn-tutorial-ready {
+    flex-grow: 1;
 }
