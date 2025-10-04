@@ -266,16 +266,129 @@ b { color: var(--color-accent); font-weight: 600; }
     margin-right: auto;
 }
 
+/* ... все предыдущие стили до блока 18 ... */
+
 /* --- 18. Стили для экрана успеха регистрации --- */
 .success-emoji {
     font-size: 60px;
     margin-bottom: 15px;
-    animation: fadeInUp 0.5s ease-out; /* Добавим анимацию появления */
+    animation: fadeInUp 0.5s ease-out;
 }
-
 #reg-success-view .description {
-    max-width: 300px; /* Чтобы текст не был слишком широким */
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
+}
+
+/* --- 19. Стили для экрана шага II (Депозит) --- */
+.step2-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.step2-title em { /* Стиль для выделенной части заголовка */
+    color: var(--color-accent);
+    font-style: normal;
+    font-weight: 700;
+}
+#post-reg-view .description {
+    margin-bottom: 25px;
+}
+.strategy-section {
+    margin-bottom: 35px;
+    position: relative;
+}
+.strategy-bubble {
+    display: inline-block;
+    background-color: var(--bg-main);
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    position: relative;
+}
+/* "Хвостик" у облачка сообщения */
+.strategy-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--bg-main);
+}
+.strategy-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.strategy-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: left;
+}
+.strategy-card.risk-on { border-left: 4px solid var(--color-green); }
+.strategy-card.risk-off { border-left: 4px solid var(--text-secondary); }
+.strategy-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 15px 0;
+    font-size: 18px;
+}
+.strategy-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-secondary);
+}
+.strategy-card li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 8px;
+}
+/* Галочка перед пунктами списка */
+.strategy-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+/* Стилизация переключателя (toggle) */
+.toggle {
+    display: inline-block;
+    width: 44px;
+    height: 26px;
+    border-radius: 13px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+.toggle::after { /* Кружок внутри переключателя */
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    top: 2px;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+.toggle.on {
+    background-color: var(--color-green);
+}
+.toggle.on::after {
+    transform: translateX(18px); /* Сдвигаем кружок вправо */
+}
+.toggle.off {
+    background-color: var(--text-secondary);
+}
+.toggle.off::after {
+    transform: translateX(2px); /* Сдвигаем кружок влево */
 }
