@@ -437,3 +437,53 @@ b { color: var(--color-accent); font-weight: 600; }
     line-height: 1.7;
     color: var(--text-primary);
 }
+/* ... (все ваши предыдущие стили до этого блока) ... */
+
+
+/* --- 25. Стили для страницы "Как зарегистрироваться" --- */
+.instruction-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 25px 0;
+    counter-reset: instruction-counter; /* Инициализация счетчика */
+    text-align: left;
+}
+.instruction-list li {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 16px;
+}
+.instruction-list li::before {
+    counter-increment: instruction-counter; /* Увеличение счетчика */
+    content: counter(instruction-counter); /* Отображение счетчика */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+.instruction-list li .main-button {
+    margin-top: 10px;
+    width: auto; /* Делаем кнопку не на всю ширину */
+    padding: 10px 25px;
+    font-size: 16px;
+}
+.instruction-list li em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: rgba(0, 170, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
