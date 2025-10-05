@@ -136,6 +136,7 @@
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя.', 'next_btn': 'Далее >', 'back_btn': '< Назад',
             'not_filled_in': '(не заполнено)', 'fill_in_btn': 'заполнить', 'edit_btn': 'изменить',
+            'prompt_name': 'Введите ваше имя:', 'prompt_about': 'Расскажите о себе:',
             'onb1_ai_users': '40+ трейдеров используют этого ИИ-бота', 'onb1_stat_users': 'пользователей', 'onb1_stat_earned': 'заработано', 'onb1_stat_recommended': 'РЕКОМЕНДОВАНО',
             'tutorial_title': 'Туториал', 'tutorial_b1': 'Подготовься перед сигналом, будь внимателен и бесстрашен.', 'tutorial_b2': 'Быстро открой сайт и повтори сделку за мной. Я дам инструкции, тут важна твоя <b>скорость</b>.', 'tutorial_b3': '8-12 сигналов: закрепи свою прибыль и не торопись её тратить. Продолжай торговать и умножай прибыль, будь рационален.', 'tutorial_b4': 'Получай звания и расти в рейтинге, чтобы получить доступ в сообщество самых успешных юзеров.', 'tutorial_ready_btn': 'Я готов!',
             'step1_label': 'ПЕРВЫЙ ШАГ', 'step1_title': 'Создай аккаунт', 'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии P/O.', 'step1_btn_register': 'Зарегистрироваться', 'how_to_register_btn': 'Как сделать регистрацию?', 'have_account_btn': 'У меня уже есть аккаунт',
@@ -152,6 +153,7 @@
         'en': {
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
             'not_filled_in': '(not filled)', 'fill_in_btn': 'fill in', 'edit_btn': 'edit',
+            'prompt_name': 'Enter your name:', 'prompt_about': 'Tell us about yourself:',
             'onb1_ai_users': '40+ signal-traders using this AI-Bot', 'onb1_stat_users': 'users', 'onb1_stat_earned': 'earned', 'onb1_stat_recommended': 'RECOMMENDED',
             'tutorial_title': 'Tutorial', 'tutorial_b1': 'Prepare before the signal, be attentive and fearless.', 'tutorial_b2': 'Quickly open the site and copy the trade after me. I will give instructions, your <b>speed</b> is important here.', 'tutorial_b3': '8-12 signals: secure your profit and don\'t rush to spend it. Keep trading and multiply your profit, be rational.', 'tutorial_b4': 'Get titles and grow in the rankings to gain access to the community of the most successful users.', 'tutorial_ready_btn': 'I\'m ready!',
             'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 'step1_side_note': 'All our users have instant withdrawals thanks to the P/O license.', 'step1_btn_register': 'Register', 'how_to_register_btn': 'How to register?', 'have_account_btn': 'I already have an account',
@@ -198,31 +200,30 @@
         }
     }
 
+    // ===== ИСПРАВЛЕНИЕ ЗДЕСЬ =====
     function renderProfileField(fieldKey, valueElId) {
         const valueEl = document.getElementById(valueElId);
         const savedValue = localStorage.getItem(fieldKey);
         const t = TRANSLATIONS[userLang];
         
-        let currentText = savedValue || '';
-        let buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
-        let displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
+        const currentText = savedValue || '';
+        const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
+        const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
 
         valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
+        
         valueEl.querySelector('button').onclick = () => {
-            const promptTitle = (fieldKey === 'userName') ? 'Введите ваше имя' : 'Расскажите о себе';
-            tg.showPopup({
-                title: promptTitle,
-                message: 'Пожалуйста, введите данные.',
-                buttons: [
-                    {id: 'save', type: 'default', text: 'Сохранить'},
-                    {type: 'cancel'},
-                ]
-            }, (buttonId, text) => {
-                 if (buttonId === 'save' && text) {
-                    localStorage.setItem(fieldKey, text);
-                    renderProfileField(fieldKey, valueElId); // Re-render the field
-                }
-            });
+            const promptTitleKey = (fieldKey === 'userName') ? 'prompt_name' : 'prompt_about';
+            const promptTitle = t[promptTitleKey];
+            
+            // Используем стандартный prompt() для ввода текста
+            const newValue = prompt(promptTitle, currentText);
+            
+            // Если пользователь нажал "ОК" (newValue не null), сохраняем значение
+            if (newValue !== null) {
+                localStorage.setItem(fieldKey, newValue);
+                renderProfileField(fieldKey, valueElId); // Перерисовываем поле, чтобы обновить значение и текст кнопки
+            }
         };
     }
 
