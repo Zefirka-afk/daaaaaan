@@ -490,3 +490,32 @@ b { color: var(--color-accent); font-weight: 600; }
     color: var(--text-secondary);
     font-style: italic;
 }
+/* ... все предыдущие стили до блока 20 ... */
+
+/* --- 20. Стили для сценария "У меня есть аккаунт" --- */
+/* ... */
+
+/* --- 21. Стили для сценария "ДА, есть деньги" --- */
+.question-btn {
+    width: auto !important; /* Делаем кнопку не на всю ширину */
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.risk-info-text {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.risk-info-text em {
+    display: block; /* Выносим на новую строку */
+    margin-top: 25px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--color-accent);
+    text-shadow: 0 0 15px var(--color-accent-glow);
+    animation: pulseGlow 2s infinite; /* Добавляем пульсацию */
+}
