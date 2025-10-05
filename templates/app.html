@@ -15,10 +15,10 @@
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАН 0:УЗКА -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active"><div class="card"><div class="spinner"></div><p data-translate-key="loading"></p></div></div>
     
-    <!-- ЭКРАН 0.1: ОКА -->
+    <!-- ЭКРАН 0.1: ОШИБКА -->
     <div id="error-view" class="view"><div class="card"><p data-translate-key="error_text"></p></div></div>
 
     <!-- БЛОК 1: ПЕРВЫЙ ЭКРАН -->
@@ -70,9 +70,6 @@
         </div>
     </div>
     
-    <!-- Старый экран регистрации, который может использоваться в некоторых сценариях -->
-    <div id="onboarding-4-view" class="view"><div class="card"><h1 class="title" data-translate-key="onb4_title"></h1><p class="description" data-translate-key="onb4_desc"></p><ul class="features-list"><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat1"></span></li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat2"></span></li><li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span data-translate-key="onb4_feat3"></span></li></ul><div class="nav-buttons-vertical"><button class="main-button" id="btn-register" data-translate-key="onb4_btn"></button><button class="secondary-button" id="btn-have-account" data-translate-key="have_account_btn"></button><button class="secondary-button" id="btn-how-to-register" data-translate-key="how_to_register_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-onb4-back" data-translate-key="back_btn"></button></div></div></div>
-
     <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
     <!-- Экран 1: Проверка на реальные деньги -->
     <div id="real-money-check-view" class="view">
@@ -88,61 +85,69 @@
         </div>
     </div>
     
-    <!-- Экран 2: Инструкции для тех, у кого НЕТ реальных денег -->
+    <!-- Экран 2 (ответ "НЕТ"): Инструкции -->
     <div id="new-account-flow-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="new_acc_flow_title"></h1>
             <p class="description" data-translate-key="new_acc_flow_subtitle"></p>
-
             <div class="flow-step">
-                <div class="step-content">
-                    <span class="step-number">1</span>
-                    <p data-translate-key="new_acc_flow_step1"></p>
-                </div>
+                <div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div>
                 <button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button>
             </div>
-
             <div class="flow-step">
-                <div class="step-content">
-                    <span class="step-number">2</span>
-                    <p data-translate-key="new_acc_flow_step2"></p>
-                </div>
+                <div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div>
                 <button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button>
                 <button class="secondary-button" id="btn-new-acc-how-to" data-translate-key="how_to_register_btn"></button>
             </div>
-            
             <div class="important-note" data-translate-key="new_acc_flow_note"></div>
-
-            <div class="nav-buttons">
-                <button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button>
-            </div>
+            <div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div>
         </div>
     </div>
 
-    <!-- Экран 3: Инструкция по удалению аккаунта -->
+    <!-- Экран 3 (ответ "НЕТ"): Инструкция по удалению -->
     <div id="how-to-delete-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="how_to_del_title"></h1>
             <ul class="delete-guide">
-                <li data-translate-key="how_to_del_s1"></li>
-                <li data-translate-key="how_to_del_s2"></li>
-                <li data-translate-key="how_to_del_s3"></li>
-                <li data-translate-key="how_to_del_s4"></li>
+                <li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li>
+                <li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li>
                 <li data-translate-key="how_to_del_s5"></li>
             </ul>
             <div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div>
-            <div class="nav-buttons">
-                <button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button>
-            </div>
+            <div class="nav-buttons"><button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button></div>
         </div>
     </div>
 
-    <!-- Старые экраны для сценария, если пользователь ответил "Да" -->
-    <div id="no-money-view" class="view"><div class="card"><h1 class="title" data-translate-key="no_money_title"></h1><p class="description" data-translate-key="no_money_desc"></p><div class="choice-buttons"><button class="choice-button" id="btn-choice-1">1</button><button class="choice-button" id="btn-choice-2">2</button><button class="choice-button" id="btn-choice-3">3</button><button class="choice-button" id="btn-choice-4">4</button></div><p class="description" data-translate-key="no_money_choice"></p><div class="nav-buttons"><button class="back-button" id="btn-no-money-back" data-translate-key="back_btn"></button></div></div></div>
-    <div id="bebra-view" class="view"><div class="card"><p class="description" data-translate-key="bebra_text"></p><div class="nav-buttons-vertical"><button class="main-button" id="btn-not-a-loser" data-translate-key="not_a_loser_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-bebra-back" data-translate-key="back_btn"></button></div></div></div>
-    <div id="barrier-view" class="view"><div class="card"><p class="description" data-translate-key="barrier_text"></p><div class="nav-buttons-vertical"><button class="main-button" id="btn-barrier-register" data-translate-key="onb4_btn"></button><button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="how_to_withdraw_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-barrier-back" data-translate-key="back_btn"></button></div></div></div>
-    <div id="withdraw-wip-view" class="view"><div class="card"><p class="description" data-translate-key="wip_desc"></p><div class="nav-buttons-vertical"><button class="main-button" id="btn-withdraw-register" data-translate-key="onb4_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-withdraw-back" data-translate-key="back_btn"></button></div></div></div>
-    <!-- КОНЕЦ СЦЕНАРИЯ -->
+    <!-- Экран 4 (ответ "ДА"): Варианты -->
+    <div id="have-money-options-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="have_money_title"></h1>
+            <p class="description" data-translate-key="have_money_subtitle"></p>
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div>
+                <button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button>
+            </div>
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div>
+                <button class="main-button" id="btn-register-for-friend" data-translate-key="step1_btn_register"></button>
+            </div>
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div>
+                <button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button>
+            </div>
+            <div class="nav-buttons"><button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button></div>
+        </div>
+    </div>
+
+    <!-- Экран 5 (ответ "ДА"): Объяснение риска -->
+    <div id="risk-info-view" class="view">
+        <div class="card">
+            <p class="risk-info-text" data-translate-key="risk_info_text"></p>
+            <div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div>
+        </div>
+    </div>
+    <!-- КОНЕЦ СЦЕНАРИЯ "УЖЕ ЕСТЬ АККАУНТ" -->
+
 
     <!-- ЭКРАН: УСПЕШНАЯ РЕГИСТРАЦИЯ -->
     <div id="reg-success-view" class="view">
@@ -218,7 +223,8 @@
             'reg_success_title': 'Регистрация подтверждена!', 'reg_success_desc': 'Уже скоро ты получишь свой первый сигнал и начнёшь зарабатывать вместе с сотнями других трейдеров.',
             'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'step2_strategy_bubble': 'Выбери стратегию:', 'strat1_title': 'Риск включен', 'strat1_li1': 'Маленький депозит', 'strat1_li2': 'Проверка сигналов', 'strat1_li3': 'Бояться и играть по-крупному', 'strat2_title': 'Риск выключен', 'strat2_li1': 'Достойный депозит', 'strat2_li2': 'Быстрая прибыль', 'strat2_li3': 'Брать от жизни всё', 'step2_btn_deposit': 'Сделать депозит', 'how_to_deposit_btn': 'Как сделать депозит?',
             'real_money_q': 'Хорошо! Но на нём есть real money?', 'yes_btn': 'Да', 'no_btn': 'Нет', 'new_acc_flow_title': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.', 'new_acc_flow_subtitle': 'Поэтому для начала:', 'new_acc_flow_step1': 'Удали свой текущий аккаунт', 'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту.', 'how_to_del_title': 'Как удалить аккаунт?', 'how_to_del_s1': 'Перейди в свой профиль, где указаны твои личные данные.', 'how_to_del_s2': 'Пролистай в самый низ страницы.', 'how_to_del_s3': 'Нажми большую красную кнопку: "Delete account".', 'how_to_del_s4': 'Выбери <em>любую</em> причину и подтверди удаление.', 'how_to_del_s5': 'Выйди с аккаунта.', 'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
-            'onb4_title': 'Регистрация в Pocket Option', 'onb4_desc': 'Чтобы получать сигналы, вам необходимо зарегистрироваться у надежного брокера', 'onb4_feat1': 'Лицензированный брокер', 'onb4_feat2': 'Быстрые выплаты', 'onb4_feat3': 'Минимальный депозит $10', 'onb4_btn': 'Зарегистрироваться >', 'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>${deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>${profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!', 'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге.', 'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Будь готов!', 'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.', 'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так.', 'confirm_ready_btn': 'Я готов!', 'no_money_title': 'Может быть ты и денег не хочешь? 😏', 'no_money_desc': 'Тот кто хочет, тот всегда найдет вариант:<br>1 — продолжать нюхать бебру<br>2 — зарегать акк на друга<br>3 — сделать все, чтобы вывести деньги со старого аккаунта и зарегать новый<br>4 — забить на остаток своих шекелей на старом акке', 'no_money_choice': 'Что выбираешь?', 'bebra_text': 'Ну продолжай нюхать бебру, если захочешь заработать самые легкие и честные деньги в своей жизни - нажми на кнопку👇', 'not_a_loser_btn': 'Я не буду ничтожеством', 'barrier_text': 'Значит проблема в том, что у тебя уже есть деньги на старом аккаунте и из-за этого ты не хочешь создавать новый.<br><br>Смотри сам, если у тебя стоит какой-то непреодолимый барьер, то попробуй выиграть сам или проиграй все. Хватит жалеть себя, будь решителен. Либо ты будешь зарабатывать на моих сигналах, либо будешь бесконечно торговать сам, не добиваясь феноменальных результатов.<br><br>Когда будешь готов зарегать новый акк - нажми на кнопку!👇', 'how_to_withdraw_btn': 'Как сделать вывод', 'how_to_deposit_text': '<i>*Скрины с помощью*</i>',
+            'have_money_title': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.', 'have_money_subtitle': 'У тебя есть несколько вариантов:', 'have_money_opt1': 'Вывести остаток денег, затем удалить аккаунт и создать новый.', 'have_money_btn1': 'Как вывести деньги с аккаунта?', 'have_money_opt2': 'Зарегистрировать аккаунт на друга.', 'have_money_opt3': 'Рискуй.', 'have_money_btn3': 'Что?', 'risk_info_text': 'Если денег на балансе мало – рискуй и иди до конца: либо все проиграешь, либо удвоишь. Мои сигналы окупят больше, чем твой остаток. <em>Действуй!</em>',
+            'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>${deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>${profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!', 'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге.', 'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Будь готов!', 'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.', 'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так.', 'confirm_ready_btn': 'Я готов!', 'how_to_deposit_text': '<i>*Скрины с помощью*</i>',
         },
         'en': {
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -228,7 +234,8 @@
             'reg_success_title': 'Registration Confirmed!', 'reg_success_desc': 'Soon you will receive your first signal and start earning along with hundreds of other traders.',
             'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?',
             'real_money_q': 'Okay! But does it have real money?', 'yes_btn': 'Yes', 'no_btn': 'No', 'new_acc_flow_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.', 'how_to_del_title': 'How to delete the account?', 'how_to_del_s1': 'Go to your profile where your personal data is listed.', 'how_to_del_s2': 'Scroll to the very bottom of the page.', 'how_to_del_s3': 'Press the big red button: "Delete account".', 'how_to_del_s4': 'Choose <em>any</em> reason and confirm the deletion.', 'how_to_del_s5': 'Log out of the account.', 'how_to_del_video_placeholder': '"video guide will be here"',
-            'onb4_title': 'Registration in Pocket Option','onb4_desc': 'To receive signals, you need to register with a reliable broker','onb4_feat1': 'Licensed broker','onb4_feat2': 'Fast payouts','onb4_feat3': 'Minimum deposit $10','onb4_btn': 'Register >', 'postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>${deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>${profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!', 'vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Be ready!', 'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal','i_lost_btn': 'I lost','loss_title': 'Hmm, strange! But I won','loss_desc': 'You must have done something wrong.','confirm_ready_btn': 'I\'m ready!', 'no_money_title': 'Maybe you don\'t want money either? 😏', 'no_money_desc': 'Those who want, will always find a way:<br>1 — Keep doing nothing<br>2 — Register an account for a friend<br>3 — Do everything to withdraw from the old account and register a new one<br>4 — Forget about the pennies on your old account', 'no_money_choice': 'What do you choose?', 'bebra_text': 'Well, keep doing nothing. When you want to earn the easiest and most honest money of your life - click the button below👇', 'not_a_loser_btn': 'I won\'t be a nobody', 'barrier_text': 'So the problem is you already have money in your old account, and that\'s why you don\'t want to create a new one.<br><br>Look, if you have some insurmountable barrier, try to win on your own or lose it all. Stop feeling sorry for yourself, be decisive. Either you will earn with my signals, or you will trade endlessly on your own, without achieving phenomenal results.<br><br>When you are ready to register a new account - click the button!👇', 'how_to_withdraw_btn': 'How to withdraw funds', 'how_to_deposit_text': '<i>*Screenshots with help*</i>',
+            'have_money_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'have_money_subtitle': 'You have several options:', 'have_money_opt1': 'Withdraw the remaining money, then delete the account and create a new one.', 'have_money_btn1': 'How to withdraw funds?', 'have_money_opt2': 'Register an account for a friend.', 'have_money_opt3': 'Take a risk.', 'have_money_btn3': 'What?', 'risk_info_text': 'If there is little money on the balance - take a risk and go all the way: either you lose everything, or you double it. My signals will pay off more than your balance. <em>Act!</em>',
+            'postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>${deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>${profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!', 'vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Be ready!', 'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal','i_lost_btn': 'I lost','loss_title': 'Hmm, strange! But I won','loss_desc': 'You must have done something wrong.','confirm_ready_btn': 'I\'m ready!', 'how_to_deposit_text': '<i>*Screenshots with help*</i>',
         }
     };
     let userLang = 'en';
@@ -245,8 +252,10 @@
                 el.innerHTML = text;
             }
         });
-        document.getElementById('btn-wip-back').setAttribute('data-translate-key', 'back_btn');
-        document.getElementById('btn-wip-back').innerHTML = t['back_btn'];
+        if(document.getElementById('btn-wip-back')) {
+            document.getElementById('btn-wip-back').setAttribute('data-translate-key', 'back_btn');
+            document.getElementById('btn-wip-back').innerHTML = t['back_btn'];
+        }
     }
 
     function showView(viewId) {
@@ -294,34 +303,47 @@
     function setupNavigation() {
         const openRegisterLink = () => { const userId = tg.initDataUnsafe.user.id; const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
+        // Главный путь онбординга
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-tutorial-back').onclick = () => showView('onboarding-1-view');
         document.getElementById('btn-tutorial-ready').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-reg-success-next').onclick = () => showView('post-reg-view');
         document.getElementById('btn-step1-back').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-step1-register').onclick = openRegisterLink;
         document.getElementById('btn-step1-how-to').onclick = () => showView('wip-view');
-        document.getElementById('btn-step1-have-account').onclick = () => showView('real-money-check-view');
+        document.getElementById('btn-reg-success-next').onclick = () => showView('post-reg-view');
 
+        // Сценарий "Уже есть аккаунт"
+        document.getElementById('btn-step1-have-account').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-real-money-back').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-real-money-yes').onclick = () => showView('no-money-view');
-        document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
         
+        // Ветка "НЕТ денег"
+        document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
         document.getElementById('btn-new-acc-back').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-how-and-why-delete').onclick = () => showView('how-to-delete-view');
         document.getElementById('btn-new-acc-register').onclick = () => showView('onboarding-3-view');
         document.getElementById('btn-new-acc-how-to').onclick = () => showView('wip-view');
-        
         document.getElementById('btn-delete-guide-back').onclick = () => showView('new-account-flow-view');
         
+        // Ветка "ДА, есть деньги"
+        document.getElementById('btn-real-money-yes').onclick = () => showView('have-money-options-view');
+        document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
+        document.getElementById('btn-how-to-withdraw').onclick = () => showView('wip-view');
+        document.getElementById('btn-register-for-friend').onclick = () => showView('onboarding-3-view');
+        document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
+        document.getElementById('btn-risk-info-back').onclick = () => showView('have-money-options-view');
+
+        // Экран депозита и далее
         document.getElementById('btn-make-deposit').onclick = openRegisterLink;
         document.getElementById('btn-how-to-deposit').onclick = () => showView('how-to-deposit-view');
-
-        document.getElementById('btn-onb4-back').onclick = () => showView('onboarding-3-view'); 
+        document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
         
+        // Экраны после депозита
         document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
         document.getElementById('btn-simple-signal').onclick = startSignalFlow;
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('post-deposit-view'); }};
+        document.getElementById('faq-button').onclick = () => showView('wip-view');
+
+        // Экраны внутри сигнала
         document.getElementById('btn-next-signal').onclick = startSignalFlow;
         document.getElementById('btn-goto-vip-from-win').onclick = () => showView('wip-view');
         document.getElementById('btn-i-lost').onclick = () => showView('loss-view');
@@ -329,22 +351,6 @@
         document.getElementById('btn-vip-from-loss').onclick = () => showView('wip-view');
         document.getElementById('btn-next-from-loss-result').onclick = startSignalFlow;
         document.getElementById('btn-vip-from-loss-result').onclick = () => showView('wip-view');
-        document.getElementById('faq-button').onclick = () => showView('wip-view');
-        
-        document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
-        
-        document.getElementById('btn-no-money-back').onclick = () => showView('real-money-check-view');
-        document.getElementById('btn-choice-1').onclick = () => showView('bebra-view');
-        document.getElementById('btn-choice-3').onclick = () => showView('barrier-view');
-        document.getElementById('btn-bebra-back').onclick = () => showView('no-money-view');
-        document.getElementById('btn-barrier-back').onclick = () => showView('no-money-view');
-        document.getElementById('btn-how-to-withdraw').onclick = () => showView('withdraw-wip-view');
-        document.getElementById('btn-withdraw-back').onclick = () => showView('barrier-view');
-        document.getElementById('btn-choice-2').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-choice-4').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-not-a-loser').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-barrier-register').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-withdraw-register').onclick = () => showView('onboarding-3-view');
     }
 
     async function fetchAndUpdateView(userId) {
@@ -367,7 +373,12 @@
                     }
                 }
             } else {
-                if (!['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view'].includes(currentViewId)) {
+                const onboardingViews = [
+                    'onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 
+                    'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view',
+                    'have-money-options-view', 'risk-info-view'
+                ];
+                if (!onboardingViews.includes(currentViewId)) {
                     showView('onboarding-1-view');
                 }
             }
@@ -410,7 +421,3 @@
 
 </body>
 </html>
-
-
-
-
