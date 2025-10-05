@@ -519,3 +519,88 @@ b { color: var(--color-accent); font-weight: 600; }
     text-shadow: 0 0 15px var(--color-accent-glow);
     animation: pulseGlow 2s infinite; /* Добавляем пульсацию */
 }
+/* ... все предыдущие стили до блока 21 ... */
+
+/* --- 21. Стили для сценария "ДА, есть деньги" --- */
+/* ... */
+
+/* --- 22. Pro-Tip Pop-up и стили Лобби --- */
+.overlay-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 23, 31, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none; /* По умолчанию скрыт */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeInUp 0.5s;
+}
+.pro-tip-card {
+    max-width: 340px;
+    width: 100%;
+}
+.pro-tip-card .subtitle {
+    color: var(--color-gold); /* Делаем заголовок совета золотым */
+    margin-bottom: 15px;
+}
+.pro-tip-card .main-button {
+    margin-top: 15px;
+}
+
+.lobby-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    background: linear-gradient(45deg, var(--color-accent), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+#post-deposit-view .description {
+    margin-bottom: 20px;
+}
+.deposit-display {
+    background: rgba(0, 170, 255, 0.1);
+    border: 1px solid var(--color-accent);
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin: 10px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.deposit-amount {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+.deposit-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+.small-text {
+    font-size: 14px;
+    opacity: 0.8;
+}
+#post-deposit-view .signal-buttons {
+    margin-top: 25px;
+}
+#post-deposit-view .nav-buttons-vertical {
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
