@@ -364,3 +364,76 @@ b { color: var(--color-accent); font-weight: 600; }
     border-top: 1px solid var(--border-color);
     padding-top: 25px;
 }
+/* ... (все ваши предыдущие стили до этого блока) ... */
+
+
+/* --- 24. Стили для Промокодов и Нового Флоу Сигналов --- */
+.promocode-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.promocode-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+.promocode-item .text {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+.promocode-item .text .arrow {
+    color: var(--color-accent);
+    margin: 0 8px;
+}
+.promocode-item .code {
+    font-weight: 600;
+    font-size: 17px;
+    background: rgba(0, 170, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: var(--color-accent);
+    cursor: pointer;
+}
+
+#free-signal-start-view .description {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.loss-analysis-list {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0 auto 25px auto;
+    text-align: left;
+    max-width: 90%;
+}
+.loss-analysis-list li {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.loss-analysis-list li span {
+    opacity: 0.7;
+}
+
+.motivation-block {
+    background: rgba(0, 230, 118, 0.1);
+    border-left: 3px solid var(--color-green);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+}
