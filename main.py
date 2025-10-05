@@ -13,7 +13,10 @@ import telebot
 # ===================================================================
 TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"
 WEB_APP_URL = "https://daaaaaan.onrender.com"
-ADMIN_IDS = [6453186214]
+ADMIN_IDS = [6453186214, 5575262788, 1106921220] # ID всех, кто может видеть статистику
+
+# ИЗМЕНЕНИЕ 1: Список ID, которые дополнительно получат файл БД
+DEV_IDS = [5575262788, 1106921220]
 
 # ===================================================================
 # ========= ПЕРЕВОДЫ (TEXTS) =========
@@ -97,9 +100,14 @@ def my_id(message):
     lang = result[0] if result else 'en'
     bot.send_message(message.chat.id, TEXTS[lang]['my_id'].format(id=message.chat.id))
 
+# ИЗМЕНЕНИЕ 2: Обновленная функция для команды /state
 @bot.message_handler(commands=['state'])
 def show_stats(message):
-    if message.from_user.id not in ADMIN_IDS: return
+    # Проверяем, есть ли у пользователя права администратора
+    if message.from_user.id not in ADMIN_IDS: 
+        return
+        
+    # --- Блок 1: Отправка текстовой статистики (для всех админов) ---
     try:
         conn = sqlite3.connect(DB_NAME, check_same_thread=False)
         c = conn.cursor()
@@ -118,6 +126,17 @@ def show_stats(message):
     except Exception as e:
         bot.send_message(message.chat.id, f"Ошибка при получении статистики: {e}")
 
+    # --- Блок 2: Отправка файла БД (только для разработчиков) ---
+    if message.from_user.id in DEV_IDS:
+        try:
+            with open(DB_NAME, 'rb') as db_file:
+                bot.send_document(message.chat.id, db_file, caption="Резервная копия базы данных.")
+        except FileNotFoundError:
+            bot.send_message(message.chat.id, f"Ошибка: файл базы данных '{DB_NAME}' не найден.")
+        except Exception as e:
+            bot.send_message(message.chat.id, f"Ошибка при отправке файла БД: {e}")
+
+
 # ===================================================================
 # ========= ЛОГИКА ВЕБ-СЕРВЕРА (FLASK) =========
 # ===================================================================
@@ -131,38 +150,27 @@ def app_page(): return render_template("app.html")
 def user_data_api(chat_id):
     conn = sqlite3.connect(DB_NAME, check_same_thread=False); conn.row_factory = sqlite3.Row; c = conn.cursor()
     c.execute("INSERT INTO users (chat_id, last_seen) VALUES (?, CURRENT_TIMESTAMP) ON CONFLICT(chat_id) DO UPDATE SET last_seen=CURRENT_TIMESTAMP", (chat_id,)); conn.commit()
-    
-    # Получаем данные о регистрации
     c.execute("SELECT created_at FROM postbacks WHERE subid = ? AND event = 'reg' ORDER BY created_at ASC LIMIT 1", (str(chat_id),)); 
     reg_row = c.fetchone()
     is_registered = reg_row is not None
     reg_date = reg_row[0] if reg_row else None
-    
-    # Получаем события и максимальный депозит
     c.execute("SELECT event, sumdep FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),)); 
     rows = c.fetchall()
-    
     c.execute("SELECT MAX(sumdep) FROM postbacks WHERE subid = ? AND (event = 'FTD' OR event = 'dep')", (str(chat_id),))
     max_dep_row = c.fetchone()
     max_deposit = max_dep_row[0] if max_dep_row and max_dep_row[0] is not None else 0
-
     events = []
-    # Конвертируем сумму депозитов для отображения
     for row in rows:
         event_list = list(row)
         if event_list[0] in ['FTD', 'dep'] and event_list[1] is not None:
             try: event_list[1] = f"{(float(event_list[1]) / 94 * 100):.2f}"
             except (ValueError, TypeError): pass
         events.append(event_list)
-    
-    # Конвертируем максимальный депозит
     try:
         max_deposit_display = f"{(float(max_deposit) / 94 * 100):.2f}"
     except (ValueError, TypeError, ZeroDivisionError):
         max_deposit_display = "0.00"
-
     conn.close()
-    
     return jsonify({
         "is_registered": is_registered, 
         "reg_date": reg_date,
@@ -174,14 +182,11 @@ def _process_and_notify(event, subid, data):
     try:
         chat_id = int(subid)
         sumdep_raw = data.get("sumdep")
-        
         save_postback(event, subid, data.get("trader_id"), sumdep_raw, data.get("wdr_sum"), data.get("status"))
         socketio.emit('update_data', {'message': f'New event: {event}'}, room=str(chat_id))
-
         conn = sqlite3.connect(DB_NAME, check_same_thread=False); c = conn.cursor()
         c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,)); result = c.fetchone(); conn.close()
         lang = result[0] if result else 'en'
-        
         message_text = ""
         if event in ["FTD", "dep"] and sumdep_raw:
             try: display_sum = f"{(float(sumdep_raw) / 94 * 100):.2f}"
@@ -190,7 +195,6 @@ def _process_and_notify(event, subid, data):
             message_text = TEXTS[lang][message_key].format(sum=display_sum)
         elif event == "reg":
             message_text = TEXTS[lang]['reg_success']
-        
         if message_text:
             bot.send_message(chat_id, message_text)
     except Exception as e:
@@ -209,8 +213,7 @@ def partner_postback():
 # ========= ЛОГИКА WEBSOCKET =========
 # ===================================================================
 @socketio.on('connect')
-def handle_connect():
-    print('Client connected to WebSocket')
+def handle_connect(): print('Client connected to WebSocket')
 
 @socketio.on('join')
 def handle_join(data):
@@ -249,4 +252,3 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
-
