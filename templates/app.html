@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<!-- ВСПЛЫВАЮЩИЙ БЛССОВЕТОМ -->
+<!-- ВСПЛЫВАЮЩИЙ БЛОК С СОВЕТОМ -->
 <div id="pro-tip-overlay" class="overlay-view">
     <div class="card pro-tip-card">
         <h2 class="subtitle" data-translate-key="pro_tip_title"></h2>
@@ -65,15 +65,7 @@
     <div id="loss-analysis-view" class="view"><div class="card"><h1 class="title" data-translate-key="loss_analysis_title"></h1><p class="description" data-translate-key="loss_analysis_subtitle"></p><ol class="loss-analysis-list"><li data-translate-key="loss_reason1"></li><li data-translate-key="loss_reason2"></li><li data-translate-key="loss_reason3"></li><li data-translate-key="loss_reason4"></li></ol><div class="motivation-block" data-translate-key="loss_motivation"></div><div class="nav-buttons full-width"><button class="main-button" id="btn-loss-analysis-back" data-translate-key="loss_analysis_btn"></button></div></div></div>
 
     <!-- ЭКРАНЫ ДЕЙСТВИЙ -->
-    <div id="wip-view" class="view">
-        <div class="card">
-            <h1 class="title" data-translate-key="wip_title"></h1>
-            <p class="description" data-translate-key="wip_desc"></p>
-            <div class="nav-buttons">
-                <button class="back-button" id="btn-wip-back" data-translate-key="back_btn"></button>
-            </div>
-        </div>
-    </div>
+    <div id="wip-view" class="view"><div class="card"><h1 class="title" data-translate-key="wip_title"></h1><p class="description" data-translate-key="wip_desc"></p><div class="nav-buttons"><button class="back-button" id="btn-wip-back" data-translate-key="back_btn"></button></div></div></div>
     <div id="signal-active-view" class="view"><div class="card signal-card"><div id="signal-stage-1"><p class="emoji-spinner">⏳</p><h1 class="title" data-translate-key="search_title"></h1><p class="description" data-translate-key="search_desc"></p></div><div id="signal-stage-2" style="display: none;"><button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button></div><div id="signal-stage-3" style="display: none;"><p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p><p class="signal-step" id="signal-pair"></p><p class="signal-step" id="signal-exp-soon" data-translate-key="signal_exp_soon"></p><p class="signal-step" id="signal-expiration" style="display: none;"></p><div id="signal-confirmation-container" style="display: none; margin-top: 20px;"><button class="main-button" id="btn-confirm-ready" data-translate-key="confirm_ready_btn"></button></div><p class="signal-step" id="signal-direction" style="display: none;"></p><div id="signal-result-container" style="display: none;"><p class="signal-result" id="signal-result"></p><div id="signal-win-buttons" style="display: none;"><button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button><button class="action-button vip" id="btn-goto-vip-from-win" data-translate-key="want_vip_btn"></button><button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button></div><div id="signal-loss-buttons" style="display: none;"><button class="action-button" id="btn-next-from-loss-result" data-translate-key="next_signal_btn"></button><button class="action-button vip" id="btn-vip-from-loss-result" data-translate-key="want_vip_btn"></button></div></div></div></div></div>
     
 </div>
@@ -98,7 +90,8 @@
             'tutorial_title': 'Туториал', 'tutorial_b1': 'Подготовься перед сигналом, будь внимателен и бесстрашен.', 'tutorial_b2': 'Быстро открой сайт и повтори сделку за мной. Я дам инструкции, тут важна твоя <b>скорость</b>.', 'tutorial_b3': '8-12 сигналов: закрепи свою прибыль и не торопись её тратить. Продолжай торговать и умножай прибыль, будь рационален.', 'tutorial_b4': 'Получай звания и расти в рейтинге, чтобы получить доступ в сообщество самых успешных юзеров.', 'tutorial_ready_btn': 'Я готов!',
             'step1_label': 'ПЕРВЫЙ ШАГ', 'step1_title': 'Создай аккаунт', 'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии P/O.', 'step1_btn_register': 'Зарегистрироваться', 'how_to_register_btn': 'Как сделать регистрацию?', 'have_account_btn': 'У меня уже есть аккаунт',
             'reg_success_title': 'Регистрация подтверждена!', 'reg_success_desc': 'Уже скоро ты получишь свой первый сигнал и начнёшь зарабатывать вместе с сотнями других трейдеров.',
-            'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'how_to_deposit_text': '<i>*Здесь будет инструкция*</i>',
+            'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'step2_strategy_bubble': 'Выбери стратегию:', 'strat1_title': 'Риск включен', 'strat1_li1': 'Маленький депозит', 'strat1_li2': 'Проверка сигналов', 'strat1_li3': 'Бояться и играть по-крупному', 'strat2_title': 'Риск выключен', 'strat2_li1': 'Достойный депозит', 'strat2_li2': 'Быстрая прибыль', 'strat2_li3': 'Брать от жизни всё', 'step2_btn_deposit': 'Сделать депозит', 'how_to_deposit_btn': 'Как сделать депозит?',
+            'how_to_deposit_text': '<i>*Здесь будет инструкция*</i>',
             'pro_tip_title': 'Совет от про-трейдеров', 'pro_tip_desc': 'Не бойся потерь, они есть у всех. В долгосроке все твои действия принесут прибыль!', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Лобби', 'lobby_congrats': 'Поздравляю с первым депозитом!', 'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.', 'lobby_btn_profile': 'Перейти в профиль трейдера',
             'profile_title': 'Профиль трейдера', 'profile_nickname': 'Никнейм', 'profile_name': 'Имя', 'profile_about': 'О себе', 'profile_balance': 'Текущий баланс', 'profile_rank': 'Текущее звание', 'rank_novice': 'Новичок', 'rank_detail_vip': 'Количество полученных ВИП сигналов', 'rank_detail_days': 'С даты регистрации прошло', 'rank_detail_maxdep': 'Максимальный депозит', 'rank_detail_maxdep_note': 'ниже среднего',
@@ -117,7 +110,10 @@
             'tutorial_title': 'Tutorial', 'tutorial_b1': 'Prepare before the signal, be attentive and fearless.', 'tutorial_b2': 'Quickly open the site and copy the trade. Your <b>speed</b> is important.', 'tutorial_b3': '8-12 signals: secure your profit. Keep trading and multiply your profit.', 'tutorial_b4': 'Get ranks and grow to access the community of successful users.', 'tutorial_ready_btn': 'I\'m ready!',
             'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 'step1_side_note': 'All our users have instant withdrawals thanks to the P/O license.', 'step1_btn_register': 'Register', 'how_to_register_btn': 'How to register?', 'have_account_btn': 'I already have an account',
             'reg_success_title': 'Registration Confirmed!', 'reg_success_desc': 'Soon you will receive your first signal and start earning.',
-            'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'how_to_deposit_text': '<i>*Instructions will be here*</i>',
+            'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 
+            // ИСПРАВЛЕНИЕ ЗДЕСЬ: Добавлены недостающие переводы
+            'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?',
+            'how_to_deposit_text': '<i>*Instructions will be here*</i>',
             'pro_tip_title': 'Advice from pro-traders', 'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Lobby', 'lobby_congrats': 'Congratulations on your first deposit!', 'lobby_footnote': 'This is your starting point, not counting bonuses.', 'lobby_btn_profile': 'Go to trader\'s profile',
             'profile_title': 'Trader Profile', 'profile_nickname': 'Nickname', 'profile_name': 'Name', 'profile_about': 'About me', 'profile_balance': 'Current Balance', 'profile_rank': 'Current Rank', 'rank_novice': 'Novice', 'rank_detail_vip': 'VIP signals received', 'rank_detail_days': 'Days since registration', 'rank_detail_maxdep': 'Maximum deposit', 'rank_detail_maxdep_note': 'below average',
@@ -190,13 +186,10 @@
         const valueEl = document.getElementById(valueElId);
         const savedValue = localStorage.getItem(`${fieldKey}_${userId}`);
         const t = TRANSLATIONS[userLang];
-        
         const currentText = savedValue || '';
         const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
         const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
-
         valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
-        
         valueEl.querySelector('button').onclick = () => {
             const promptTitleKey = (fieldKey === 'userName') ? 'prompt_name' : 'prompt_about';
             const promptTitle = t[promptTitleKey];
@@ -230,32 +223,12 @@
 
     function startSignalFlow() {
         showView('signal-active-view');
-        const allElements = {
-            'stage1': document.getElementById('signal-stage-1'),
-            'stage2': document.getElementById('signal-stage-2'),
-            'stage3': document.getElementById('signal-stage-3'),
-            'resultContainer': document.getElementById('signal-result-container'),
-            'winButtons': document.getElementById('signal-win-buttons'),
-            'lossButtons': document.getElementById('signal-loss-buttons'),
-            'confirmationContainer': document.getElementById('signal-confirmation-container'),
-            'signalStatusReady': document.getElementById('signal-status-ready'),
-            'signalPair': document.getElementById('signal-pair'),
-            'signalStatusExpSoon': document.getElementById('signal-exp-soon'),
-            'signalExpiration': document.getElementById('signal-expiration'),
-            'signalDirection': document.getElementById('signal-direction'),
-        };
+        const allElements = {'stage1': document.getElementById('signal-stage-1'),'stage2': document.getElementById('signal-stage-2'),'stage3': document.getElementById('signal-stage-3'),'resultContainer': document.getElementById('signal-result-container'),'winButtons': document.getElementById('signal-win-buttons'),'lossButtons': document.getElementById('signal-loss-buttons'),'confirmationContainer': document.getElementById('signal-confirmation-container'),'signalStatusReady': document.getElementById('signal-status-ready'),'signalPair': document.getElementById('signal-pair'),'signalStatusExpSoon': document.getElementById('signal-exp-soon'),'signalExpiration': document.getElementById('signal-expiration'),'signalDirection': document.getElementById('signal-direction'),};
         for (const key in allElements) { allElements[key].style.display = 'none'; }
-        
         allElements.stage1.style.display = 'block';
-
-        setTimeout(() => {
-            allElements.stage1.style.display = 'none';
-            allElements.stage2.style.display = 'block';
-        }, 5000);
-
+        setTimeout(() => {allElements.stage1.style.display = 'none'; allElements.stage2.style.display = 'block';}, 5000);
         document.getElementById('btn-get-signal').onclick = () => {
-            allElements.stage2.style.display = 'none';
-            allElements.stage3.style.display = 'block';
+            allElements.stage2.style.display = 'none'; allElements.stage3.style.display = 'block';
             const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"], expirations = ["S15", "S20", "S25"], directions = ["buy", "sell"], getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)], selectedPair = getRandomItem(currencyPairs), selectedExp = getRandomItem(expirations), selectedDir = getRandomItem(directions);
             setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500);
             setTimeout(() => { allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); allElements.signalPair.style.display = 'block'; }, 1500);
@@ -329,16 +302,11 @@
             const response = await fetch(`/user/${userId}/data`);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            
             renderProfileData(data);
             const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
-            if (depositEvent) {
-                document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`;
-            }
-
+            if (depositEvent) { document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`; }
             const ftdEvent = data.events.find(e => e[0] === 'FTD');
             const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep');
-
             if (hasDeposit) {
                 const proTipSessionKey = `proTipShown_${userId}`;
                 if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) {
@@ -346,9 +314,7 @@
                     document.getElementById('pro-tip-overlay').style.display = 'flex';
                 } else {
                     const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view'];
-                    if (!postDepositViews.includes(currentViewId)) {
-                        showView('post-deposit-view');
-                    }
+                    if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); }
                 }
             } else if (data.is_registered) {
                 if(currentViewId !== 'post-reg-view') { showView('reg-success-view'); }
@@ -370,7 +336,6 @@
         }
         const user = tg.initDataUnsafe.user;
         userId = user.id;
-        // КЛЮЧЕВАЯ ЛОГИКА ОПРЕДЕЛЕНИЯ ЯЗЫКА
         userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
         document.documentElement.lang = userLang;
         
@@ -396,5 +361,3 @@
 
 </body>
 </html>
-
-
