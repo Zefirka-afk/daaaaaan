@@ -13,9 +13,18 @@
 </head>
 <body>
 
+<!-- ВСПЛЫВАЮЩИЙ БЛОК С СОВЕТОМ -->
+<div id="pro-tip-overlay" class="overlay-view">
+    <div class="card pro-tip-card">
+        <h2 class="subtitle" data-translate-key="pro_tip_title"></h2>
+        <p class="description" data-translate-key="pro_tip_desc"></p>
+        <button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button>
+    </div>
+</div>
+
 <div class="app-wrapper">
 
-    <!-- ЭКРАН 0: ЗАГА -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active"><div class="card"><div class="spinner"></div><p data-translate-key="loading"></p></div></div>
     
     <!-- ЭКРАН 0.1: ОШИБКА -->
@@ -70,135 +79,46 @@
         </div>
     </div>
     
-    <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
+    <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" (без изменений) -->
     <!-- Экран 1: Проверка на реальные деньги -->
-    <div id="real-money-check-view" class="view">
-        <div class="card">
-            <h1 class="title" data-translate-key="real_money_q"></h1>
-            <div class="nav-buttons-vertical">
-                <button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button>
-                <button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button>
-            </div>
-            <div class="nav-buttons">
-                <button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button>
-            </div>
-        </div>
-    </div>
-    
+    <div id="real-money-check-view" class="view"><div class="card"><h1 class="title" data-translate-key="real_money_q"></h1><div class="nav-buttons-vertical"><button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button><button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button></div></div></div>
     <!-- Экран 2 (ответ "НЕТ"): Инструкции -->
-    <div id="new-account-flow-view" class="view">
-        <div class="card">
-            <h1 class="title" data-translate-key="new_acc_flow_title"></h1>
-            <p class="description" data-translate-key="new_acc_flow_subtitle"></p>
-            <div class="flow-step">
-                <div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div>
-                <button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button>
-            </div>
-            <div class="flow-step">
-                <div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div>
-                <button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button>
-                <button class="secondary-button" id="btn-new-acc-how-to" data-translate-key="how_to_register_btn"></button>
-            </div>
-            <div class="important-note" data-translate-key="new_acc_flow_note"></div>
-            <div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div>
-        </div>
-    </div>
-
+    <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button><button class="secondary-button" id="btn-new-acc-how-to" data-translate-key="how_to_register_btn"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
     <!-- Экран 3 (ответ "НЕТ"): Инструкция по удалению -->
-    <div id="how-to-delete-view" class="view">
-        <div class="card">
-            <h1 class="title" data-translate-key="how_to_del_title"></h1>
-            <ul class="delete-guide">
-                <li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li>
-                <li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li>
-                <li data-translate-key="how_to_del_s5"></li>
-            </ul>
-            <div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div>
-            <div class="nav-buttons"><button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button></div>
-        </div>
-    </div>
-
+    <div id="how-to-delete-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_del_title"></h1><ul class="delete-guide"><li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li><li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li><li data-translate-key="how_to_del_s5"></li></ul><div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div><div class="nav-buttons"><button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button></div></div></div>
     <!-- Экран 4 (ответ "ДА"): Варианты -->
-    <div id="have-money-options-view" class="view">
-        <div class="card">
-            <h1 class="title" data-translate-key="have_money_title"></h1>
-            <p class="description" data-translate-key="have_money_subtitle"></p>
-            <div class="flow-step">
-                <div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div>
-                <button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button>
-            </div>
-            <div class="flow-step">
-                <div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div>
-                <button class="main-button" id="btn-register-for-friend" data-translate-key="step1_btn_register"></button>
-            </div>
-            <div class="flow-step">
-                <div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div>
-                <button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button>
-            </div>
-            <div class="nav-buttons"><button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button></div>
-        </div>
-    </div>
-
+    <div id="have-money-options-view" class="view"><div class="card"><h1 class="title" data-translate-key="have_money_title"></h1><p class="description" data-translate-key="have_money_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div><button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div><button class="main-button" id="btn-register-for-friend" data-translate-key="step1_btn_register"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div><button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button></div><div class="nav-buttons"><button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button></div></div></div>
     <!-- Экран 5 (ответ "ДА"): Объяснение риска -->
-    <div id="risk-info-view" class="view">
-        <div class="card">
-            <p class="risk-info-text" data-translate-key="risk_info_text"></p>
-            <div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div>
-        </div>
-    </div>
-    <!-- КОНЕЦ СЦЕНАРИЯ "УЖЕ ЕСТЬ АККАУНТ" -->
-
+    <div id="risk-info-view" class="view"><div class="card"><p class="risk-info-text" data-translate-key="risk_info_text"></p><div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div></div></div>
+    <!-- КОНЕЦ СЦЕНАРИЯ -->
 
     <!-- ЭКРАН: УСПЕШНАЯ РЕГИСТРАЦИЯ -->
-    <div id="reg-success-view" class="view">
-        <div class="card">
-            <p class="success-emoji">✅</p>
-            <h1 class="title" data-translate-key="reg_success_title"></h1>
-            <p class="description" data-translate-key="reg_success_desc"></p>
-            <div class="nav-buttons full-width">
-                <button class="main-button" id="btn-reg-success-next" data-translate-key="next_btn"></button>
-            </div>
-        </div>
-    </div>
+    <div id="reg-success-view" class="view"><div class="card"><p class="success-emoji">✅</p><h1 class="title" data-translate-key="reg_success_title"></h1><p class="description" data-translate-key="reg_success_desc"></p><div class="nav-buttons full-width"><button class="main-button" id="btn-reg-success-next" data-translate-key="next_btn"></button></div></div></div>
 
     <!-- БЛОК 2: ШАГ II - ДЕПОЗИТ -->
-    <div id="post-reg-view" class="view">
-        <div class="card">
-            <h1 class="step2-title" data-translate-key="step2_title"></h1>
-            <p class="description" data-translate-key="step2_subtitle"></p>
-            <div class="strategy-section">
-                <div class="strategy-bubble" data-translate-key="step2_strategy_bubble"></div>
-                <div class="strategy-choices">
-                    <div class="strategy-card risk-on">
-                        <h3><span class="toggle on"></span><span data-translate-key="strat1_title"></span></h3>
-                        <ul><li data-translate-key="strat1_li1"></li><li data-translate-key="strat1_li2"></li><li data-translate-key="strat1_li3"></li></ul>
-                    </div>
-                    <div class="strategy-card risk-off">
-                         <h3><span class="toggle off"></span><span data-translate-key="strat2_title"></span></h3>
-                        <ul><li data-translate-key="strat2_li1"></li><li data-translate-key="strat2_li2"></li><li data-translate-key="strat2_li3"></li></ul>
-                    </div>
-                </div>
-            </div>
-            <div class="nav-buttons-vertical">
-                <button class="main-button" id="btn-make-deposit" data-translate-key="step2_btn_deposit"></button>
-                <button class="secondary-button" id="btn-how-to-deposit" data-translate-key="how_to_deposit_btn"></button>
-            </div>
-        </div>
-    </div>
+    <div id="post-reg-view" class="view"><div class="card"><h1 class="step2-title" data-translate-key="step2_title"></h1><p class="description" data-translate-key="step2_subtitle"></p><div class="strategy-section"><div class="strategy-bubble" data-translate-key="step2_strategy_bubble"></div><div class="strategy-choices"><div class="strategy-card risk-on"><h3><span class="toggle on"></span><span data-translate-key="strat1_title"></span></h3><ul><li data-translate-key="strat1_li1"></li><li data-translate-key="strat1_li2"></li><li data-translate-key="strat1_li3"></li></ul></div><div class="strategy-card risk-off"><h3><span class="toggle off"></span><span data-translate-key="strat2_title"></span></h3><ul><li data-translate-key="strat2_li1"></li><li data-translate-key="strat2_li2"></li><li data-translate-key="strat2_li3"></li></ul></div></div></div><div class="nav-buttons-vertical"><button class="main-button" id="btn-make-deposit" data-translate-key="step2_btn_deposit"></button><button class="secondary-button" id="btn-how-to-deposit" data-translate-key="how_to_deposit_btn"></button></div></div></div>
 
     <!-- ЭКРАН: Как сделать депозит -->
     <div id="how-to-deposit-view" class="view"><div class="card"><p class="description" data-translate-key="how_to_deposit_text"></p><div class="nav-buttons"><button class="back-button" id="btn-how-to-deposit-back" data-translate-key="back_btn"></button></div></div></div>
 
-    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА -->
-    <div id="post-deposit-view" class="view"><div class="card"><h1 class="title" data-translate-key="postdep_title"></h1><p class="description" data-translate-key="postdep_desc"></p><p class="description" data-translate-key="postdep_profit"></p><div class="signal-buttons"><button class="signal-button" id="btn-vip-signal"><div class="signal-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/></svg></div><div class="signal-text"><h3 data-translate-key="vip_signal_title"></h3><p data-translate-key="vip_signal_desc"></p></div></button><button class="signal-button" id="btn-simple-signal"><div class="signal-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div><div class="signal-text"><h3 data-translate-key="simple_signal_title"></h3><p data-translate-key="simple_signal_desc"></p></div></button></div></div></div>
+    <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (НОВЫЙ ЭКРАН "ЛОББИ") -->
+    <div id="post-deposit-view" class="view">
+        <div class="card">
+            <h1 class="lobby-title" data-translate-key="lobby_title"></h1>
+            <p class="description" data-translate-key="lobby_congrats"></p>
+            <div class="deposit-display">
+                <div class="deposit-amount" id="deposit-amount-display"></div>
+            </div>
+            <p class="small-text" data-translate-key="lobby_footnote"></p>
+            <div class="nav-buttons-vertical">
+                <button class="secondary-button" id="btn-goto-profile" data-translate-key="lobby_btn_profile"></button>
+            </div>
+        </div>
+    </div>
     
-    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ -->
+    <!-- БЛОК 4: ЭКРАНЫ ДЕЙСТВИЙ (без изменений) -->
     <div id="wip-view" class="view"><div class="card"><h1 class="title" data-translate-key="wip_title"></h1><p class="description" data-translate-key="wip_desc"></p><div class="nav-buttons full-width"><button class="back-button" id="btn-wip-back"></button></div></div></div>
-    
-    <!-- Процесс получения сигнала -->
     <div id="signal-active-view" class="view"><div class="card signal-card"><div id="signal-stage-1"><p class="emoji-spinner">⏳</p><h1 class="title" data-translate-key="search_title"></h1><p class="description" data-translate-key="search_desc"></p></div><div id="signal-stage-2" style="display: none;"><button class="main-button" id="btn-get-signal" data-translate-key="signal_get_btn"></button></div><div id="signal-stage-3" style="display: none;"><p class="signal-step" id="signal-status-ready" data-translate-key="signal_ready"></p><p class="signal-step" id="signal-pair"></p><p class="signal-step" id="signal-exp-soon" data-translate-key="signal_exp_soon"></p><p class="signal-step" id="signal-expiration" style="display: none;"></p><div id="signal-confirmation-container" style="display: none; margin-top: 20px;"><button class="main-button" id="btn-confirm-ready" data-translate-key="confirm_ready_btn"></button></div><p class="signal-step" id="signal-direction" style="display: none;"></p><div id="signal-result-container" style="display: none;"><p class="signal-result" id="signal-result"></p><div id="signal-win-buttons" style="display: none;"><button class="action-button" id="btn-next-signal" data-translate-key="next_signal_btn"></button><button class="action-button vip" id="btn-goto-vip-from-win" data-translate-key="want_vip_btn"></button><button class="action-button lost" id="btn-i-lost" data-translate-key="i_lost_btn"></button></div><div id="signal-loss-buttons" style="display: none;"><button class="action-button" id="btn-next-from-loss-result" data-translate-key="next_signal_btn"></button><button class="action-button vip" id="btn-vip-from-loss-result" data-translate-key="want_vip_btn"></button></div></div></div></div></div>
-    
-    <!-- Экран проигрыша -->
     <div id="loss-view" class="view"><div class="card"><h1 class="title" data-translate-key="loss_title"></h1><p class="description" data-translate-key="loss_desc"></p><div class="nav-buttons-vertical"><button class="main-button" id="btn-next-from-loss" data-translate-key="next_signal_btn"></button><button class="secondary-button" id="btn-vip-from-loss" data-translate-key="want_vip_btn"></button></div></div></div>
 
 </div>
@@ -224,7 +144,15 @@
             'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'step2_strategy_bubble': 'Выбери стратегию:', 'strat1_title': 'Риск включен', 'strat1_li1': 'Маленький депозит', 'strat1_li2': 'Проверка сигналов', 'strat1_li3': 'Бояться и играть по-крупному', 'strat2_title': 'Риск выключен', 'strat2_li1': 'Достойный депозит', 'strat2_li2': 'Быстрая прибыль', 'strat2_li3': 'Брать от жизни всё', 'step2_btn_deposit': 'Сделать депозит', 'how_to_deposit_btn': 'Как сделать депозит?',
             'real_money_q': 'Хорошо! Но на нём есть real money?', 'yes_btn': 'Да', 'no_btn': 'Нет', 'new_acc_flow_title': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.', 'new_acc_flow_subtitle': 'Поэтому для начала:', 'new_acc_flow_step1': 'Удали свой текущий аккаунт', 'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту.', 'how_to_del_title': 'Как удалить аккаунт?', 'how_to_del_s1': 'Перейди в свой профиль, где указаны твои личные данные.', 'how_to_del_s2': 'Пролистай в самый низ страницы.', 'how_to_del_s3': 'Нажми большую красную кнопку: "Delete account".', 'how_to_del_s4': 'Выбери <em>любую</em> причину и подтверди удаление.', 'how_to_del_s5': 'Выйди с аккаунта.', 'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
             'have_money_title': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.', 'have_money_subtitle': 'У тебя есть несколько вариантов:', 'have_money_opt1': 'Вывести остаток денег, затем удалить аккаунт и создать новый.', 'have_money_btn1': 'Как вывести деньги с аккаунта?', 'have_money_opt2': 'Зарегистрировать аккаунт на друга.', 'have_money_opt3': 'Рискуй.', 'have_money_btn3': 'Что?', 'risk_info_text': 'Если денег на балансе мало – рискуй и иди до конца: либо все проиграешь, либо удвоишь. Мои сигналы окупят больше, чем твой остаток. <em>Действуй!</em>',
-            'postdep_title': 'Супер, твой депозит пополнен!', 'postdep_desc': 'Вот твоя точка А - <b>${deposit_sum}</b>', 'postdep_profit': 'За 5-10 сигналов можно сделать ~<b>${profit_sum}</b><br>Не бойся потерь, они есть у всех. В долгосроке ты обязательно заработаешь!', 'vip_signal_title': '👑 ВИП Сигнал', 'vip_signal_desc': 'ВИП сигналы - самый надежный способ заработать на трейдинге.', 'simple_signal_title': 'Простой сигнал', 'simple_signal_desc': 'Я пришлю валютную пару, время экспирации и сам сигнал (вверх или вниз). Будь готов!', 'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.', 'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так.', 'confirm_ready_btn': 'Я готов!', 'how_to_deposit_text': '<i>*Скрины с помощью*</i>',
+            'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.', 'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'loss_title': 'Хм, странно! А я выиграл', 'loss_desc': 'Должно быть ты сделал что-то не так.', 'confirm_ready_btn': 'Я готов!', 'how_to_deposit_text': '<i>*Скрины с помощью*</i>',
+            // НОВЫЕ ПЕРЕВОДЫ
+            'pro_tip_title': 'Совет от про-трейдеров',
+            'pro_tip_desc': 'Не бойся потерь, они есть у всех. В долгосроке все твои действия принесут прибыль!',
+            'pro_tip_btn': 'OK!',
+            'lobby_title': 'Лобби',
+            'lobby_congrats': 'Поздравляю с первым депозитом!',
+            'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.',
+            'lobby_btn_profile': 'Перейти в профиль трейдера',
         },
         'en': {
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -235,21 +163,28 @@
             'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?',
             'real_money_q': 'Okay! But does it have real money?', 'yes_btn': 'Yes', 'no_btn': 'No', 'new_acc_flow_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.', 'how_to_del_title': 'How to delete the account?', 'how_to_del_s1': 'Go to your profile where your personal data is listed.', 'how_to_del_s2': 'Scroll to the very bottom of the page.', 'how_to_del_s3': 'Press the big red button: "Delete account".', 'how_to_del_s4': 'Choose <em>any</em> reason and confirm the deletion.', 'how_to_del_s5': 'Log out of the account.', 'how_to_del_video_placeholder': '"video guide will be here"',
             'have_money_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'have_money_subtitle': 'You have several options:', 'have_money_opt1': 'Withdraw the remaining money, then delete the account and create a new one.', 'have_money_btn1': 'How to withdraw funds?', 'have_money_opt2': 'Register an account for a friend.', 'have_money_opt3': 'Take a risk.', 'have_money_btn3': 'What?', 'risk_info_text': 'If there is little money on the balance - take a risk and go all the way: either you lose everything, or you double it. My signals will pay off more than your balance. <em>Act!</em>',
-            'postdep_title': 'Super, your deposit is funded!','postdep_desc': 'Here is your starting point A - <b>${deposit_sum}</b>','postdep_profit': 'In 5-10 signals, you can make ~<b>${profit_sum}</b><br>Don\'t be afraid of losses, everyone has them. In the long run, you will definitely earn!', 'vip_signal_title': '👑 VIP Signal','vip_signal_desc': 'VIP signals are the most reliable way to earn in trading.','simple_signal_title': 'Simple Signal','simple_signal_desc': 'I will send you the currency pair, expiration time, and the signal itself (up or down). Be ready!', 'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal','i_lost_btn': 'I lost','loss_title': 'Hmm, strange! But I won','loss_desc': 'You must have done something wrong.','confirm_ready_btn': 'I\'m ready!', 'how_to_deposit_text': '<i>*Screenshots with help*</i>',
+            'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.','search_title': 'Searching for a signal','search_desc': 'Get ready, go to the platform, you will need to act quickly','signal_get_btn': 'Get Signal','signal_ready': 'Ready!','signal_pair_select': 'Choose currency pair <b>{pair}</b>','signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW','signal_buy': 'BUY 🟢','signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!','want_vip_btn': 'I want a VIP signal','i_lost_btn': 'I lost','loss_title': 'Hmm, strange! But I won','loss_desc': 'You must have done something wrong.','confirm_ready_btn': 'I\'m ready!', 'how_to_deposit_text': '<i>*Screenshots with help*</i>',
+            // NEW TRANSLATIONS
+            'pro_tip_title': 'Advice from pro-traders',
+            'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!',
+            'pro_tip_btn': 'OK!',
+            'lobby_title': 'Lobby',
+            'lobby_congrats': 'Congratulations on your first deposit!',
+            'lobby_footnote': 'This is your starting point, not counting bonuses.',
+            'lobby_btn_profile': 'Go to trader\'s profile',
         }
     };
     let userLang = 'en';
     let currentViewId = '';
     let previousViewId = '';
+    let userId;
 
-    function applyTranslations(lang, data = {}) {
+    function applyTranslations(lang) {
         const t = TRANSLATIONS[lang];
         document.querySelectorAll('[data-translate-key]').forEach(el => {
             const key = el.getAttribute('data-translate-key');
             if (t[key]) {
-                let text = t[key];
-                for (const dataKey in data) { text = text.replace(`{${dataKey}}`, data[dataKey]); }
-                el.innerHTML = text;
+                el.innerHTML = t[key];
             }
         });
         if(document.getElementById('btn-wip-back')) {
@@ -265,7 +200,7 @@
         const viewElement = document.getElementById(viewId);
         if (viewElement) { viewElement.classList.add('active'); }
         const faqButton = document.getElementById('faq-button');
-        const faqVisibleOn = ['post-deposit-view', 'loss-view', 'post-reg-view'];
+        const faqVisibleOn = ['post-deposit-view', 'loss-view', 'post-reg-view', 'signal-active-view'];
         if (faqVisibleOn.includes(viewId) || (viewId === 'wip-view' && faqVisibleOn.includes(previousViewId))) {
             faqButton.classList.add('visible');
         } else {
@@ -301,7 +236,14 @@
     }
 
     function setupNavigation() {
-        const openRegisterLink = () => { const userId = tg.initDataUnsafe.user.id; const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
+        const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
+        
+        // НОВЫЕ КНОПКИ
+        document.getElementById('btn-pro-tip-ok').onclick = () => {
+            document.getElementById('pro-tip-overlay').style.display = 'none';
+            showView('post-deposit-view');
+        };
+        document.getElementById('btn-goto-profile').onclick = () => showView('wip-view');
         
         // Главный путь онбординга
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
@@ -315,20 +257,16 @@
         // Сценарий "Уже есть аккаунт"
         document.getElementById('btn-step1-have-account').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-real-money-back').onclick = () => showView('onboarding-3-view');
-        
-        // Ветка "НЕТ денег"
         document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
         document.getElementById('btn-new-acc-back').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-how-and-why-delete').onclick = () => showView('how-to-delete-view');
-        document.getElementById('btn-new-acc-register').onclick = () => showView('onboarding-3-view');
+        document.getElementById('btn-new-acc-register').onclick = openRegisterLink;
         document.getElementById('btn-new-acc-how-to').onclick = () => showView('wip-view');
         document.getElementById('btn-delete-guide-back').onclick = () => showView('new-account-flow-view');
-        
-        // Ветка "ДА, есть деньги"
         document.getElementById('btn-real-money-yes').onclick = () => showView('have-money-options-view');
         document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-how-to-withdraw').onclick = () => showView('wip-view');
-        document.getElementById('btn-register-for-friend').onclick = () => showView('onboarding-3-view');
+        document.getElementById('btn-register-for-friend').onclick = openRegisterLink;
         document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
         document.getElementById('btn-risk-info-back').onclick = () => showView('have-money-options-view');
 
@@ -337,9 +275,7 @@
         document.getElementById('btn-how-to-deposit').onclick = () => showView('how-to-deposit-view');
         document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
         
-        // Экраны после депозита
-        document.getElementById('btn-vip-signal').onclick = () => showView('wip-view');
-        document.getElementById('btn-simple-signal').onclick = startSignalFlow;
+        // Кнопки-заглушки
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('post-deposit-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
 
@@ -358,19 +294,28 @@
             const response = await fetch(`/user/${userId}/data`);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            const hasDeposit = data.events.some(e => e[0] === 'FTD' || e[0] === 'dep');
+            
+            const ftdEvent = data.events.find(e => e[0] === 'FTD');
+            const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep');
 
-            if (data.is_registered) {
-                if (hasDeposit) {
-                    const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
-                    const depositAmount = parseFloat(depositEvent[1]);
-                    const profitAmount = (depositAmount * 2.5).toFixed(2);
-                    applyTranslations(userLang, { deposit_sum: `${depositAmount.toFixed(2)}`, profit_sum: `${profitAmount}` });
-                    showView('post-deposit-view');
+            if (hasDeposit) {
+                const depositEvent = ftdEvent || data.events.find(e => e[0] === 'dep');
+                const depositAmount = parseFloat(depositEvent[1]).toFixed(2);
+                
+                // Всегда обновляем данные в лобби, даже если оно скрыто
+                document.getElementById('deposit-amount-display').innerText = `$${depositAmount}`;
+
+                // Показываем pop-up ТОЛЬКО при первом депозите (FTD) и если он еще не был показан в этой сессии
+                const proTipSessionKey = `proTipShown_${userId}`;
+                if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) {
+                    sessionStorage.setItem(proTipSessionKey, 'true');
+                    document.getElementById('pro-tip-overlay').style.display = 'flex';
                 } else {
-                    if(currentViewId !== 'post-reg-view') {
-                        showView('reg-success-view'); 
-                    }
+                    showView('post-deposit-view');
+                }
+            } else if (data.is_registered) {
+                if(currentViewId !== 'post-reg-view') {
+                    showView('reg-success-view'); 
                 }
             } else {
                 const onboardingViews = [
@@ -395,7 +340,7 @@
             return;
         }
         const user = tg.initDataUnsafe.user;
-        const userId = user.id;
+        userId = user.id; // Сохраняем userId в глобальную переменную
         userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
         document.documentElement.lang = userLang;
         
@@ -421,4 +366,3 @@
 
 </body>
 </html>
-
