@@ -392,3 +392,101 @@ b { color: var(--color-accent); font-weight: 600; }
 .toggle.off::after {
     transform: translateX(2px); /* Сдвигаем кружок влево */
 }
+/* ... все предыдущие стили до блока 19 ... */
+
+/* --- 19. Стили для экрана шага II (Депозит) --- */
+/* ... */
+
+/* --- 20. Стили для сценария "У меня есть аккаунт" --- */
+.flow-step {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+.flow-step .step-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.flow-step .step-number {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+.flow-step p {
+    margin: 0;
+    font-weight: 500;
+}
+.flow-step .main-button, .flow-step .secondary-button {
+    width: 100%;
+    margin-top: 10px;
+}
+.important-note {
+    background-color: rgba(255, 215, 0, 0.1);
+    border-left: 3px solid var(--color-gold);
+    border-radius: 8px;
+    padding: 15px 15px 15px 20px;
+    margin-top: 25px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+.delete-guide {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 25px 0;
+    counter-reset: delete-counter; /* Инициализация счетчика */
+    text-align: left;
+}
+.delete-guide li {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.delete-guide li::before {
+    counter-increment: delete-counter; /* Увеличение счетчика */
+    content: counter(delete-counter); /* Отображение счетчика */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+.delete-guide li em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: rgba(0, 170, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.video-placeholder {
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
