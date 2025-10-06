@@ -538,3 +538,32 @@ b { color: var(--color-accent); font-weight: 600; }
     margin: 15px 0;
     letter-spacing: 4px;
 }
+/* ... (все ваши предыдущие стили) ... */
+
+
+/* --- 27. Стили для инлайн-редактирования в профиле --- */
+.inline-input {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 15px;
+    padding: 4px 8px;
+    width: 60%;
+    box-sizing: border-box;
+}
+.save-button {
+    background: none;
+    border: none;
+    color: var(--color-green);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+.save-button:hover {
+    background-color: rgba(0, 230, 118, 0.1);
+}
