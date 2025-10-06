@@ -150,34 +150,52 @@ def app_page(): return render_template("app.html")
 def user_data_api(chat_id):
     conn = sqlite3.connect(DB_NAME, check_same_thread=False); conn.row_factory = sqlite3.Row; c = conn.cursor()
     c.execute("INSERT INTO users (chat_id, last_seen) VALUES (?, CURRENT_TIMESTAMP) ON CONFLICT(chat_id) DO UPDATE SET last_seen=CURRENT_TIMESTAMP", (chat_id,)); conn.commit()
+    
+    # Получаем дату регистрации
     c.execute("SELECT created_at FROM postbacks WHERE subid = ? AND event = 'reg' ORDER BY created_at ASC LIMIT 1", (str(chat_id),)); 
     reg_row = c.fetchone()
     is_registered = reg_row is not None
     reg_date = reg_row[0] if reg_row else None
+    
+    # Получаем события
     c.execute("SELECT event, sumdep FROM postbacks WHERE subid = ? ORDER BY created_at DESC", (str(chat_id),)); 
     rows = c.fetchall()
+    
+    # Получаем максимальный депозит
     c.execute("SELECT MAX(sumdep) FROM postbacks WHERE subid = ? AND (event = 'FTD' OR event = 'dep')", (str(chat_id),))
     max_dep_row = c.fetchone()
     max_deposit = max_dep_row[0] if max_dep_row and max_dep_row[0] is not None else 0
+
+    # === НОВОЕ ИЗМЕНЕНИЕ: Подсчет суммы выводов ===
+    c.execute("SELECT SUM(wdr_sum) FROM postbacks WHERE subid = ?", (str(chat_id),))
+    wdr_sum_row = c.fetchone()
+    user_withdrawal_sum = wdr_sum_row[0] if wdr_sum_row and wdr_sum_row[0] is not None else 0.0
+    # ===============================================
+
     events = []
+    # Конвертируем сумму депозитов для отображения
     for row in rows:
         event_list = list(row)
         if event_list[0] in ['FTD', 'dep'] and event_list[1] is not None:
             try: event_list[1] = f"{(float(event_list[1]) / 94 * 100):.2f}"
             except (ValueError, TypeError): pass
         events.append(event_list)
+    
+    # Конвертируем максимальный депозит
     try:
         max_deposit_display = f"{(float(max_deposit) / 94 * 100):.2f}"
     except (ValueError, TypeError, ZeroDivisionError):
         max_deposit_display = "0.00"
+
     conn.close()
+    
     return jsonify({
         "is_registered": is_registered, 
         "reg_date": reg_date,
         "max_deposit": max_deposit_display,
+        "user_withdrawal_sum": user_withdrawal_sum, # Новое поле с суммой выводов
         "events": events
     })
-
 def _process_and_notify(event, subid, data):
     try:
         chat_id = int(subid)
@@ -252,3 +270,4 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
