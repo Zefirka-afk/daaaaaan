@@ -14,12 +14,20 @@
 <body>
 
 <!-- ВСПЛЫВАЮЩИЙ БЛОК С СОВЕТОМ -->
-<div id="pro-tip-overlay" class="overlay-view"><div class="card pro-tip-card"><h2 class="subtitle" data-translate-key="pro_tip_title"></h2><p class="description" data-translate-key="pro_tip_desc"></p><button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button></div></div>
+<div id="pro-tip-overlay" class="overlay-view">
+    <div class="card pro-tip-card">
+        <h2 class="subtitle" data-translate-key="pro_tip_title"></h2>
+        <p class="description" data-translate-key="pro_tip_desc"></p>
+        <button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button>
+    </div>
+</div>
 
 <div class="app-wrapper">
 
-    <!-- ЭКРАНЫ ЗАГРУЗКИ И ОШИБКИ -->
+    <!-- ЭКРАН 0: ЗАГРУЗКА -->
     <div id="loader-view" class="view active"><div class="card"><div class="spinner"></div><p data-translate-key="loading"></p></div></div>
+    
+    <!-- ЭКРАН 0.1: ОШИБКА -->
     <div id="error-view" class="view"><div class="card"><p data-translate-key="error_text"></p></div></div>
 
     <!-- БЛОК 1: ОНБОРДИНГ -->
@@ -48,16 +56,67 @@
     <div id="post-deposit-view" class="view"><div class="card"><h1 class="lobby-title" data-translate-key="lobby_title"></h1><p class="description" data-translate-key="lobby_congrats"></p><div class="deposit-display"><div class="deposit-amount" id="deposit-amount-display"></div></div><p class="small-text" data-translate-key="lobby_footnote"></p><div class="nav-buttons-vertical"><button class="secondary-button" id="btn-goto-profile" data-translate-key="lobby_btn_profile"></button></div></div></div>
     
     <!-- ЭКРАН ПРОФИЛЯ ТРЕЙДЕРА -->
-    <div id="trader-profile-view" class="view"><div class="card"><h1 class="title" data-translate-key="profile_title"></h1><ul class="profile-info-list"><li class="profile-info-item"><span class="label" data-translate-key="profile_nickname"></span><span class="value" id="profile-nickname-val"></span></li><li class="profile-info-item"><span class="label" data-translate-key="profile_name"></span><span class="value" id="profile-name-val"></span></li><li class="profile-info-item"><span class="label" data-translate-key="profile_about"></span><span class="value" id="profile-about-val"></span></li><li class="profile-info-item"><span class="label" data-translate-key="profile_balance"></span><span class="value" id="profile-balance-val"></span></li><li class="profile-info-item"><span class="label" data-translate-key="profile_rank"></span><span class="value"><span data-translate-key="rank_novice"></span><span class="rank-toggle" id="rank-toggle-btn">›</span></span></li></ul><div id="rank-details" style="display: none;"><div class="rank-details"><p><span data-translate-key="rank_detail_vip"></span>: 0</p><p><span data-translate-key="rank_detail_days"></span>: <span id="days-since-reg">0</span></p><p><span data-translate-key="rank_detail_maxdep"></span>: <span id="max-deposit-val">$0.00</span> (<span data-translate-key="rank_detail_maxdep_note"></span>)</p></div></div><div class="nav-buttons-vertical profile-actions"><button class="main-button" id="btn-trade-free" data-translate-key="profile_btn_trade_free"></button><button class="secondary-button" id="btn-rating" data-translate-key="profile_btn_rating"></button><button class="secondary-button" id="btn-trade-vip" data-translate-key="profile_btn_trade_vip"></button><button class="secondary-button" id="btn-help" data-translate-key="profile_btn_help"></button><button class="secondary-button" id="btn-promocodes" data-translate-key="profile_btn_promocodes"></button></div><div class="nav-buttons"><button class="back-button" id="btn-profile-back" data-translate-key="back_btn"></button></div></div></div>
-    
-    <!-- ЭКРАН РЕЙТИНГА -->
-    <div id="rating-view" class="view"><div class="card"><h1 class="title" data-translate-key="rating_title"></h1><ul class="rating-list" id="rating-list-container"></ul><div class="nav-buttons"><button class="back-button" id="btn-rating-back" data-translate-key="back_btn"></button></div></div></div>
+    <!-- ЭКРАН ПРОФИЛЯ ТРЕЙДЕРА -->
+    <!-- ЭКРАН ПРОФИЛЯ ТРЕЙДЕРА -->
+    <!-- ЭКРАН ПРОФИЛЯ ТРЕЙДЕРА -->
+    <div id="trader-profile-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="profile_title"></h1>
+            <ul class="profile-info-list">
+                <li class="profile-info-item"><span class="label" data-translate-key="profile_nickname"></span><span class="value" id="profile-nickname-val"></span></li>
+                <li class="profile-info-item"><span class="label" data-translate-key="profile_name"></span><span class="value" id="profile-name-val"></span></li>
+                <li class="profile-info-item"><span class="label" data-translate-key="profile_about"></span><span class="value" id="profile-about-val"></span></li>
+                <li class="profile-info-item"><span class="label" data-translate-key="profile_balance"></span><span class="value" id="profile-balance-val"></span></li>
+                <li class="profile-info-item"><span class="label" data-translate-key="profile_rank"></span><span class="value"><span data-translate-key="rank_novice"></span><span class="rank-toggle" id="rank-toggle-btn">›</span></span></li>
+            </ul>
+            <div id="rank-details" style="display: none;">
+                <div class="rank-details">
+                    <p><span data-translate-key="rank_detail_vip"></span>: 0</p>
+                    <p><span data-translate-key="rank_detail_days"></span>: <span id="days-since-reg">0</span></p>
+                    <p><span data-translate-key="rank_detail_maxdep"></span>: <span id="max-deposit-val">$0.00</span> (<span data-translate-key="rank_detail_maxdep_note"></span>)</p>
+                </div>
+            </div>
+            <div class="nav-buttons-vertical profile-actions">
+                <button class="main-button" id="btn-trade-free" data-translate-key="profile_btn_trade_free"></button>
+                <button class="secondary-button" id="btn-rating" data-translate-key="profile_btn_rating"></button>
+                <button class="secondary-button" id="btn-trade-vip" data-translate-key="profile_btn_trade_vip"></button>
+                <button class="secondary-button" id="btn-help" data-translate-key="profile_btn_help"></button>
+                <button class="secondary-button" id="btn-promocodes" data-translate-key="profile_btn_promocodes"></button>
+            </div>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-profile-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
 
+
+    <!-- НОВЫЙ ЭКРАН: РЕЙТИНГ -->
+    <div id="rating-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="rating_title"></h1>
+            <ul class="rating-list" id="rating-list-container">
+                <!-- Содержимое генерируется JS -->
+            </ul>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-rating-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
     <!-- ЭКРАН ПРОМОКОДОВ -->
     <div id="promocodes-view" class="view"><div class="card"><h1 class="title" data-translate-key="promocode_title"></h1><ul class="promocode-list"><li class="promocode-item"><span class="text">+50% от $50 <span class="arrow">›</span></span><span class="code">WXL727</span></li><li class="promocode-item"><span class="text">+60% от $500 <span class="arrow">›</span></span><span class="code">ONB511</span></li><li class="promocode-item"><span class="text">+60% от $1000 <span class="arrow">›</span></span><span class="code">HFB504</span></li></ul><div class="nav-buttons"><button class="back-button" id="btn-promocodes-back" data-translate-key="back_btn"></button></div></div></div>
     
     <!-- ЭКРАН СТАРТА БЕСПЛАТНОГО СИГНАЛА -->
-    <div id="free-signal-start-view" class="view"><div class="card"><h1 class="title" data-translate-key="free_signal_title"></h1><p class="description" id="free-signal-text"></p><div class="nav-buttons"><button class="back-button" id="btn-free-signal-back" data-translate-key="back_btn"></button><button class="main-button" id="btn-free-signal-start" data-translate-key="start_btn"></button></div></div></div>
+    <div id="free-signal-start-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="free_signal_title"></h1>
+            <p class="description" id="free-signal-text"></p>
+            <!-- ИСПРАВЛЕНИЕ ЗДЕСЬ -->
+            <div class="nav-buttons">
+                 <button class="back-button" id="btn-free-signal-back" data-translate-key="back_btn"></button>
+                 <button class="main-button" id="btn-free-signal-start" data-translate-key="start_btn"></button>
+            </div>
+        </div>
+    </div>
 
     <!-- ЭКРАН АНАЛИЗА ПРОИГРЫША -->
     <div id="loss-analysis-view" class="view"><div class="card"><h1 class="title" data-translate-key="loss_analysis_title"></h1><p class="description" data-translate-key="loss_analysis_subtitle"></p><ol class="loss-analysis-list"><li data-translate-key="loss_reason1"></li><li data-translate-key="loss_reason2"></li><li data-translate-key="loss_reason3"></li><li data-translate-key="loss_reason4"></li></ol><div class="motivation-block" data-translate-key="loss_motivation"></div><div class="nav-buttons full-width"><button class="main-button" id="btn-loss-analysis-back" data-translate-key="loss_analysis_btn"></button></div></div></div>
@@ -98,46 +157,64 @@
             'pro_tip_title': 'Совет от про-трейдеров', 'pro_tip_desc': 'Не бойся потерь, они есть у всех. В долгосроке все твои действия принесут прибыль!', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Лобби', 'lobby_congrats': 'Поздравляю с первым депозитом!', 'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.', 'lobby_btn_profile': 'Перейти в профиль трейдера',
             'profile_title': 'Профиль трейдера', 'profile_nickname': 'Никнейм', 'profile_name': 'Имя', 'profile_about': 'О себе', 'profile_balance': 'Текущий баланс', 'profile_rank': 'Текущее звание', 'rank_novice': 'Новичок', 'rank_detail_vip': 'Количество полученных ВИП сигналов', 'rank_detail_days': 'С даты регистрации прошло', 'rank_detail_maxdep': 'Максимальный депозит', 'rank_detail_maxdep_note': 'ниже среднего',
-            'profile_btn_trade_free': 'Торговать на бесплатных сигналах', 'profile_btn_rating': 'Рейтинг', 'profile_btn_trade_vip': 'VIP сигналы', 'profile_btn_help': 'Помощь', 'profile_btn_promocodes': 'Персональные промокоды',
-            'rating_title': 'Рейтинг', 'your_position': 'Ваша позиция',
+            'profile_btn_trade_free': 'Торговать на бесплатных сигналах', 'profile_btn_trade_vip': 'VIP сигналы', 'profile_btn_help': 'Помощь', 'profile_btn_promocodes': 'Персональные промокоды',
             'promocode_title': 'Мои промокоды',
             'free_signal_title': 'Бесплатный сигнал', 'free_signal_text': 'Нажми кнопку <b>Старт</b>, когда будешь готов получить свой {count} сигнал.',
             'loss_analysis_title': 'Скорее всего, ты сделал что-то не так', 'loss_analysis_subtitle': 'Возможные варианты:', 'loss_reason1': 'Не вовремя открыл сделку <span>(слишком поздно)</span>', 'loss_reason2': 'Выбрал неверную валютную пару', 'loss_reason3': 'Открыл сделку в противоположном направлении', 'loss_reason4': 'Либо мои алгоритмы дали сбой <span>(и такое возможно)</span>', 'loss_motivation': 'Помни, что потерь не нужно бояться, они есть и будут у всех. Тот, кто не сломался от них, дойдёт до своих иксов прибыли!', 'loss_analysis_btn': 'Ни шагу назад!',
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
             'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу, надо будет действовать быстро', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'confirm_ready_btn': 'Я готов!',
+            'profile_btn_rating': 'Рейтинг',
+            'rating_title': 'Рейтинг', 
+            'your_position': 'Ваша позиция',
         },
-        'en': { /* Английские переводы добавлены для полноты */ }
+        'en': { 
+            'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
+            'not_filled_in': '(not filled)', 'fill_in_btn': 'fill in', 'edit_btn': 'edit',
+            'prompt_name': 'Enter your name:', 'prompt_about': 'Tell us about yourself:', 'start_btn': 'Start', 'goto_profile_btn': 'To Profile',
+            'onb1_ai_users': '40+ signal-traders using this AI-Bot', 'onb1_stat_users': 'users', 'onb1_stat_earned': 'earned', 'onb1_stat_recommended': 'RECOMMENDED',
+            'tutorial_title': 'Tutorial', 'tutorial_b1': 'Prepare before the signal, be attentive and fearless.', 'tutorial_b2': 'Quickly open the site and copy the trade. Your <b>speed</b> is important.', 'tutorial_b3': '8-12 signals: secure your profit. Keep trading and multiply your profit.', 'tutorial_b4': 'Get ranks and grow to access the community of successful users.', 'tutorial_ready_btn': 'I\'m ready!',
+            'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 'step1_side_note': 'All our users have instant withdrawals thanks to the P/O license.', 'step1_btn_register': 'Register', 'how_to_register_btn': 'How to register?', 'have_account_btn': 'I already have an account',
+            'how_to_reg_title': 'It\'s simple!', 'how_to_reg_subtitle': 'Follow these instructions:', 'how_to_reg_s1': 'Follow the link:', 'how_to_reg_s1_btn': 'Link', 'how_to_reg_s2': 'Enter your email and create a password.', 'how_to_reg_s3': 'In the "promocode" field, write <em>50START</em>.', 'how_to_reg_s4': 'Accept the broker\'s terms by clicking the checkbox.', 'how_to_reg_s5': 'Click "Register"!', 'how_to_reg_video': '"video instruction"',
+            'reg_success_title': 'Registration Confirmed!', 'reg_success_desc': 'Soon you will receive your first signal and start earning.',
+            'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?', 'how_to_deposit_text': '<i>*Instructions will be here*</i>',
+            'real_money_q': 'Okay! But does it have real money?', 'yes_btn': 'Yes', 'no_btn': 'No',
+            'new_acc_flow_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.',
+            'how_to_del_title': 'How to delete the account?', 'how_to_del_s1': 'Go to your profile where your personal data is listed.', 'how_to_del_s2': 'Scroll to the very bottom of the page.', 'how_to_del_s3': 'Press the big red button: "Delete account".', 'how_to_del_s4': 'Choose <em>any</em> reason and confirm the deletion.', 'how_to_del_s5': 'Log out of the account.', 'how_to_del_video_placeholder': '"video guide will be here"',
+            'have_money_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'have_money_subtitle': 'You have several options:', 'have_money_opt1': 'Withdraw the remaining money, then delete the account and create a new one.', 'have_money_btn1': 'How to withdraw funds?', 'have_money_opt2': 'Register an account for a friend.', 'have_money_opt3': 'Take a risk.', 'have_money_btn3': 'What?',
+            'risk_info_text': 'If there is little money on the balance - take a risk and go all the way: either you lose everything, or you double it. My signals will pay off more than your balance. <em>Act!</em>',
+            'pro_tip_title': 'Advice from pro-traders', 'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!', 'pro_tip_btn': 'OK!',
+            'lobby_title': 'Lobby', 'lobby_congrats': 'Congratulations on your first deposit!', 'lobby_footnote': 'This is your starting point, not counting bonuses.', 'lobby_btn_profile': 'Go to trader\'s profile',
+            'profile_title': 'Trader Profile', 'profile_nickname': 'Nickname', 'profile_name': 'Name', 'profile_about': 'About me', 'profile_balance': 'Current Balance', 'profile_rank': 'Current Rank', 'rank_novice': 'Novice', 'rank_detail_vip': 'VIP signals received', 'rank_detail_days': 'Days since registration', 'rank_detail_maxdep': 'Maximum deposit', 'rank_detail_maxdep_note': 'below average',
+            'profile_btn_trade_free': 'Trade on free signals', 'profile_btn_trade_vip': 'VIP signals', 'profile_btn_help': 'Help', 'profile_btn_promocodes': 'Personal promo codes',
+            'promocode_title': 'My promocodes',
+            'free_signal_title': 'Free Signal', 'free_signal_text': 'Press the <b>Start</b> button when you are ready to receive your {count} signal.',
+            'loss_analysis_title': 'You probably did something wrong', 'loss_analysis_subtitle': 'Possible options:', 'loss_reason1': 'Opened the trade at the wrong time <span>(too late)</span>', 'loss_reason2': 'Chose the wrong currency pair', 'loss_reason3': 'Opened the trade in the opposite direction', 'loss_reason4': 'Or my algorithms failed <span>(it happens)</span>', 'loss_motivation': 'Remember not to be afraid of losses; everyone has them. Those who don\'t break from them will reach their profit multipliers!', 'loss_analysis_btn': 'Not one step back!',
+            'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.',
+            'search_title': 'Searching for a signal', 'search_desc': 'Get ready, go to the platform, you will need to act quickly', 'signal_get_btn': 'Get Signal', 'signal_ready': 'Ready!', 'signal_pair_select': 'Choose currency pair <b>{pair}</b>', 'signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW', 'signal_buy': 'BUY 🟢', 'signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!', 'want_vip_btn': 'I want a VIP signal', 'i_lost_btn': 'I lost', 'confirm_ready_btn': 'I\'m ready!',
+            'profile_btn_rating': 'Rating',
+            'rating_title': 'Rating', 
+            'your_position': 'Your Position',
+        }
     };
     let userLang = 'en';
     let currentViewId = '';
     let previousViewId = '';
     let userId;
 
-    function getRussianOrdinal(n) { /* ... без изменений ... */ }
-    function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
-    function incrementSignalCount() { let count = getSignalCount(); localStorage.setItem(`signalCounter_${userId}`, count + 1); }
-
-    function applyTranslations(lang) {
-        const t = TRANSLATIONS[lang] || TRANSLATIONS['en']; // Fallback to English
-        document.querySelectorAll('[data-translate-key]').forEach(el => {
-            const key = el.getAttribute('data-translate-key');
-            if (t[key]) { el.innerHTML = t[key]; }
-        });
+    function getRussianOrdinal(n) {
+        if (userLang !== 'ru') {
+            const lastDigit = n % 10, lastTwoDigits = n % 100;
+            if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return `${n}th`;
+            switch (lastDigit) {
+                case 1: return `${n}st`;
+                case 2: return `${n}nd`;
+                case 3: return `${n}rd`;
+                default: return `${n}th`;
+            }
+        }
+        return `${n}-й`;
     }
-    
-    function prepareFreeSignalView() {
-        const count = getSignalCount();
-        const ordinal = getRussianOrdinal(count);
-        showView('free-signal-start-view');
-        document.getElementById('free-signal-text').innerHTML = (TRANSLATIONS[userLang] || TRANSLATIONS['en'])['free_signal_text'].replace('{count}', `<b>${ordinal}</b>`);
-    }
-
-    function showView(viewId) { /* ... без изменений ... */ }
-    function renderProfileField(fieldKey, valueElId) { /* ... без изменений ... */ }
-    function renderProfileData(data) { /* ... без изменений ... */ }
-    function startSignalFlow() { /* ... без изменений ... */ }
-    
-    function renderRating(data) {
+        function renderRating(data) {
         const container = document.getElementById('rating-list-container');
         container.innerHTML = '';
         const user = tg.initDataUnsafe.user;
@@ -146,11 +223,11 @@
         const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"];
         const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
         
-        // ВАШИ ТОЧНЫЕ ЦИФРЫ ДЛЯ ТОП-5
+        // Ваши точные цифры для топ-5
         const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56];
         
         // 1. Топ 15
-        let lastSum = top5Sums[4];
+        let lastSum = top5Sums[4]; // Начинаем отсчет от 5-го места
         for(let i = 1; i <= 15; i++) {
             const name = fakeNames[i-1];
             let sum;
@@ -158,13 +235,15 @@
                 sum = top5Sums[i-1];
             } else {
                 lastSum -= getRandom(15000, 30000);
-                sum = Math.max(lastSum, (16 - i) * 10000);
+                sum = Math.max(lastSum, (16 - i) * 10000); // Гарантируем, что сумма не будет отрицательной
             }
             container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
         }
         
+        // 2. Сепаратор
         container.innerHTML += `<li class="rating-separator">...</li>`;
         
+        // 3. Данные пользователя и "соседи"
         let userRankKey = `userRank_${userId}`;
         let userPos = localStorage.getItem(userRankKey);
         if (!userPos) {
@@ -174,27 +253,131 @@
         userPos = parseInt(userPos);
         const userSum = data.user_withdrawal_sum || 0.0;
         
+        // Игрок выше
         const playerAboveSum = userSum + getRandom(50, 200);
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
         
+        // Сам пользователь
         const userName = user.first_name || t.your_position;
         container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${userName} (Вы)</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
 
+        // Игрок ниже
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`;
+    }
+    function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
+    function incrementSignalCount() {
+        let count = getSignalCount();
+        localStorage.setItem(`signalCounter_${userId}`, count + 1);
+    }
+
+    function applyTranslations(lang) {
+        const t = TRANSLATIONS[lang];
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (t[key]) {
+                el.innerHTML = t[key];
+            }
+        });
+    }
+    
+    function prepareFreeSignalView() {
+        const count = getSignalCount();
+        const ordinal = getRussianOrdinal(count);
+        showView('free-signal-start-view');
+        document.getElementById('free-signal-text').innerHTML = TRANSLATIONS[userLang]['free_signal_text'].replace('{count}', `<b>${ordinal}</b>`);
+    }
+
+    function showView(viewId) {
+        if (currentViewId && currentViewId !== viewId) { previousViewId = currentViewId; }
+        currentViewId = viewId;
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const viewElement = document.getElementById(viewId);
+        if (viewElement) { viewElement.classList.add('active'); }
+        const faqButton = document.getElementById('faq-button');
+        const faqVisibleOn = ['post-deposit-view', 'post-reg-view', 'trader-profile-view'];
+        if (faqVisibleOn.includes(viewId)) {
+            faqButton.classList.add('visible');
+        } else {
+            faqButton.classList.remove('visible');
+        }
+    }
+
+    function renderProfileField(fieldKey, valueElId) {
+        const valueEl = document.getElementById(valueElId);
+        const savedValue = localStorage.getItem(`${fieldKey}_${userId}`);
+        const t = TRANSLATIONS[userLang];
+        const currentText = savedValue || '';
+        const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
+        const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
+        valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
+        valueEl.querySelector('button').onclick = () => {
+            const promptTitleKey = (fieldKey === 'userName') ? 'prompt_name' : 'prompt_about';
+            const promptTitle = t[promptTitleKey];
+            const newValue = prompt(promptTitle, currentText);
+            if (newValue !== null) {
+                localStorage.setItem(`${fieldKey}_${userId}`, newValue);
+                renderProfileField(fieldKey, valueElId);
+            }
+        };
+    }
+
+    function renderProfileData(data) {
+        const user = tg.initDataUnsafe.user;
+        document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set';
+        renderProfileField('userName', 'profile-name-val');
+        renderProfileField('userAbout', 'profile-about-val');
+        const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
+        const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00";
+        document.getElementById('profile-balance-val').innerText = `$${balance}`;
+        if (data.reg_date) {
+            const regDate = new Date(data.reg_date);
+            const today = new Date();
+            const timeDiff = today.getTime() - regDate.getTime();
+            const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24)));
+            document.getElementById('days-since-reg').innerText = daysDiff;
+        } else {
+            document.getElementById('days-since-reg').innerText = 'N/A';
+        }
+        document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`;
+    }
+
+    function startSignalFlow() {
+        showView('signal-active-view');
+        const allElements = {'stage1': document.getElementById('signal-stage-1'),'stage2': document.getElementById('signal-stage-2'),'stage3': document.getElementById('signal-stage-3'),'resultContainer': document.getElementById('signal-result-container'),'winButtons': document.getElementById('signal-win-buttons'),'lossButtons': document.getElementById('signal-loss-buttons'),'confirmationContainer': document.getElementById('signal-confirmation-container'),'signalStatusReady': document.getElementById('signal-status-ready'),'signalPair': document.getElementById('signal-pair'),'signalStatusExpSoon': document.getElementById('signal-exp-soon'),'signalExpiration': document.getElementById('signal-expiration'),'signalDirection': document.getElementById('signal-direction'),};
+        for (const key in allElements) { allElements[key].style.display = 'none'; }
+        allElements.stage1.style.display = 'block';
+        setTimeout(() => {allElements.stage1.style.display = 'none'; allElements.stage2.style.display = 'block';}, 5000);
+        document.getElementById('btn-get-signal').onclick = () => {
+            allElements.stage2.style.display = 'none'; allElements.stage3.style.display = 'block';
+            const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"], expirations = ["S15", "S20", "S25"], directions = ["buy", "sell"], getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)], selectedPair = getRandomItem(currencyPairs), selectedExp = getRandomItem(expirations), selectedDir = getRandomItem(directions);
+            setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500);
+            setTimeout(() => { allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); allElements.signalPair.style.display = 'block'; }, 1500);
+            setTimeout(() => { allElements.signalStatusExpSoon.style.display = 'block'; }, 3000);
+            setTimeout(() => { allElements.signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', `<b>${selectedExp}</b>`); allElements.signalExpiration.style.display = 'block'; allElements.confirmationContainer.style.display = 'block'; }, 10000);
+            document.getElementById('btn-confirm-ready').onclick = () => {
+                allElements.confirmationContainer.style.display = 'none'; let dirText = selectedDir === 'buy' ? TRANSLATIONS[userLang]['signal_buy'] : TRANSLATIONS[userLang]['signal_sell']; allElements.signalDirection.className = `signal-step ${selectedDir}-signal`; allElements.signalDirection.innerHTML = dirText; allElements.signalDirection.style.display = 'block'; const expirationInMs = parseInt(selectedExp.substring(1)) * 1000;
+                setTimeout(() => {
+                    const isWin = Math.random() < 0.7;
+                    const signalResultEl = document.getElementById('signal-result');
+                    if (isWin) { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_win']; signalResultEl.className = 'signal-result win'; allElements.winButtons.style.display = 'flex'; }
+                    else { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_loss']; signalResultEl.className = 'signal-result loss'; allElements.lossButtons.style.display = 'flex'; }
+                    allElements.resultContainer.style.display = 'block';
+                }, expirationInMs);
+            };
+        };
     }
 
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
-        document.getElementById('btn-rating').onclick = () => showView('rating-view');
-        document.getElementById('btn-rating-back').onclick = () => showView('trader-profile-view');
-        
         document.getElementById('btn-promocodes').onclick = () => showView('promocodes-view');
         document.getElementById('btn-promocodes-back').onclick = () => showView('trader-profile-view');
-        
+        // ... внутри setupNavigation() ...
+        document.getElementById('btn-rating').onclick = () => showView('rating-view');
+        document.getElementById('btn-rating-back').onclick = () => showView('trader-profile-view');
         document.getElementById('btn-trade-free').onclick = prepareFreeSignalView;
         document.getElementById('btn-free-signal-start').onclick = startSignalFlow;
-        document.getElementById('btn-free-signal-back').onclick = () => showView('trader-profile-view'); 
+        document.getElementById('btn-free-signal-back').onclick = () => showView('trader-profile-view'); // ИСПРАВЛЕНИЕ ЗДЕСЬ
 
         const nextSignalHandler = () => { incrementSignalCount(); prepareFreeSignalView(); };
         document.getElementById('btn-next-signal').onclick = nextSignalHandler;
@@ -301,9 +484,6 @@
             fetchAndUpdateView(userId);
         });
     }
-
-    // --- Полные версии функций для краткости ---
-    getRussianOrdinal=(n)=>{if(userLang!=="ru"){const t=n%10,e=n%100;return e>=11&&e<=13?`${n}th`:1===t?`${n}st`:2===t?`${n}nd`:3===t?`${n}rd`:`${n}th`}return`${n}-й`};showView=t=>{currentViewId&&currentViewId!==t&&(previousViewId=currentViewId),currentViewId=t,document.querySelectorAll(".view").forEach(t=>t.classList.remove("active"));const e=document.getElementById(t);e&&e.classList.add("active");const i=document.getElementById("faq-button");["post-deposit-view","post-reg-view","trader-profile-view"].includes(t)?i.classList.add("visible"):i.classList.remove("visible")};renderProfileData=t=>{const e=tg.initDataUnsafe.user;document.getElementById("profile-nickname-val").innerText=e.username?`@${e.username}`:"Not set",renderProfileField("userName","profile-name-val"),renderProfileField("userAbout","profile-about-val");const i=t.events.find(t=>"FTD"===t[0]||"dep"===t[0]),n=i?parseFloat(i[1]).toFixed(2):"0.00";if(document.getElementById("profile-balance-val").innerText=`$${n}`,t.reg_date){const e=new Date(t.reg_date),i=(new Date).getTime()-e.getTime(),n=Math.max(0,Math.floor(i/864e5));document.getElementById("days-since-reg").innerText=n}else document.getElementById("days-since-reg").innerText="N/A";document.getElementById("max-deposit-val").innerText=`$${t.max_deposit||"0.00"}`};startSignalFlow=()=>{showView("signal-active-view");const t={stage1:document.getElementById("signal-stage-1"),stage2:document.getElementById("signal-stage-2"),stage3:document.getElementById("signal-stage-3"),resultContainer:document.getElementById("signal-result-container"),winButtons:document.getElementById("signal-win-buttons"),lossButtons:document.getElementById("signal-loss-buttons"),confirmationContainer:document.getElementById("signal-confirmation-container"),signalStatusReady:document.getElementById("signal-status-ready"),signalPair:document.getElementById("signal-pair"),signalStatusExpSoon:document.getElementById("signal-exp-soon"),signalExpiration:document.getElementById("signal-expiration"),signalDirection:document.getElementById("signal-direction")};for(const e in t)t[e].style.display="none";t.stage1.style.display="block",setTimeout(()=>{t.stage1.style.display="none",t.stage2.style.display="block"},5e3),document.getElementById("btn-get-signal").onclick=()=>{t.stage2.style.display="none",t.stage3.style.display="block";const e=["EUR/RUB OTC","AUD/USD OTC","AUD/CAD OTC"],i=["S15","S20","S25"],n=["buy","sell"],s=t=>t[Math.floor(Math.random()*t.length)],a=s(e),o=s(i),l=s(n);setTimeout(()=>{t.signalStatusReady.style.display="block"},500),setTimeout(()=>{t.signalPair.innerHTML=(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_pair_select.replace("{pair}",`<b>${a}</b>`),t.signalPair.style.display="block"},1500),setTimeout(()=>{t.signalStatusExpSoon.style.display="block"},3e3),setTimeout(()=>{t.signalExpiration.innerHTML=(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_exp_time.replace("{exp}",`<b>${o}</b>`),t.signalExpiration.style.display="block",t.confirmationContainer.style.display="block"},1e4),document.getElementById("btn-confirm-ready").onclick=()=>{t.confirmationContainer.style.display="none";let e="buy"===l?(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_buy:(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_sell;t.signalDirection.className=`signal-step ${l}-signal`,t.signalDirection.innerHTML=e,t.signalDirection.style.display="block";const s=1e3*parseInt(o.substring(1));setTimeout(()=>{const e=Math.random()<.7,i=document.getElementById("signal-result");e?(i.innerHTML=(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_win,i.className="signal-result win",t.winButtons.style.display="flex"):(i.innerHTML=(TRANSLATIONS[userLang]||TRANSLATIONS.en).signal_loss,i.className="signal-result loss",t.lossButtons.style.display="flex"),t.resultContainer.style.display="block"},s)}}};main=async()=>{if(!tg.initDataUnsafe||!tg.initDataUnsafe.user)return applyTranslations("en"),void showView("error-view");const t=tg.initDataUnsafe.user;userId=t.id,userLang=t.language_code&&t.language_code.startsWith("ru")?"ru":"en",document.documentElement.lang=userLang,applyTranslations(userLang),setupNavigation(),await fetchAndUpdateView(userId);const e=io();e.on("connect",()=>{console.log("Connected to WebSocket server!"),e.emit("join",{chat_id:userId})}),e.on("update_data",t=>{console.log("Received update from server:",t.message),tg.HapticFeedback.notificationOccurred("success"),fetchAndUpdateView(userId)})};
 
     document.addEventListener('DOMContentLoaded', main);
 </script>
