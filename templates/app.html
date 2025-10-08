@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
 <!-- ВСПЛЫВАЮЩИЙ БЛОК С СОВЕТОМ -->
 <div id="pro-tip-overlay" class="overlay-view">
     <div class="card pro-tip-card">
@@ -21,7 +20,7 @@
         <button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button>
     </div>
 </div>
-
+<div id="notification-toast" class="notification-toast"></div>
 <div class="app-wrapper">
 
     <!-- ЭКРАН 0: ЗАГРУЗКА -->
@@ -166,6 +165,8 @@
             'profile_btn_rating': 'Рейтинг',
             'rating_title': 'Рейтинг', 
             'your_position': 'Ваша позиция',
+            'save_btn': 'Сохранить',
+            'promocode_copied': 'Промокод скопирован!',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -194,6 +195,8 @@
             'profile_btn_rating': 'Rating',
             'rating_title': 'Rating', 
             'your_position': 'Your Position',
+            'save_btn': 'Save',
+            'promocode_copied': 'Promocode copied!',
         }
     };
     let userLang = 'en';
@@ -301,24 +304,53 @@
             faqButton.classList.remove('visible');
         }
     }
-
+    function showNotification(text) {
+        const toast = document.getElementById('notification-toast');
+        toast.textContent = text;
+        toast.classList.add('visible');
+        setTimeout(() => {
+            toast.classList.remove('visible');
+        }, 2500);
+    }
     function renderProfileField(fieldKey, valueElId) {
         const valueEl = document.getElementById(valueElId);
-        const savedValue = localStorage.getItem(`${fieldKey}_${userId}`);
-        const t = TRANSLATIONS[userLang];
-        const currentText = savedValue || '';
-        const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
-        const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
-        valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
-        valueEl.querySelector('button').onclick = () => {
-            const promptTitleKey = (fieldKey === 'userName') ? 'prompt_name' : 'prompt_about';
-            const promptTitle = t[promptTitleKey];
-            const newValue = prompt(promptTitle, currentText);
-            if (newValue !== null) {
-                localStorage.setItem(`${fieldKey}_${userId}`, newValue);
-                renderProfileField(fieldKey, valueElId);
-            }
+        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
+
+        // Функция для отображения текста и кнопки "изменить"
+        const renderDisplayMode = () => {
+            const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
+            const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
+            const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
+            
+            valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
+            valueEl.querySelector('.edit-button').onclick = renderEditMode;
         };
+
+        // Функция для отображения поля ввода и кнопки "сохранить"
+        const renderEditMode = () => {
+            const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
+            valueEl.innerHTML = `
+                <input type="text" class="inline-input" value="${savedValue}">
+                <button class="save-button">${t.save_btn}</button>
+            `;
+            const input = valueEl.querySelector('.inline-input');
+            input.focus(); // Сразу ставим курсор в поле
+            
+            const saveValue = () => {
+                localStorage.setItem(`${fieldKey}_${userId}`, input.value);
+                renderDisplayMode();
+            };
+
+            valueEl.querySelector('.save-button').onclick = saveValue;
+            // Сохранение по нажатию Enter
+            input.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    saveValue();
+                }
+            };
+        };
+
+        renderDisplayMode();
     }
 
     function renderProfileData(data) {
@@ -369,7 +401,16 @@
 
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
-        
+        document.querySelectorAll('.promocode-item .code').forEach(el => {
+            el.onclick = () => {
+                navigator.clipboard.writeText(el.textContent).then(() => {
+                    const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
+                    showNotification(t.promocode_copied);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            };
+        });
         document.getElementById('btn-promocodes').onclick = () => showView('promocodes-view');
         document.getElementById('btn-promocodes-back').onclick = () => showView('trader-profile-view');
         // ... внутри setupNavigation() ...
@@ -490,3 +531,4 @@
 
 </body>
 </html>
+
