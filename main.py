@@ -164,13 +164,22 @@ def user_data_api(chat_id):
     # Получаем максимальный депозит
     c.execute("SELECT MAX(sumdep) FROM postbacks WHERE subid = ? AND (event = 'FTD' OR event = 'dep')", (str(chat_id),))
     max_dep_row = c.fetchone()
-    max_deposit = max_dep_row[0] if max_dep_row and max_dep_row[0] is not None else 0
+    max_deposit = max_dep_row[0] if max_dep_row and max_dep_row[0] is not None else 0.0
 
-    # === НОВОЕ ИЗМЕНЕНИЕ: Подсчет суммы выводов ===
+    # Подсчет суммы выводов (для рейтинга)
     c.execute("SELECT SUM(wdr_sum) FROM postbacks WHERE subid = ?", (str(chat_id),))
     wdr_sum_row = c.fetchone()
     user_withdrawal_sum = wdr_sum_row[0] if wdr_sum_row and wdr_sum_row[0] is not None else 0.0
-    # ===============================================
+    
+    # === НОВОЕ ИЗМЕНЕНИЕ: Подсчет ОБЩЕЙ суммы депозитов (для званий) ===
+    c.execute("SELECT SUM(sumdep) FROM postbacks WHERE subid = ? AND (event = 'FTD' OR event = 'dep')", (str(chat_id),))
+    total_dep_row = c.fetchone()
+    total_deposit_sum_raw = total_dep_row[0] if total_dep_row and total_dep_row[0] is not None else 0.0
+    try:
+        total_deposit_sum_display = (float(total_deposit_sum_raw) / 94 * 100)
+    except (ValueError, TypeError, ZeroDivisionError):
+        total_deposit_sum_display = 0.0
+    # =====================================================================
 
     events = []
     # Конвертируем сумму депозитов для отображения
@@ -193,7 +202,8 @@ def user_data_api(chat_id):
         "is_registered": is_registered, 
         "reg_date": reg_date,
         "max_deposit": max_deposit_display,
-        "user_withdrawal_sum": user_withdrawal_sum, # Новое поле с суммой выводов
+        "user_withdrawal_sum": user_withdrawal_sum,
+        "total_deposit_sum": total_deposit_sum_display, # Новое поле с общей суммой депозитов
         "events": events
     })
 def _process_and_notify(event, subid, data):
@@ -270,4 +280,5 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
 
