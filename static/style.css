@@ -618,3 +618,17 @@ b { color: var(--color-accent); font-weight: 600; }
     transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
+/* --- 28. Стили для списка рангов в профиле --- */
+.ranks-info-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+.ranks-info-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+.ranks-info-list li b {
+    color: var(--text-primary);
+}
