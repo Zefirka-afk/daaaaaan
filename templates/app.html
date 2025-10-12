@@ -73,8 +73,18 @@
                     <p><span data-translate-key="rank_detail_vip"></span>: 0</p>
                     <p><span data-translate-key="rank_detail_days"></span>: <span id="days-since-reg">0</span></p>
                     <p><span data-translate-key="rank_detail_maxdep"></span>: <span id="max-deposit-val">$0.00</span> (<span data-translate-key="rank_detail_maxdep_note"></span>)</p>
+        
+        <!-- НОВЫЙ БЛОК: Список всех рангов -->
+                    <ul class="ranks-info-list">
+                        <li><b>Strategist:</b> $1 - $399</li>
+                        <li><b>Royal:</b> $400 - $999</li>
+                        <li><b>Hero:</b> $1000 - $4999</li>
+                        <li><b>Nova:</b> $5000 - $19999</li>
+                        <li><b>Legend:</b> $20000+</li>
+                    </ul>
                 </div>
             </div>
+           
             <div class="nav-buttons-vertical profile-actions">
                 <button class="main-button" id="btn-trade-free" data-translate-key="profile_btn_trade_free"></button>
                 <button class="secondary-button" id="btn-rating" data-translate-key="profile_btn_rating"></button>
@@ -167,6 +177,12 @@
             'your_position': 'Ваша позиция',
             'save_btn': 'Сохранить',
             'promocode_copied': 'Промокод скопирован!',
+            'rank_novice': 'Strategist', // Начальный ранг
+            'rank_strategist': 'Strategist',
+            'rank_royal': 'Royal',
+            'rank_hero': 'Hero',
+            'rank_nova': 'Nova',
+            'rank_legend': 'Legend',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -197,6 +213,12 @@
             'your_position': 'Your Position',
             'save_btn': 'Save',
             'promocode_copied': 'Promocode copied!',
+            'rank_novice': 'Strategist', // Начальный ранг\
+            'rank_strategist': 'Strategist',
+            'rank_royal': 'Royal',
+            'rank_hero': 'Hero',
+            'rank_nova': 'Nova',
+            'rank_legend': 'Legend',
         }
     };
     let userLang = 'en';
@@ -355,12 +377,27 @@
 
     function renderProfileData(data) {
         const user = tg.initDataUnsafe.user;
+        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
+
         document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set';
         renderProfileField('userName', 'profile-name-val');
         renderProfileField('userAbout', 'profile-about-val');
+        
         const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
         const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00";
         document.getElementById('profile-balance-val').innerText = `$${balance}`;
+        
+        // --- НОВАЯ ЛОГИКА ОПРЕДЕЛЕНИЯ РАНГА ---
+        const totalDeposit = data.total_deposit_sum || 0;
+        let rankKey = 'rank_strategist';
+        if (totalDeposit >= 20000) rankKey = 'rank_legend';
+        else if (totalDeposit >= 5000) rankKey = 'rank_nova';
+        else if (totalDeposit >= 1000) rankKey = 'rank_hero';
+        else if (totalDeposit >= 400) rankKey = 'rank_royal';
+        
+        document.getElementById('current-rank-name').innerText = t[rankKey];
+        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+
         if (data.reg_date) {
             const regDate = new Date(data.reg_date);
             const today = new Date();
@@ -434,7 +471,12 @@
         document.getElementById('btn-pro-tip-ok').onclick = () => { document.getElementById('pro-tip-overlay').style.display = 'none'; showView('post-deposit-view'); };
         document.getElementById('btn-goto-profile').onclick = goToProfileHandler;
         document.getElementById('btn-profile-back').onclick = () => showView('post-deposit-view');
-        document.getElementById('rank-toggle-btn').onclick = (e) => { const details = document.getElementById('rank-details'); e.target.classList.toggle('open'); details.style.display = details.style.display === 'none' ? 'block' : 'none'; };
+        document.getElementById('rank-container').onclick = (e) => {
+            const details = document.getElementById('rank-details');
+            const toggleBtn = document.getElementById('rank-toggle-btn');
+            toggleBtn.classList.toggle('open');
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        };
         document.getElementById('btn-trade-vip').onclick = () => showView('wip-view');
         document.getElementById('btn-help').onclick = () => showView('wip-view');
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
@@ -531,5 +573,6 @@
 
 </body>
 </html>
+
 
 
