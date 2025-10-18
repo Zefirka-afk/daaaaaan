@@ -507,8 +507,8 @@
 
             // Важно: убедитесь, что имена файлов в папке static/ в нижнем регистре (reg_ru.mp4, reg_en.mp4)
             // Render чувствителен к регистру!
-            const videoSrcRu = "{{ url_for('static', filename='reg_ru.mp4') }}";
-            const videoSrcEn = "{{ url_for('static', filename='reg_en.mp4') }}";
+            const videoSrcRu = "{{ url_for('static', filename='reg_ru.MP4') }}";
+            const videoSrcEn = "{{ url_for('static', filename='reg_en.MP4') }}";
             
             // Устанавливаем нужный источник видео в зависимости от языка
             videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
@@ -655,6 +655,7 @@
 
 </body>
 </html>
+
 
 
 
