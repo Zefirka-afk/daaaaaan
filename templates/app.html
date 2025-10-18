@@ -493,14 +493,16 @@
         // --- КОНЕЦ ИСПРАВЛЕНИЙ ТУТОРИАЛА ---
 
         // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ "КАК СДЕЛАТЬ РЕГИСТРАЦИЮ" ---
+                // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ "КАК СДЕЛАТЬ РЕГИСТРАЦИЮ" ---
         document.getElementById('btn-step1-how-to').onclick = () => {
             const videoEl = document.getElementById('registration-video');
             // Убедитесь, что имена файлов в папке static совпадают
-            const videoSrcRu = "{{ url_for('static', filename='reg_ru.MP4') }}";
-            const videoSrcEn = "{{ url_for('static', filename='reg_en.MP4') }}";
+            const videoSrcRu = "{{ url_for('static', filename='reg_ru.mp4') }}";
+            const videoSrcEn = "{{ url_for('static', filename='reg_en.mp4') }}";
             
             videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
-            
+
+            // ДОБАВЬТЕ ЭТУ СТРОКУ
             showView('how-to-register-view');
         };
         document.getElementById('btn-how-to-reg-back').onclick = () => {
@@ -630,6 +632,7 @@
 
 </body>
 </html>
+
 
 
 
