@@ -26,7 +26,6 @@
     <div id="error-view" class="view"><div class="card"><p data-translate-key="error_text"></p></div></div>
 
     <!-- БЛОК 1: ОНБОРДИНГ -->
-        <!-- БЛОК 1: ПЕРВЫЙ ЭКРАН -->
     <div id="onboarding-1-view" class="view">
         <div class="card">
             <h1 class="custom-header">PRO MAX TRADING SIGNAL BOT</h1>
@@ -40,7 +39,6 @@
             <div class="nav-buttons full-width"><button class="main-button" id="btn-onb1-next" data-translate-key="next_btn"></button></div>
         </div>
     </div>
-        <!-- БЛОК 1.2: ТУТОРИАЛ -->
     <div id="onboarding-2-view" class="view">
         <div class="card">
             <h1 class="tutorial-title" data-translate-key="tutorial_title"></h1>
@@ -83,8 +81,24 @@
     <div id="onboarding-3-view" class="view"><div class="card"><p class="step-label" data-translate-key="step1_label"></p><h1 class="roman-numeral">I</h1><h2 class="step-title" data-translate-key="step1_title"></h2><div class="side-note"><p data-translate-key="step1_side_note"></p></div><div class="nav-buttons-vertical"><button class="main-button" id="btn-step1-register" data-translate-key="step1_btn_register"></button><button class="secondary-button" id="btn-step1-how-to" data-translate-key="how_to_register_btn"></button><button class="secondary-button" id="btn-step1-have-account" data-translate-key="have_account_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-step1-back" data-translate-key="back_btn"></button></div></div></div>
     
     <!-- ЭКРАН: КАК ЗАРЕГИСТРИРОВАТЬСЯ -->
-    <div id="how-to-register-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_reg_title"></h1><p class="description" data-translate-key="how_to_reg_subtitle"></p><ol class="instruction-list"><li><span data-translate-key="how_to_reg_s1"></span><button class="main-button" id="btn-how-to-reg-link" data-translate-key="how_to_reg_s1_btn"></button></li><li data-translate-key="how_to_reg_s2"></li><li data-translate-key="how_to_reg_s3"></li><li data-translate-key="how_to_reg_s4"></li><li data-translate-key="how_to_reg_s5"></li></ol><p class="video-placeholder" data-translate-key="how_to_reg_video"></p><div class="nav-buttons"><button class="back-button" id="btn-how-to-reg-back" data-translate-key="back_btn"></button></div></div></div>
-
+    <div id="how-to-register-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="how_to_reg_title"></h1>
+            <p class="description" data-translate-key="how_to_reg_subtitle"></p>
+            <ol class="instruction-list">
+                <li><span data-translate-key="how_to_reg_s1"></span><button class="main-button" id="btn-how-to-reg-link" data-translate-key="how_to_reg_s1_btn"></button></li>
+                <li data-translate-key="how_to_reg_s2"></li>
+                <li data-translate-key="how_to_reg_s3"></li>
+                <li data-translate-key="how_to_reg_s4"></li>
+                <li data-translate-key="how_to_reg_s5"></li>
+            </ol>
+            <!-- === ИЗМЕНЕНИЕ 1: Заменили <p> на <video> === -->
+            <video id="registration-video" width="100%" controls muted playsinline loop style="border-radius: 12px; margin-bottom: 25px;"></video>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-how-to-reg-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
     <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
     <div id="real-money-check-view" class="view"><div class="card"><h1 class="title" data-translate-key="real_money_q"></h1><div class="nav-buttons-vertical"><button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button><button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button></div></div></div>
     <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
@@ -632,6 +646,7 @@
 
 </body>
 </html>
+
 
 
 
