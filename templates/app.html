@@ -99,6 +99,7 @@
             </div>
         </div>
     </div>
+
     <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
     <div id="real-money-check-view" class="view"><div class="card"><h1 class="title" data-translate-key="real_money_q"></h1><div class="nav-buttons-vertical"><button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button><button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button></div></div></div>
     <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
@@ -183,6 +184,7 @@
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
     
+    // ... (весь ваш блок TRANSLATIONS остается без изменений) ...
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя.', 'next_btn': 'Далее >', 'back_btn': '< Назад',
@@ -268,6 +270,7 @@
             'rank_strategist': 'Strategist', 'rank_royal': 'Royal', 'rank_hero': 'Hero', 'rank_nova': 'Nova', 'rank_legend': 'Legend',
         }
     };
+
     let userLang = 'en';
     let currentViewId = '';
     let previousViewId = '';
@@ -286,7 +289,8 @@
         }
         return `${n}-й`;
     }
-        function renderRating(data) {
+    
+    function renderRating(data) {
         const container = document.getElementById('rating-list-container');
         container.innerHTML = '';
         const user = tg.initDataUnsafe.user;
@@ -295,11 +299,9 @@
         const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"];
         const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
         
-        // Ваши точные цифры для топ-5
         const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56];
         
-        // 1. Топ 15
-        let lastSum = top5Sums[4]; // Начинаем отсчет от 5-го места
+        let lastSum = top5Sums[4]; 
         for(let i = 1; i <= 15; i++) {
             const name = fakeNames[i-1];
             let sum;
@@ -307,15 +309,13 @@
                 sum = top5Sums[i-1];
             } else {
                 lastSum -= getRandom(15000, 30000);
-                sum = Math.max(lastSum, (16 - i) * 10000); // Гарантируем, что сумма не будет отрицательной
+                sum = Math.max(lastSum, (16 - i) * 10000); 
             }
             container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
         }
         
-        // 2. Сепаратор
         container.innerHTML += `<li class="rating-separator">...</li>`;
         
-        // 3. Данные пользователя и "соседи"
         let userRankKey = `userRank_${userId}`;
         let userPos = localStorage.getItem(userRankKey);
         if (!userPos) {
@@ -325,17 +325,16 @@
         userPos = parseInt(userPos);
         const userSum = data.user_withdrawal_sum || 0.0;
         
-        // Игрок выше
         const playerAboveSum = userSum + getRandom(50, 200);
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
         
-        // Сам пользователь
         const userName = user.first_name || t.your_position;
         container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${userName} (Вы)</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
 
-        // Игрок ниже
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`;
     }
+
+    // ... (остальные ваши JS-функции: getSignalCount, incrementSignalCount, applyTranslations, etc. без изменений) ...
     function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
     function incrementSignalCount() {
         let count = getSignalCount();
@@ -385,7 +384,6 @@
         const valueEl = document.getElementById(valueElId);
         const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
 
-        // Функция для отображения текста и кнопки "изменить"
         const renderDisplayMode = () => {
             const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
             const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
@@ -395,7 +393,6 @@
             valueEl.querySelector('.edit-button').onclick = renderEditMode;
         };
 
-        // Функция для отображения поля ввода и кнопки "сохранить"
         const renderEditMode = () => {
             const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
             valueEl.innerHTML = `
@@ -403,7 +400,7 @@
                 <button class="save-button">${t.save_btn}</button>
             `;
             const input = valueEl.querySelector('.inline-input');
-            input.focus(); // Сразу ставим курсор в поле
+            input.focus(); 
             
             const saveValue = () => {
                 localStorage.setItem(`${fieldKey}_${userId}`, input.value);
@@ -411,7 +408,6 @@
             };
 
             valueEl.querySelector('.save-button').onclick = saveValue;
-            // Сохранение по нажатию Enter
             input.onkeydown = (e) => {
                 if (e.key === 'Enter') {
                     saveValue();
@@ -434,7 +430,6 @@
         const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00";
         document.getElementById('profile-balance-val').innerText = `$${balance}`;
         
-        // --- НОВАЯ ЛОГИКА ОПРЕДЕЛЕНИЯ РАНГА ---
         const totalDeposit = data.total_deposit_sum || 0;
         let rankKey = 'rank_strategist';
         if (totalDeposit >= 20000) rankKey = 'rank_legend';
@@ -443,7 +438,6 @@
         else if (totalDeposit >= 400) rankKey = 'rank_royal';
         
         document.getElementById('current-rank-name').innerText = t[rankKey];
-        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
 
         if (data.reg_date) {
             const regDate = new Date(data.reg_date);
@@ -482,10 +476,11 @@
             };
         };
     }
+
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
-        // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ ТУТОРИАЛА ---
+        // --- Логика туториала ---
         document.querySelector('#tutorial-btn-1 button').onclick = () => {
             document.getElementById('tutorial-step-2').style.display = 'flex';
             document.getElementById('tutorial-step-2').style.opacity = 1;
@@ -504,28 +499,40 @@
             document.getElementById('tutorial-final-btns').style.display = 'flex';
             document.getElementById('tutorial-btn-3').style.display = 'none';
         };
-        // --- КОНЕЦ ИСПРАВЛЕНИЙ ТУТОРИАЛА ---
-
-        // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ "КАК СДЕЛАТЬ РЕГИСТРАЦИЮ" ---
-                // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ "КАК СДЕЛАТЬ РЕГИСТРАЦИЮ" ---
+        
+        // === ИЗМЕНЕНИЕ 2: Полностью исправленная логика для кнопки "Как сделать регистрацию?" ===
         document.getElementById('btn-step1-how-to').onclick = () => {
             const videoEl = document.getElementById('registration-video');
-            // Убедитесь, что имена файлов в папке static совпадают
+            if (!videoEl) return; // Защита от ошибок, если элемент не найден
+
+            // Важно: убедитесь, что имена файлов в папке static/ в нижнем регистре (reg_ru.mp4, reg_en.mp4)
+            // Render чувствителен к регистру!
             const videoSrcRu = "{{ url_for('static', filename='reg_ru.mp4') }}";
             const videoSrcEn = "{{ url_for('static', filename='reg_en.mp4') }}";
             
+            // Устанавливаем нужный источник видео в зависимости от языка
             videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
+            
+            // Загружаем новое видео
+            videoEl.load();
 
-            // ДОБАВЬТЕ ЭТУ СТРОКУ
+            // <--- САМОЕ ГЛАВНОЕ: Показываем экран с инструкцией
             showView('how-to-register-view');
         };
+
+        // === ИЗМЕНЕНИЕ 3: Улучшение для кнопки "Назад" ===
         document.getElementById('btn-how-to-reg-back').onclick = () => {
-            document.getElementById('registration-video').pause(); // Останавливаем видео при выходе
+            const videoEl = document.getElementById('registration-video');
+            if (videoEl) {
+                videoEl.pause(); // <--- Останавливаем видео при выходе, чтобы не играло в фоне
+                videoEl.currentTime = 0; // Сбрасываем видео на начало
+            }
             showView('onboarding-3-view');
         };
-        // --- КОНЕЦ ИСПРАВЛЕНИЙ КНОПКИ ---
+        // === КОНЕЦ ИЗМЕНЕНИЙ ===
 
-        // Остальная навигация
+
+        // Остальная навигация (остается без изменений)
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-tutorial-back').onclick = () => showView('onboarding-1-view');
         document.getElementById('btn-tutorial-ready').onclick = () => showView('onboarding-3-view');
@@ -581,6 +588,8 @@
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
     }
+    
+    // ... (ваши функции fetchAndUpdateView и main остаются без изменений) ...
     async function fetchAndUpdateView(userId) {
         try {
             const response = await fetch(`/user/${userId}/data`);
@@ -646,6 +655,7 @@
 
 </body>
 </html>
+
 
 
 
