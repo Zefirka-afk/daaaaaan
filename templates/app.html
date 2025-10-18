@@ -16,7 +16,7 @@
 <!-- ВСЫВА СО-->
 <div id="pro-tip-overlay" class="overlay-view"><div class="card pro-tip-card"><h2 class="subtitle" data-translate-key="pro_tip_title"></h2><p class="description" data-translate-key="pro_tip_desc"></p><button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button></div></div>
 
-<!-- ЭЛЕМЕНТ ДЛЯ УВЕДЕНИЙ -->
+<!-- ЭЛЕМЕНТ ДЛЯ УВЕДОМЛЕНИЙ -->
 <div id="notification-toast" class="notification-toast"></div>
 
 <div class="app-wrapper">
@@ -102,11 +102,11 @@
     <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
     <div id="real-money-check-view" class="view"><div class="card"><h1 class="title" data-translate-key="real_money_q"></h1><div class="nav-buttons-vertical"><button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button><button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button></div></div></div>
     
-    <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
+    <!-- Экран для тех, у кого НЕТ денег на аккаунте -->
+    <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title_no_money"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
     
-    <!-- ИЗМЕНЕННЫЙ ЭКРАН "КАК УДАЛИТЬ" -->
+    <!-- Экран "Как удалить аккаунт" -->
     <div id="how-to-delete-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_del_title"></h1><ul class="delete-guide"><li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li><li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li><li data-translate-key="how_to_del_s5"></li></ul><div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div>
-        <!-- НОВОЕ: Добавлена новая кнопка -->
         <div class="nav-buttons-vertical" style="margin-bottom: 20px;">
             <button class="secondary-button" id="btn-why-delete" data-translate-key="why_delete_btn"></button>
         </div>
@@ -115,18 +115,44 @@
         </div>
     </div></div>
     
-    <!-- НОВОЕ: Экран с объяснением, зачем удалять аккаунт -->
+    <!-- Экран "Зачем удалять аккаунт" -->
     <div id="why-delete-info-view" class="view">
         <div class="card">
             <h1 class="title" data-translate-key="why_delete_title"></h1>
-            <p class="description" data-translate-key="why_delete_desc" style="text-align: left;"></p>
+            <p class="description warning-note" data-translate-key="why_delete_desc"></p>
             <div class="nav-buttons">
                 <button class="back-button" id="btn-why-delete-info-back" data-translate-key="back_btn"></button>
             </div>
         </div>
     </div>
 
-    <div id="have-money-options-view" class="view"><div class="card"><h1 class="title" data-translate-key="have_money_title"></h1><p class="description" data-translate-key="have_money_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div><button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div><button class="main-button" id="btn-register-for-friend" data-translate-key="step1_btn_register"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div><button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button></div><div class="nav-buttons"><button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button></div></div></div>
+    <!-- === ИЗМЕНЕНИЕ 1: Полностью переработанный экран для тех, у кого ЕСТЬ деньги на аккаунте === -->
+    <div id="have-money-options-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="have_money_title"></h1>
+            <p class="description" data-translate-key="have_money_subtitle"></p>
+            
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div>
+                <button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button>
+            </div>
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div>
+                <button class="main-button" id="btn-register-for-friend" data-translate-key="have_money_btn2"></button>
+            </div>
+            <div class="flow-step">
+                <div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div>
+                <button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button>
+            </div>
+
+            <div class="important-note" data-translate-key="have_money_note"></div>
+
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
+
     <div id="risk-info-view" class="view"><div class="card"><p class="risk-info-text" data-translate-key="risk_info_text"></p><div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div></div></div>
     
     <!-- ЭКРАН ПОСЛЕ РЕГИСТРАЦИИ -->
@@ -206,51 +232,46 @@
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
     
-    // НОВОЕ: Обновлены все переводы согласно вашим правкам
+    // === ИЗМЕНЕНИЕ 2: Обновлен блок переводов в соответствии с правками ===
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя.', 'next_btn': 'Далее >', 'back_btn': '< Назад',
-            'onb1_ai_users': '40+ про-трейдеров используют этого ИИ-бота',
-            'onb1_stat_users': 'юзеров',
-            'onb1_stat_earned': 'заработано',
-            'onb1_stat_recommended': 'сигнал-бот',
+            'onb1_ai_users': '40+ про-трейдеров используют этого ИИ-бота', 'onb1_stat_users': 'юзеров', 'onb1_stat_earned': 'заработано', 'onb1_stat_recommended': 'сигнал-бот',
             
-            'tutorial_title': 'Туториал',
-            'tutorial_b1': 'Подготовься перед сигналом, будь внимателен(-на).',
-            'tutorial_btn1': 'ОК! 👀',
-            'tutorial_b2': 'Быстро открой сайт и повтори сделку за мной. Я дам инструкции, тут важна твоя <b>скорость</b>.',
-            'tutorial_btn2': 'Понятно! 🏇💨',
-            'tutorial_b3': 'Закрепи свою прибыль и не торопись её тратить. Продолжай торговать, будь <b>рационален(-на)</b>.',
-            'tutorial_btn3': 'Хорошо 🧠',
-            'tutorial_b4': 'Расти в рейтинге и получи доступ в сообщество успешных юзеров.',
-            'tutorial_ready_btn': 'Я готов! 🤑',
+            'tutorial_title': 'Туториал', 'tutorial_b1': 'Подготовься перед сигналом, будь внимателен(-на).', 'tutorial_btn1': 'ОК! 👀', 'tutorial_b2': 'Быстро открой сайт и повтори сделку за мной. Я дам инструкции, тут важна твоя <b>скорость</b>.', 'tutorial_btn2': 'Понятно! 🏇💨', 'tutorial_b3': 'Закрепи свою прибыль и не торопись её тратить. Продолжай торговать, будь <b>рационален(-на)</b>.', 'tutorial_btn3': 'Хорошо 🧠', 'tutorial_b4': 'Расти в рейтинге и получи доступ в сообщество успешных юзеров.', 'tutorial_ready_btn': 'Я готов! 🤑',
 
-            'step1_label': 'ПЕРВЫЙ ШАГ', 'step1_title': 'Создай аккаунт', 
-            'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии от <b>Pocket Option</b>.',
+            'step1_label': 'ПЕРВЫЙ ШАГ', 'step1_title': 'Создай аккаунт', 'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии от <b>Pocket Option</b>.',
             'not_filled_in': '(не заполнено)', 'fill_in_btn': 'заполнить', 'edit_btn': 'изменить', 'save_btn': 'Сохранить', 'start_btn': 'Старт', 'goto_profile_btn': 'В профиль', 'promocode_copied': 'Промокод скопирован!',
             'step1_btn_register': 'Зарегистрироваться', 'how_to_register_btn': 'Как сделать регистрацию?', 'have_account_btn': 'У меня уже есть аккаунт',
             'how_to_reg_title': 'Всё просто!', 'how_to_reg_subtitle': 'Действуй по этой инструкции:', 'how_to_reg_s1': 'Перейди по ссылке:', 'how_to_reg_s1_btn': 'Ссылка', 'how_to_reg_s2': 'Введи электронную почту и придумай пароль.', 'how_to_reg_s3': 'В поле «промокод» напиши <em>50START</em>.', 'how_to_reg_s4': 'Прими условия брокера, нажав на галочку.', 'how_to_reg_s5': 'Жми «Зарегистрироваться»!', 'how_to_reg_video': '"видеоинструкция"',
             'reg_success_title': 'Регистрация подтверждена!', 'reg_success_desc': 'Уже скоро ты получишь свой первый сигнал и начнёшь зарабатывать вместе с сотнями других трейдеров.',
             'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'step2_strategy_bubble': 'Выбери стратегию:', 'strat1_title': 'Риск включен', 'strat1_li1': 'Маленький депозит', 'strat1_li2': 'Проверка сигналов', 'strat1_li3': 'Бояться и играть по-крупному', 'strat2_title': 'Риск выключен', 'strat2_li1': 'Достойный депозит', 'strat2_li2': 'Быстрая прибыль', 'strat2_li3': 'Брать от жизни всё', 'step2_btn_deposit': 'Сделать депозит', 'how_to_deposit_btn': 'Как сделать депозит?', 'how_to_deposit_text': '<i>*Здесь будет инструкция*</i>',
             
-            // ИЗМЕНЕННЫЕ ТЕКСТЫ
             'real_money_q': 'Хорошо! Но на нём есть реальные деньги?', 'yes_btn': 'Да', 'no_btn': 'Нет',
-            'new_acc_flow_title': 'Ок! Для того чтобы использовать весь функционал бота и получать ИИ-сигналы, тебе нужен новый аккаунт.', 
-            'new_acc_flow_subtitle': 'Поэтому для начала:', 'new_acc_flow_step1': 'Удали свой текущий аккаунт', 'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту.',
-            'how_to_del_title': 'Как удалить аккаунт?', 
-            'how_to_del_s1': 'Перейди в свой профиль', 
-            'how_to_del_s2': 'Пролистай в самый низ', 
-            'how_to_del_s3': 'Нажми «Удалить аккаунт»', 
-            'how_to_del_s4': 'Выбери <em>любую</em> причину', 
-            'how_to_del_s5': 'Выйди с аккаунта.', 
-            'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
-            
-            // НОВЫЕ ТЕКСТЫ
-            'why_delete_btn': 'Зачем удалять аккаунт?',
-            'why_delete_title': 'Для твоей безопасности 🛡️',
-            'why_delete_desc': 'Если ты будешь использовать одновременно 2 и более аккаунтов, то Pocket Option может тебя заблокировать по причине “мультиаккаунтинг”.',
 
-            'have_money_title': 'Хорошо! Чтобы использовать весь функционал...', 'have_money_subtitle': 'У тебя есть несколько вариантов:', 'have_money_opt1': 'Вывести остаток денег...', 'have_money_btn1': 'Как вывести деньги?', 'have_money_opt2': 'Зарегистрировать аккаунт на друга.', 'have_money_opt3': 'Рискуй.', 'have_money_btn3': 'Что?',
+            // Тексты для экрана "Нет денег"
+            'new_acc_flow_title_no_money': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.',
+            'new_acc_flow_subtitle': 'Поэтому для начала:', 
+            'new_acc_flow_step1': 'Удали свой текущий аккаунт', 
+            'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 
+            'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 
+            'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту',
+
+            'how_to_del_title': 'Как удалить аккаунт?', 'how_to_del_s1': 'Перейди в свой профиль', 'how_to_del_s2': 'Пролистай в самый низ', 'how_to_del_s3': 'Нажми «Удалить аккаунт»', 'how_to_del_s4': 'Выбери <em>любую</em> причину', 'how_to_del_s5': 'Выйди с аккаунта', 'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
+            
+            'why_delete_btn': 'Зачем удалять аккаунт?', 'why_delete_title': 'Для твоей безопасности 🛡️', 'why_delete_desc': 'Если ты будешь использовать одновременно 2 и более аккаунтов, то Pocket Option может тебя заблокировать по причине “мультиаккаунтинг”.',
+
+            // Новые тексты для экрана "Есть деньги"
+            'have_money_title': 'Ок!<br>Для того чтобы использовать весь функционал бота и получать ИИ-сигналы, тебе нужна <b>новая учётная запись</b>', 
+            'have_money_subtitle': '<em>У тебя есть несколько вариантов:</em>', 
+            'have_money_opt1': 'Вывести остаток денег, а затем сменить учетную запись', 
+            'have_money_btn1': 'Как вывести деньги?', 
+            'have_money_opt2': 'Зарегистрировать аккаунт на друга',
+            'have_money_btn2': 'Зарегистрировать',
+            'have_money_opt3': 'Рискуй', 
+            'have_money_btn3': 'Что?',
+            'have_money_note': '! При регистрации нового аккаунта<br>используй другую электронную почту',
+            
             'risk_info_text': 'Если денег на балансе мало – рискуй... <em>Действуй!</em>',
             'pro_tip_title': 'Совет от про-трейдеров', 'pro_tip_desc': 'Не бойся потерь, они есть у всех...', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Лобби', 'lobby_congrats': 'Поздравляю с первым депозитом!', 'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.', 'lobby_btn_profile': 'Перейти в профиль трейдера',
@@ -265,46 +286,34 @@
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
-            'onb1_ai_users': '40+ pro-traders use this AI bot',
-            'onb1_stat_users': 'users',
-            'onb1_stat_earned': 'earned',
-            'onb1_stat_recommended': 'signal-bot',
+            'onb1_ai_users': '40+ pro-traders use this AI bot', 'onb1_stat_users': 'users', 'onb1_stat_earned': 'earned', 'onb1_stat_recommended': 'signal-bot',
+            'tutorial_title': 'Tutorial', 'tutorial_b1': 'Prepare before the signal, be attentive.', 'tutorial_btn1': 'OK! 👀', 'tutorial_b2': 'Quickly open the site and copy the trade after me. I will give instructions, your <b>speed</b> is important here.', 'tutorial_btn2': 'Got it! 🏇💨', 'tutorial_b3': 'Secure your profit and don\'t rush to spend it. Keep trading, be <b>rational</b>.', 'tutorial_btn3': 'Alright 🧠', 'tutorial_b4': 'Grow in the rankings and get access to the community of successful users.', 'tutorial_ready_btn': 'I\'m ready! 🤑',
 
-            'tutorial_title': 'Tutorial',
-            'tutorial_b1': 'Prepare before the signal, be attentive.',
-            'tutorial_btn1': 'OK! 👀',
-            'tutorial_b2': 'Quickly open the site and copy the trade after me. I will give instructions, your <b>speed</b> is important here.',
-            'tutorial_btn2': 'Got it! 🏇💨',
-            'tutorial_b3': 'Secure your profit and don\'t rush to spend it. Keep trading, be <b>rational</b>.',
-            'tutorial_btn3': 'Alright 🧠',
-            'tutorial_b4': 'Grow in the rankings and get access to the community of successful users.',
-            'tutorial_ready_btn': 'I\'m ready! 🤑',
-
-            'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 
-            'step1_side_note': 'All our users have instant withdrawals thanks to the license from <b>Pocket Option</b>.',
+            'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 'step1_side_note': 'All our users have instant withdrawals thanks to the license from <b>Pocket Option</b>.',
             'not_filled_in': '(not filled)', 'fill_in_btn': 'fill in', 'edit_btn': 'edit', 'save_btn': 'Save', 'start_btn': 'Start', 'goto_profile_btn': 'To Profile', 'promocode_copied': 'Promocode copied!',
             'how_to_reg_title': 'It\'s simple!', 'how_to_reg_subtitle': 'Follow these instructions:', 'how_to_reg_s1': 'Follow the link:', 'how_to_reg_s1_btn': 'Link', 'how_to_reg_s2': 'Enter your email and create a password.', 'how_to_reg_s3': 'In the "promocode" field, write <em>50START</em>.', 'how_to_reg_s4': 'Accept the broker\'s terms by clicking the checkbox.', 'how_to_reg_s5': 'Click "Register"!', 'how_to_reg_video': '"video instruction"',
             'reg_success_title': 'Registration Confirmed!', 'reg_success_desc': 'Soon you will receive your first signal and start earning.',
             'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?', 'how_to_deposit_text': '<i>*Instructions will be here*</i>',
             
-            // ИЗМЕНЕННЫЕ ТЕКСТЫ
             'real_money_q': 'Okay! But does it have real money on it?', 'yes_btn': 'Yes', 'no_btn': 'No',
-            'new_acc_flow_title': 'Okay! To use all the bot\'s features and receive AI signals, you need a new account.', 
-            'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.',
-            'how_to_del_title': 'How to delete the account?', 
-            'how_to_del_s1': 'Go to your profile', 
-            'how_to_del_s2': 'Scroll to the very bottom', 
-            'how_to_del_s3': 'Press "Delete account"', 
-            'how_to_del_s4': 'Choose <em>any</em> reason', 
-            'how_to_del_s5': 'Log out of the account.', 
-            'how_to_del_video_placeholder': '"video guide will be here"',
+            
+            'new_acc_flow_title_no_money': 'Okay! To use all the bot\'s features and receive AI signals, you need a new account.',
+            'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address',
 
-            // НОВЫЕ ТЕКСТЫ
-            'why_delete_btn': 'Why delete the account?',
-            'why_delete_title': 'For your safety 🛡️',
-            'why_delete_desc': 'If you use 2 or more accounts at the same time, Pocket Option may block you for "multi-accounting".',
+            'how_to_del_title': 'How to delete the account?', 'how_to_del_s1': 'Go to your profile', 'how_to_del_s2': 'Scroll to the very bottom', 'how_to_del_s3': 'Press "Delete account"', 'how_to_del_s4': 'Choose <em>any</em> reason', 'how_to_del_s5': 'Log out of the account', 'how_to_del_video_placeholder': '"video guide will be here"',
+            
+            'why_delete_btn': 'Why delete the account?', 'why_delete_title': 'For your safety 🛡️', 'why_delete_desc': 'If you use 2 or more accounts at the same time, Pocket Option may block you for "multi-accounting".',
 
-            'have_money_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'have_money_subtitle': 'You have several options:', 'have_money_opt1': 'Withdraw the remaining money, then delete the account and create a new one.', 'have_money_btn1': 'How to withdraw funds?', 'have_money_opt2': 'Register an account for a friend.', 'have_money_opt3': 'Take a risk.', 'have_money_btn3': 'What?',
+            'have_money_title': 'Okay!<br>To use all the bot\'s features and receive AI signals, you need a <b>new account</b>', 
+            'have_money_subtitle': '<em>You have several options:</em>', 
+            'have_money_opt1': 'Withdraw the remaining funds, then change the account', 
+            'have_money_btn1': 'How to withdraw funds?', 
+            'have_money_opt2': 'Register an account for a friend',
+            'have_money_btn2': 'Register',
+            'have_money_opt3': 'Take a risk', 
+            'have_money_btn3': 'What?',
+            'have_money_note': '! When registering a new account<br>use a different email address',
+
             'risk_info_text': 'If there is little money on the balance - take a risk and go all the way: either you lose everything, or you double it. My signals will pay off more than your balance. <em>Act!</em>',
             'pro_tip_title': 'Advice from pro-traders', 'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Lobby', 'lobby_congrats': 'Congratulations on your first deposit!', 'lobby_footnote': 'This is your starting point, not counting bonuses.', 'lobby_btn_profile': 'Go to trader\'s profile',
@@ -323,233 +332,31 @@
     let previousViewId = '';
     let userId;
 
-    function getRussianOrdinal(n) {
-        if (userLang !== 'ru') {
-            const lastDigit = n % 10, lastTwoDigits = n % 100;
-            if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return `${n}th`;
-            switch (lastDigit) {
-                case 1: return `${n}st`;
-                case 2: return `${n}nd`;
-                case 3: return `${n}rd`;
-                default: return `${n}th`;
-            }
-        }
-        return `${n}-й`;
-    }
-        function renderRating(data) {
-        const container = document.getElementById('rating-list-container');
-        container.innerHTML = '';
-        const user = tg.initDataUnsafe.user;
-        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
-        
-        const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"];
-        const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-        
-        const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56];
-        
-        let lastSum = top5Sums[4];
-        for(let i = 1; i <= 15; i++) {
-            const name = fakeNames[i-1];
-            let sum;
-            if (i <= 5) {
-                sum = top5Sums[i-1];
-            } else {
-                lastSum -= getRandom(15000, 30000);
-                sum = Math.max(lastSum, (16 - i) * 10000); 
-            }
-            container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
-        }
-        
-        container.innerHTML += `<li class="rating-separator">...</li>`;
-        
-        let userRankKey = `userRank_${userId}`;
-        let userPos = localStorage.getItem(userRankKey);
-        if (!userPos) {
-            userPos = getRandom(20138, 21999);
-            localStorage.setItem(userRankKey, userPos);
-        }
-        userPos = parseInt(userPos);
-        const userSum = data.user_withdrawal_sum || 0.0;
-        
-        const playerAboveSum = userSum + getRandom(50, 200);
-        container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
-        
-        const userName = user.first_name || t.your_position;
-        container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${userName} (Вы)</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
-
-        container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`;
-    }
+    function getRussianOrdinal(n) { if (userLang !== 'ru') { const lastDigit = n % 10, lastTwoDigits = n % 100; if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return `${n}th`; switch (lastDigit) { case 1: return `${n}st`; case 2: return `${n}nd`; case 3: return `${n}rd`; default: return `${n}th`; } } return `${n}-й`; }
+    function renderRating(data) { const container = document.getElementById('rating-list-container'); container.innerHTML = ''; const user = tg.initDataUnsafe.user; const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"]; const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56]; let lastSum = top5Sums[4]; for(let i = 1; i <= 15; i++) { const name = fakeNames[i-1]; let sum; if (i <= 5) { sum = top5Sums[i-1]; } else { lastSum -= getRandom(15000, 30000); sum = Math.max(lastSum, (16 - i) * 10000); } container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; } container.innerHTML += `<li class="rating-separator">...</li>`; let userRankKey = `userRank_${userId}`; let userPos = localStorage.getItem(userRankKey); if (!userPos) { userPos = getRandom(20138, 21999); localStorage.setItem(userRankKey, userPos); } userPos = parseInt(userPos); const userSum = data.user_withdrawal_sum || 0.0; const playerAboveSum = userSum + getRandom(50, 200); container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; const userName = user.first_name || t.your_position; container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${userName} (Вы)</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`; }
     function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
-    function incrementSignalCount() {
-        let count = getSignalCount();
-        localStorage.setItem(`signalCounter_${userId}`, count + 1);
-    }
-
-    function applyTranslations(lang) {
-        const t = TRANSLATIONS[lang];
-        document.querySelectorAll('[data-translate-key]').forEach(el => {
-            const key = el.getAttribute('data-translate-key');
-            if (t[key]) {
-                el.innerHTML = t[key];
-            }
-        });
-    }
+    function incrementSignalCount() { let count = getSignalCount(); localStorage.setItem(`signalCounter_${userId}`, count + 1); }
+    function applyTranslations(lang) { const t = TRANSLATIONS[lang]; document.querySelectorAll('[data-translate-key]').forEach(el => { const key = el.getAttribute('data-translate-key'); if (t[key]) { el.innerHTML = t[key]; } }); }
+    function prepareFreeSignalView() { const count = getSignalCount(); const ordinal = getRussianOrdinal(count); showView('free-signal-start-view'); document.getElementById('free-signal-text').innerHTML = TRANSLATIONS[userLang]['free_signal_text'].replace('{count}', `<b>${ordinal}</b>`); }
+    function showView(viewId) { if (currentViewId && currentViewId !== viewId) { previousViewId = currentViewId; } currentViewId = viewId; document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); const viewElement = document.getElementById(viewId); if (viewElement) { viewElement.classList.add('active'); } const faqButton = document.getElementById('faq-button'); const faqVisibleOn = ['post-deposit-view', 'post-reg-view', 'trader-profile-view']; if (faqVisibleOn.includes(viewId)) { faqButton.classList.add('visible'); } else { faqButton.classList.remove('visible'); } }
+    function showNotification(text) { const toast = document.getElementById('notification-toast'); toast.textContent = text; toast.classList.add('visible'); setTimeout(() => { toast.classList.remove('visible'); }, 2500); }
+    function renderProfileField(fieldKey, valueElId) { const valueEl = document.getElementById(valueElId); const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; const renderDisplayMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; const buttonText = savedValue ? t.edit_btn : t.fill_in_btn; const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`; valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`; valueEl.querySelector('.edit-button').onclick = renderEditMode; }; const renderEditMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; valueEl.innerHTML = ` <input type="text" class="inline-input" value="${savedValue}"> <button class="save-button">${t.save_btn}</button> `; const input = valueEl.querySelector('.inline-input'); input.focus(); const saveValue = () => { localStorage.setItem(`${fieldKey}_${userId}`, input.value); renderDisplayMode(); }; valueEl.querySelector('.save-button').onclick = saveValue; input.onkeydown = (e) => { if (e.key === 'Enter') { saveValue(); } }; }; renderDisplayMode(); }
+    function renderProfileData(data) { const user = tg.initDataUnsafe.user; const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set'; renderProfileField('userName', 'profile-name-val'); renderProfileField('userAbout', 'profile-about-val'); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00"; document.getElementById('profile-balance-val').innerText = `$${balance}`; const totalDeposit = data.total_deposit_sum || 0; let rankKey = 'rank_strategist'; if (totalDeposit >= 20000) rankKey = 'rank_legend'; else if (totalDeposit >= 5000) rankKey = 'rank_nova'; else if (totalDeposit >= 1000) rankKey = 'rank_hero'; else if (totalDeposit >= 400) rankKey = 'rank_royal'; document.getElementById('current-rank-name').innerText = t[rankKey]; if (data.reg_date) { const regDate = new Date(data.reg_date); const today = new Date(); const timeDiff = today.getTime() - regDate.getTime(); const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24))); document.getElementById('days-since-reg').innerText = daysDiff; } else { document.getElementById('days-since-reg').innerText = 'N/A'; } document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`; }
+    function startSignalFlow() { showView('signal-active-view'); const allElements = {'stage1': document.getElementById('signal-stage-1'),'stage2': document.getElementById('signal-stage-2'),'stage3': document.getElementById('signal-stage-3'),'resultContainer': document.getElementById('signal-result-container'),'winButtons': document.getElementById('signal-win-buttons'),'lossButtons': document.getElementById('signal-loss-buttons'),'confirmationContainer': document.getElementById('signal-confirmation-container'),'signalStatusReady': document.getElementById('signal-status-ready'),'signalPair': document.getElementById('signal-pair'),'signalStatusExpSoon': document.getElementById('signal-exp-soon'),'signalExpiration': document.getElementById('signal-expiration'),'signalDirection': document.getElementById('signal-direction'),}; for (const key in allElements) { allElements[key].style.display = 'none'; } allElements.stage1.style.display = 'block'; setTimeout(() => {allElements.stage1.style.display = 'none'; allElements.stage2.style.display = 'block';}, 5000); document.getElementById('btn-get-signal').onclick = () => { allElements.stage2.style.display = 'none'; allElements.stage3.style.display = 'block'; const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"], expirations = ["S15", "S20", "S25"], directions = ["buy", "sell"], getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)], selectedPair = getRandomItem(currencyPairs), selectedExp = getRandomItem(expirations), selectedDir = getRandomItem(directions); setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500); setTimeout(() => { allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); allElements.signalPair.style.display = 'block'; }, 1500); setTimeout(() => { allElements.signalStatusExpSoon.style.display = 'block'; }, 3000); setTimeout(() => { allElements.signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', `<b>${selectedExp}</b>`); allElements.signalExpiration.style.display = 'block'; allElements.confirmationContainer.style.display = 'block'; }, 10000); document.getElementById('btn-confirm-ready').onclick = () => { allElements.confirmationContainer.style.display = 'none'; let dirText = selectedDir === 'buy' ? TRANSLATIONS[userLang]['signal_buy'] : TRANSLATIONS[userLang]['signal_sell']; allElements.signalDirection.className = `signal-step ${selectedDir}-signal`; allElements.signalDirection.innerHTML = dirText; allElements.signalDirection.style.display = 'block'; const expirationInMs = parseInt(selectedExp.substring(1)) * 1000; setTimeout(() => { const isWin = Math.random() < 0.7; const signalResultEl = document.getElementById('signal-result'); if (isWin) { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_win']; signalResultEl.className = 'signal-result win'; allElements.winButtons.style.display = 'flex'; } else { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_loss']; signalResultEl.className = 'signal-result loss'; allElements.lossButtons.style.display = 'flex'; } allElements.resultContainer.style.display = 'block'; }, expirationInMs); }; }; }
     
-    function prepareFreeSignalView() {
-        const count = getSignalCount();
-        const ordinal = getRussianOrdinal(count);
-        showView('free-signal-start-view');
-        document.getElementById('free-signal-text').innerHTML = TRANSLATIONS[userLang]['free_signal_text'].replace('{count}', `<b>${ordinal}</b>`);
-    }
-
-    function showView(viewId) {
-        if (currentViewId && currentViewId !== viewId) { previousViewId = currentViewId; }
-        currentViewId = viewId;
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        const viewElement = document.getElementById(viewId);
-        if (viewElement) { viewElement.classList.add('active'); }
-        const faqButton = document.getElementById('faq-button');
-        const faqVisibleOn = ['post-deposit-view', 'post-reg-view', 'trader-profile-view'];
-        if (faqVisibleOn.includes(viewId)) {
-            faqButton.classList.add('visible');
-        } else {
-            faqButton.classList.remove('visible');
-        }
-    }
-    function showNotification(text) {
-        const toast = document.getElementById('notification-toast');
-        toast.textContent = text;
-        toast.classList.add('visible');
-        setTimeout(() => {
-            toast.classList.remove('visible');
-        }, 2500);
-    }
-    function renderProfileField(fieldKey, valueElId) {
-        const valueEl = document.getElementById(valueElId);
-        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
-
-        const renderDisplayMode = () => {
-            const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
-            const buttonText = savedValue ? t.edit_btn : t.fill_in_btn;
-            const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`;
-            
-            valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`;
-            valueEl.querySelector('.edit-button').onclick = renderEditMode;
-        };
-
-        const renderEditMode = () => {
-            const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || '';
-            valueEl.innerHTML = `
-                <input type="text" class="inline-input" value="${savedValue}">
-                <button class="save-button">${t.save_btn}</button>
-            `;
-            const input = valueEl.querySelector('.inline-input');
-            input.focus(); 
-            
-            const saveValue = () => {
-                localStorage.setItem(`${fieldKey}_${userId}`, input.value);
-                renderDisplayMode();
-            };
-
-            valueEl.querySelector('.save-button').onclick = saveValue;
-            input.onkeydown = (e) => {
-                if (e.key === 'Enter') {
-                    saveValue();
-                }
-            };
-        };
-
-        renderDisplayMode();
-    }
-
-    function renderProfileData(data) {
-        const user = tg.initDataUnsafe.user;
-        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
-
-        document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set';
-        renderProfileField('userName', 'profile-name-val');
-        renderProfileField('userAbout', 'profile-about-val');
-        
-        const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
-        const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00";
-        document.getElementById('profile-balance-val').innerText = `$${balance}`;
-        
-        const totalDeposit = data.total_deposit_sum || 0;
-        let rankKey = 'rank_strategist';
-        if (totalDeposit >= 20000) rankKey = 'rank_legend';
-        else if (totalDeposit >= 5000) rankKey = 'rank_nova';
-        else if (totalDeposit >= 1000) rankKey = 'rank_hero';
-        else if (totalDeposit >= 400) rankKey = 'rank_royal';
-        
-        document.getElementById('current-rank-name').innerText = t[rankKey];
-
-        if (data.reg_date) {
-            const regDate = new Date(data.reg_date);
-            const today = new Date();
-            const timeDiff = today.getTime() - regDate.getTime();
-            const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24)));
-            document.getElementById('days-since-reg').innerText = daysDiff;
-        } else {
-            document.getElementById('days-since-reg').innerText = 'N/A';
-        }
-        document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`;
-    }
-
-    function startSignalFlow() {
-        showView('signal-active-view');
-        const allElements = {'stage1': document.getElementById('signal-stage-1'),'stage2': document.getElementById('signal-stage-2'),'stage3': document.getElementById('signal-stage-3'),'resultContainer': document.getElementById('signal-result-container'),'winButtons': document.getElementById('signal-win-buttons'),'lossButtons': document.getElementById('signal-loss-buttons'),'confirmationContainer': document.getElementById('signal-confirmation-container'),'signalStatusReady': document.getElementById('signal-status-ready'),'signalPair': document.getElementById('signal-pair'),'signalStatusExpSoon': document.getElementById('signal-exp-soon'),'signalExpiration': document.getElementById('signal-expiration'),'signalDirection': document.getElementById('signal-direction'),};
-        for (const key in allElements) { allElements[key].style.display = 'none'; }
-        allElements.stage1.style.display = 'block';
-        setTimeout(() => {allElements.stage1.style.display = 'none'; allElements.stage2.style.display = 'block';}, 5000);
-        document.getElementById('btn-get-signal').onclick = () => {
-            allElements.stage2.style.display = 'none'; allElements.stage3.style.display = 'block';
-            const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"], expirations = ["S15", "S20", "S25"], directions = ["buy", "sell"], getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)], selectedPair = getRandomItem(currencyPairs), selectedExp = getRandomItem(expirations), selectedDir = getRandomItem(directions);
-            setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500);
-            setTimeout(() => { allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); allElements.signalPair.style.display = 'block'; }, 1500);
-            setTimeout(() => { allElements.signalStatusExpSoon.style.display = 'block'; }, 3000);
-            setTimeout(() => { allElements.signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', `<b>${selectedExp}</b>`); allElements.signalExpiration.style.display = 'block'; allElements.confirmationContainer.style.display = 'block'; }, 10000);
-            document.getElementById('btn-confirm-ready').onclick = () => {
-                allElements.confirmationContainer.style.display = 'none'; let dirText = selectedDir === 'buy' ? TRANSLATIONS[userLang]['signal_buy'] : TRANSLATIONS[userLang]['signal_sell']; allElements.signalDirection.className = `signal-step ${selectedDir}-signal`; allElements.signalDirection.innerHTML = dirText; allElements.signalDirection.style.display = 'block'; const expirationInMs = parseInt(selectedExp.substring(1)) * 1000;
-                setTimeout(() => {
-                    const isWin = Math.random() < 0.7;
-                    const signalResultEl = document.getElementById('signal-result');
-                    if (isWin) { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_win']; signalResultEl.className = 'signal-result win'; allElements.winButtons.style.display = 'flex'; }
-                    else { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_loss']; signalResultEl.className = 'signal-result loss'; allElements.lossButtons.style.display = 'flex'; }
-                    allElements.resultContainer.style.display = 'block';
-                }, expirationInMs);
-            };
-        };
-    }
+    // === ИЗМЕНЕНИЕ 3: Обновлена навигация ===
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
-        document.querySelector('#tutorial-btn-1 button').onclick = () => {
-            document.getElementById('tutorial-step-2').style.display = 'flex';
-            document.getElementById('tutorial-step-2').style.opacity = 1;
-            document.getElementById('tutorial-btn-2').style.display = 'block';
-            document.getElementById('tutorial-btn-1').style.display = 'none';
-        };
-        document.querySelector('#tutorial-btn-2 button').onclick = () => {
-            document.getElementById('tutorial-step-3').style.display = 'flex';
-            document.getElementById('tutorial-step-3').style.opacity = 1;
-            document.getElementById('tutorial-btn-3').style.display = 'block';
-            document.getElementById('tutorial-btn-2').style.display = 'none';
-        };
-        document.querySelector('#tutorial-btn-3 button').onclick = () => {
-            document.getElementById('tutorial-step-4').style.display = 'flex';
-            document.getElementById('tutorial-step-4').style.opacity = 1;
-            document.getElementById('tutorial-final-btns').style.display = 'flex';
-            document.getElementById('tutorial-btn-3').style.display = 'none';
-        };
+        document.querySelector('#tutorial-btn-1 button').onclick = () => { document.getElementById('tutorial-step-2').style.display = 'flex'; document.getElementById('tutorial-step-2').style.opacity = 1; document.getElementById('tutorial-btn-2').style.display = 'block'; document.getElementById('tutorial-btn-1').style.display = 'none'; };
+        document.querySelector('#tutorial-btn-2 button').onclick = () => { document.getElementById('tutorial-step-3').style.display = 'flex'; document.getElementById('tutorial-step-3').style.opacity = 1; document.getElementById('tutorial-btn-3').style.display = 'block'; document.getElementById('tutorial-btn-2').style.display = 'none'; };
+        document.querySelector('#tutorial-btn-3 button').onclick = () => { document.getElementById('tutorial-step-4').style.display = 'flex'; document.getElementById('tutorial-step-4').style.opacity = 1; document.getElementById('tutorial-final-btns').style.display = 'flex'; document.getElementById('tutorial-btn-3').style.display = 'none'; };
         
         document.getElementById('btn-step1-how-to').onclick = () => {
             const videoEl = document.getElementById('registration-video');
             if (!videoEl) return; 
-
-            // НОВОЕ: Возвращаем расширение .MP4, раз оно работает
             const videoSrcRu = "{{ url_for('static', filename='reg_ru.MP4') }}";
             const videoSrcEn = "{{ url_for('static', filename='reg_en.MP4') }}";
-            
             videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
             videoEl.load();
             showView('how-to-register-view');
@@ -557,18 +364,27 @@
 
         document.getElementById('btn-how-to-reg-back').onclick = () => {
             const videoEl = document.getElementById('registration-video');
-            if (videoEl) {
-                videoEl.pause(); 
-                videoEl.currentTime = 0;
-            }
+            if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; }
             showView('onboarding-3-view');
         };
 
-        // НОВОЕ: Навигация для новых кнопок и экранов
         document.getElementById('btn-why-delete').onclick = () => showView('why-delete-info-view');
         document.getElementById('btn-why-delete-info-back').onclick = () => showView('how-to-delete-view');
 
-        // Остальная навигация
+        // Навигация для сценария "Есть деньги"
+        document.getElementById('btn-how-to-withdraw').onclick = () => showView('wip-view');
+        document.getElementById('btn-register-for-friend').onclick = openRegisterLink;
+        document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
+        document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
+        document.getElementById('btn-risk-info-back').onclick = () => showView('have-money-options-view');
+        
+        // Навигация для сценария "Нет денег" (сохранена из вашего кода)
+        document.getElementById('btn-new-acc-back').onclick = () => showView('real-money-check-view');
+        document.getElementById('btn-how-and-why-delete').onclick = () => showView('how-to-delete-view');
+        document.getElementById('btn-new-acc-register').onclick = openRegisterLink;
+        document.getElementById('btn-delete-guide-back').onclick = () => showView('new-account-flow-view');
+
+        // Основная навигация
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-tutorial-back').onclick = () => showView('onboarding-1-view');
         document.getElementById('btn-tutorial-ready').onclick = () => showView('onboarding-3-view');
@@ -607,86 +423,21 @@
         document.getElementById('btn-reg-success-next').onclick = () => showView('post-reg-view');
         document.getElementById('btn-step1-have-account').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-real-money-back').onclick = () => showView('onboarding-3-view');
-        document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
-        document.getElementById('btn-new-acc-back').onclick = () => showView('real-money-check-view');
-        document.getElementById('btn-how-and-why-delete').onclick = () => showView('how-to-delete-view');
-        document.getElementById('btn-new-acc-register').onclick = openRegisterLink;
-        document.getElementById('btn-delete-guide-back').onclick = () => showView('new-account-flow-view');
+        
+        // Главные кнопки выбора "Да" / "Нет"
         document.getElementById('btn-real-money-yes').onclick = () => showView('have-money-options-view');
-        document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
-        document.getElementById('btn-how-to-withdraw').onclick = () => showView('wip-view');
-        document.getElementById('btn-register-for-friend').onclick = openRegisterLink;
-        document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
-        document.getElementById('btn-risk-info-back').onclick = () => showView('have-money-options-view');
+        document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
+        
         document.getElementById('btn-make-deposit').onclick = openRegisterLink;
         document.getElementById('btn-how-to-deposit').onclick = () => showView('how-to-deposit-view');
         document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
     }
-    async function fetchAndUpdateView(userId) {
-        try {
-            const response = await fetch(`/user/${userId}/data`);
-            if (!response.ok) throw new Error('Network response was not ok');
-            const data = await response.json();
-            renderProfileData(data);
-            renderRating(data);
-            const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep');
-            if (depositEvent) { document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`; }
-            const ftdEvent = data.events.find(e => e[0] === 'FTD');
-            const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep');
-            if (hasDeposit) {
-                const proTipSessionKey = `proTipShown_${userId}`;
-                if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) {
-                    sessionStorage.setItem(proTipSessionKey, 'true');
-                    document.getElementById('pro-tip-overlay').style.display = 'flex';
-                } else {
-                    const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view', 'why-delete-info-view'];
-                    if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); }
-                }
-            } else if (data.is_registered) {
-                if(!['post-reg-view', 'how-to-register-view', 'why-delete-info-view'].includes(currentViewId)) { showView('reg-success-view'); }
-            } else {
-                const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view', 'why-delete-info-view'];
-                if (!onboardingViews.includes(currentViewId)) { showView('onboarding-1-view'); }
-            }
-        } catch (error) {
-            console.error("Data loading error:", error);
-            showView('error-view');
-        }
-    }
-
-    async function main() {
-        if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-            applyTranslations('en');
-            showView('error-view');
-            return;
-        }
-        const user = tg.initDataUnsafe.user;
-        userId = user.id;
-        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en';
-        document.documentElement.lang = userLang;
-        
-        applyTranslations(userLang);
-        setupNavigation();
-        
-        await fetchAndUpdateView(userId);
-
-        const socket = io();
-        socket.on('connect', () => {
-            console.log('Connected to WebSocket server!');
-            socket.emit('join', { 'chat_id': userId });
-        });
-        socket.on('update_data', (data) => {
-            console.log('Received update from server:', data.message);
-            tg.HapticFeedback.notificationOccurred('success');
-            fetchAndUpdateView(userId);
-        });
-    }
-
+    async function fetchAndUpdateView(userId) { try { const response = await fetch(`/user/${userId}/data`); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); renderProfileData(data); renderRating(data); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); if (depositEvent) { document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`; } const ftdEvent = data.events.find(e => e[0] === 'FTD'); const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep'); if (hasDeposit) { const proTipSessionKey = `proTipShown_${userId}`; if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) { sessionStorage.setItem(proTipSessionKey, 'true'); document.getElementById('pro-tip-overlay').style.display = 'flex'; } else { const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view', 'why-delete-info-view']; if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); } } } else if (data.is_registered) { if(!['post-reg-view', 'how-to-register-view', 'why-delete-info-view'].includes(currentViewId)) { showView('reg-success-view'); } } else { const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view', 'why-delete-info-view']; if (!onboardingViews.includes(currentViewId)) { showView('onboarding-1-view'); } } } catch (error) { console.error("Data loading error:", error); showView('error-view'); } }
+    async function main() { if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) { applyTranslations('en'); showView('error-view'); return; } const user = tg.initDataUnsafe.user; userId = user.id; userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; document.documentElement.lang = userLang; applyTranslations(userLang); setupNavigation(); await fetchAndUpdateView(userId); const socket = io(); socket.on('connect', () => { console.log('Connected to WebSocket server!'); socket.emit('join', { 'chat_id': userId }); }); socket.on('update_data', (data) => { console.log('Received update from server:', data.message); tg.HapticFeedback.notificationOccurred('success'); fetchAndUpdateView(userId); }); }
     document.addEventListener('DOMContentLoaded', main);
 </script>
 
 </body>
 </html>
-
