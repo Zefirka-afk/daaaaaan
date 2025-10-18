@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<!-- ВСЫВО-->
+<!-- ВСЫВА СО-->
 <div id="pro-tip-overlay" class="overlay-view"><div class="card pro-tip-card"><h2 class="subtitle" data-translate-key="pro_tip_title"></h2><p class="description" data-translate-key="pro_tip_desc"></p><button class="main-button" id="btn-pro-tip-ok" data-translate-key="pro_tip_btn"></button></div></div>
 
 <!-- ЭЛЕМЕНТ ДЛЯ УВЕДОМЛЕНИЙ -->
@@ -92,7 +92,6 @@
                 <li data-translate-key="how_to_reg_s4"></li>
                 <li data-translate-key="how_to_reg_s5"></li>
             </ol>
-            <!-- === ИЗМЕНЕНИЕ 1: Заменили <p> на <video> === -->
             <video id="registration-video" width="100%" controls muted playsinline loop style="border-radius: 12px; margin-bottom: 25px;"></video>
             <div class="nav-buttons">
                 <button class="back-button" id="btn-how-to-reg-back" data-translate-key="back_btn"></button>
@@ -102,8 +101,31 @@
 
     <!-- СЦЕНАРИЙ "УЖЕ ЕСТЬ АККАУНТ" -->
     <div id="real-money-check-view" class="view"><div class="card"><h1 class="title" data-translate-key="real_money_q"></h1><div class="nav-buttons-vertical"><button class="main-button" id="btn-real-money-yes" data-translate-key="yes_btn"></button><button class="secondary-button" id="btn-real-money-no" data-translate-key="no_btn"></button></div><div class="nav-buttons"><button class="back-button" id="btn-real-money-back" data-translate-key="back_btn"></button></div></div></div>
+    
     <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
-    <div id="how-to-delete-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_del_title"></h1><ul class="delete-guide"><li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li><li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li><li data-translate-key="how_to_del_s5"></li></ul><div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div><div class="nav-buttons"><button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button></div></div></div>
+    
+    <!-- ИЗМЕНЕННЫЙ ЭКРАН "КАК УДАЛИТЬ" -->
+    <div id="how-to-delete-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_del_title"></h1><ul class="delete-guide"><li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li><li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li><li data-translate-key="how_to_del_s5"></li></ul><div class="video-placeholder" data-translate-key="how_to_del_video_placeholder"></div>
+        <!-- НОВОЕ: Добавлена новая кнопка -->
+        <div class="nav-buttons-vertical" style="margin-bottom: 20px;">
+            <button class="secondary-button" id="btn-why-delete" data-translate-key="why_delete_btn"></button>
+        </div>
+        <div class="nav-buttons">
+            <button class="back-button" id="btn-delete-guide-back" data-translate-key="back_btn"></button>
+        </div>
+    </div></div>
+    
+    <!-- НОВОЕ: Экран с объяснением, зачем удалять аккаунт -->
+    <div id="why-delete-info-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="why_delete_title"></h1>
+            <p class="description" data-translate-key="why_delete_desc" style="text-align: left;"></p>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-why-delete-info-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
+
     <div id="have-money-options-view" class="view"><div class="card"><h1 class="title" data-translate-key="have_money_title"></h1><p class="description" data-translate-key="have_money_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="have_money_opt1"></p></div><button class="secondary-button" id="btn-how-to-withdraw" data-translate-key="have_money_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="have_money_opt2"></p></div><button class="main-button" id="btn-register-for-friend" data-translate-key="step1_btn_register"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">3</span><p data-translate-key="have_money_opt3"></p></div><button class="secondary-button question-btn" id="btn-risk-what" data-translate-key="have_money_btn3"></button></div><div class="nav-buttons"><button class="back-button" id="btn-options-back" data-translate-key="back_btn"></button></div></div></div>
     <div id="risk-info-view" class="view"><div class="card"><p class="risk-info-text" data-translate-key="risk_info_text"></p><div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div></div></div>
     
@@ -184,11 +206,10 @@
 
     const REGISTER_LINK_TEMPLATE = "https://u3.shortink.io/register?utm_campaign=825192&utm_source=affiliate&utm_medium=sr&a=PDSrNY9vG5LpeF&ac=1d&code=50START";
     
-    // ... (весь ваш блок TRANSLATIONS остается без изменений) ...
+    // НОВОЕ: Обновлены все переводы согласно вашим правкам
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя.', 'next_btn': 'Далее >', 'back_btn': '< Назад',
-            // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
             'onb1_ai_users': '40+ про-трейдеров используют этого ИИ-бота',
             'onb1_stat_users': 'юзеров',
             'onb1_stat_earned': 'заработано',
@@ -205,16 +226,30 @@
             'tutorial_ready_btn': 'Я готов! 🤑',
 
             'step1_label': 'ПЕРВЫЙ ШАГ', 'step1_title': 'Создай аккаунт', 
-            'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии от <b>Pocket Option</b>.', // <-- ИЗМЕНЕНИЕ
-            // --- КОНЕЦ ИЗМЕНЕНИЙ ---
+            'step1_side_note': 'У всех наших юзеров моментальные выводы благодаря лицензии от <b>Pocket Option</b>.',
             'not_filled_in': '(не заполнено)', 'fill_in_btn': 'заполнить', 'edit_btn': 'изменить', 'save_btn': 'Сохранить', 'start_btn': 'Старт', 'goto_profile_btn': 'В профиль', 'promocode_copied': 'Промокод скопирован!',
             'step1_btn_register': 'Зарегистрироваться', 'how_to_register_btn': 'Как сделать регистрацию?', 'have_account_btn': 'У меня уже есть аккаунт',
             'how_to_reg_title': 'Всё просто!', 'how_to_reg_subtitle': 'Действуй по этой инструкции:', 'how_to_reg_s1': 'Перейди по ссылке:', 'how_to_reg_s1_btn': 'Ссылка', 'how_to_reg_s2': 'Введи электронную почту и придумай пароль.', 'how_to_reg_s3': 'В поле «промокод» напиши <em>50START</em>.', 'how_to_reg_s4': 'Прими условия брокера, нажав на галочку.', 'how_to_reg_s5': 'Жми «Зарегистрироваться»!', 'how_to_reg_video': '"видеоинструкция"',
             'reg_success_title': 'Регистрация подтверждена!', 'reg_success_desc': 'Уже скоро ты получишь свой первый сигнал и начнёшь зарабатывать вместе с сотнями других трейдеров.',
             'step2_title': 'Финальный шаг, <em>сделай его!</em>', 'step2_subtitle': 'Определись с размером депозита.', 'step2_strategy_bubble': 'Выбери стратегию:', 'strat1_title': 'Риск включен', 'strat1_li1': 'Маленький депозит', 'strat1_li2': 'Проверка сигналов', 'strat1_li3': 'Бояться и играть по-крупному', 'strat2_title': 'Риск выключен', 'strat2_li1': 'Достойный депозит', 'strat2_li2': 'Быстрая прибыль', 'strat2_li3': 'Брать от жизни всё', 'step2_btn_deposit': 'Сделать депозит', 'how_to_deposit_btn': 'Как сделать депозит?', 'how_to_deposit_text': '<i>*Здесь будет инструкция*</i>',
-            'real_money_q': 'Хорошо! Но на нём есть real money?', 'yes_btn': 'Да', 'no_btn': 'Нет',
-            'new_acc_flow_title': 'Хорошо! Чтобы использовать весь функционал бота и получать AI-signals, тебе нужен новый аккаунт.', 'new_acc_flow_subtitle': 'Поэтому для начала:', 'new_acc_flow_step1': 'Удали свой текущий аккаунт', 'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту.',
-            'how_to_del_title': 'Как удалить аккаунт?', 'how_to_del_s1': 'Перейди в свой профиль...', 'how_to_del_s2': 'Пролистай в самый низ...', 'how_to_del_s3': 'Нажми "Delete account".', 'how_to_del_s4': 'Выбери <em>любую</em> причину...', 'how_to_del_s5': 'Выйди с аккаунта.', 'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
+            
+            // ИЗМЕНЕННЫЕ ТЕКСТЫ
+            'real_money_q': 'Хорошо! Но на нём есть реальные деньги?', 'yes_btn': 'Да', 'no_btn': 'Нет',
+            'new_acc_flow_title': 'Ок! Для того чтобы использовать весь функционал бота и получать ИИ-сигналы, тебе нужен новый аккаунт.', 
+            'new_acc_flow_subtitle': 'Поэтому для начала:', 'new_acc_flow_step1': 'Удали свой текущий аккаунт', 'new_acc_flow_btn1': 'Как и зачем удалять аккаунт?', 'new_acc_flow_step2': 'Создай новый аккаунт по этой кнопке', 'new_acc_flow_note': '! При регистрации нового аккаунта используй другую электронную почту.',
+            'how_to_del_title': 'Как удалить аккаунт?', 
+            'how_to_del_s1': 'Перейди в свой профиль', 
+            'how_to_del_s2': 'Пролистай в самый низ', 
+            'how_to_del_s3': 'Нажми «Удалить аккаунт»', 
+            'how_to_del_s4': 'Выбери <em>любую</em> причину', 
+            'how_to_del_s5': 'Выйди с аккаунта.', 
+            'how_to_del_video_placeholder': '"тут будет видеоинструкция"',
+            
+            // НОВЫЕ ТЕКСТЫ
+            'why_delete_btn': 'Зачем удалять аккаунт?',
+            'why_delete_title': 'Для твоей безопасности 🛡️',
+            'why_delete_desc': 'Если ты будешь использовать одновременно 2 и более аккаунтов, то Pocket Option может тебя заблокировать по причине “мультиаккаунтинг”.',
+
             'have_money_title': 'Хорошо! Чтобы использовать весь функционал...', 'have_money_subtitle': 'У тебя есть несколько вариантов:', 'have_money_opt1': 'Вывести остаток денег...', 'have_money_btn1': 'Как вывести деньги?', 'have_money_opt2': 'Зарегистрировать аккаунт на друга.', 'have_money_opt3': 'Рискуй.', 'have_money_btn3': 'Что?',
             'risk_info_text': 'Если денег на балансе мало – рискуй... <em>Действуй!</em>',
             'pro_tip_title': 'Совет от про-трейдеров', 'pro_tip_desc': 'Не бойся потерь, они есть у всех...', 'pro_tip_btn': 'OK!',
@@ -230,7 +265,6 @@
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
-            // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
             'onb1_ai_users': '40+ pro-traders use this AI bot',
             'onb1_stat_users': 'users',
             'onb1_stat_earned': 'earned',
@@ -247,15 +281,29 @@
             'tutorial_ready_btn': 'I\'m ready! 🤑',
 
             'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 
-            'step1_side_note': 'All our users have instant withdrawals thanks to the license from <b>Pocket Option</b>.', // <-- ИЗМЕНЕНИЕ
-            // --- КОНЕЦ ИЗМЕНЕНИЙ ---
+            'step1_side_note': 'All our users have instant withdrawals thanks to the license from <b>Pocket Option</b>.',
             'not_filled_in': '(not filled)', 'fill_in_btn': 'fill in', 'edit_btn': 'edit', 'save_btn': 'Save', 'start_btn': 'Start', 'goto_profile_btn': 'To Profile', 'promocode_copied': 'Promocode copied!',
             'how_to_reg_title': 'It\'s simple!', 'how_to_reg_subtitle': 'Follow these instructions:', 'how_to_reg_s1': 'Follow the link:', 'how_to_reg_s1_btn': 'Link', 'how_to_reg_s2': 'Enter your email and create a password.', 'how_to_reg_s3': 'In the "promocode" field, write <em>50START</em>.', 'how_to_reg_s4': 'Accept the broker\'s terms by clicking the checkbox.', 'how_to_reg_s5': 'Click "Register"!', 'how_to_reg_video': '"video instruction"',
             'reg_success_title': 'Registration Confirmed!', 'reg_success_desc': 'Soon you will receive your first signal and start earning.',
             'step2_title': 'Final step, <em>make it!</em>', 'step2_subtitle': 'Decide on the deposit size.', 'step2_strategy_bubble': 'Choose a strategy:', 'strat1_title': 'Risk On', 'strat1_li1': 'Small deposit', 'strat1_li2': 'Testing signals', 'strat1_li3': 'Be afraid and play big', 'strat2_title': 'Risk Off', 'strat2_li1': 'Decent deposit', 'strat2_li2': 'Fast profit', 'strat2_li3': 'Take everything from life', 'step2_btn_deposit': 'Make a deposit', 'how_to_deposit_btn': 'How to make a deposit?', 'how_to_deposit_text': '<i>*Instructions will be here*</i>',
-            'real_money_q': 'Okay! But does it have real money?', 'yes_btn': 'Yes', 'no_btn': 'No',
-            'new_acc_flow_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.',
-            'how_to_del_title': 'How to delete the account?', 'how_to_del_s1': 'Go to your profile where your personal data is listed.', 'how_to_del_s2': 'Scroll to the very bottom of the page.', 'how_to_del_s3': 'Press the big red button: "Delete account".', 'how_to_del_s4': 'Choose <em>any</em> reason and confirm the deletion.', 'how_to_del_s5': 'Log out of the account.', 'how_to_del_video_placeholder': '"video guide will be here"',
+            
+            // ИЗМЕНЕННЫЕ ТЕКСТЫ
+            'real_money_q': 'Okay! But does it have real money on it?', 'yes_btn': 'Yes', 'no_btn': 'No',
+            'new_acc_flow_title': 'Okay! To use all the bot\'s features and receive AI signals, you need a new account.', 
+            'new_acc_flow_subtitle': 'So to start:', 'new_acc_flow_step1': 'Delete your current account', 'new_acc_flow_btn1': 'How and why to delete the account?', 'new_acc_flow_step2': 'Create a new account using this button', 'new_acc_flow_note': '! When registering a new account, use a different email address.',
+            'how_to_del_title': 'How to delete the account?', 
+            'how_to_del_s1': 'Go to your profile', 
+            'how_to_del_s2': 'Scroll to the very bottom', 
+            'how_to_del_s3': 'Press "Delete account"', 
+            'how_to_del_s4': 'Choose <em>any</em> reason', 
+            'how_to_del_s5': 'Log out of the account.', 
+            'how_to_del_video_placeholder': '"video guide will be here"',
+
+            // НОВЫЕ ТЕКСТЫ
+            'why_delete_btn': 'Why delete the account?',
+            'why_delete_title': 'For your safety 🛡️',
+            'why_delete_desc': 'If you use 2 or more accounts at the same time, Pocket Option may block you for "multi-accounting".',
+
             'have_money_title': 'Okay! To use all bot functions and receive AI-signals, you need a new account.', 'have_money_subtitle': 'You have several options:', 'have_money_opt1': 'Withdraw the remaining money, then delete the account and create a new one.', 'have_money_btn1': 'How to withdraw funds?', 'have_money_opt2': 'Register an account for a friend.', 'have_money_opt3': 'Take a risk.', 'have_money_btn3': 'What?',
             'risk_info_text': 'If there is little money on the balance - take a risk and go all the way: either you lose everything, or you double it. My signals will pay off more than your balance. <em>Act!</em>',
             'pro_tip_title': 'Advice from pro-traders', 'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!', 'pro_tip_btn': 'OK!',
@@ -270,7 +318,6 @@
             'rank_strategist': 'Strategist', 'rank_royal': 'Royal', 'rank_hero': 'Hero', 'rank_nova': 'Nova', 'rank_legend': 'Legend',
         }
     };
-
     let userLang = 'en';
     let currentViewId = '';
     let previousViewId = '';
@@ -289,8 +336,7 @@
         }
         return `${n}-й`;
     }
-    
-    function renderRating(data) {
+        function renderRating(data) {
         const container = document.getElementById('rating-list-container');
         container.innerHTML = '';
         const user = tg.initDataUnsafe.user;
@@ -301,7 +347,7 @@
         
         const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56];
         
-        let lastSum = top5Sums[4]; 
+        let lastSum = top5Sums[4];
         for(let i = 1; i <= 15; i++) {
             const name = fakeNames[i-1];
             let sum;
@@ -333,8 +379,6 @@
 
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`;
     }
-
-    // ... (остальные ваши JS-функции: getSignalCount, incrementSignalCount, applyTranslations, etc. без изменений) ...
     function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
     function incrementSignalCount() {
         let count = getSignalCount();
@@ -476,11 +520,9 @@
             };
         };
     }
-
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
-        // --- Логика туториала ---
         document.querySelector('#tutorial-btn-1 button').onclick = () => {
             document.getElementById('tutorial-step-2').style.display = 'flex';
             document.getElementById('tutorial-step-2').style.opacity = 1;
@@ -500,39 +542,33 @@
             document.getElementById('tutorial-btn-3').style.display = 'none';
         };
         
-        // === ИЗМЕНЕНИЕ 2: Полностью исправленная логика для кнопки "Как сделать регистрацию?" ===
         document.getElementById('btn-step1-how-to').onclick = () => {
             const videoEl = document.getElementById('registration-video');
-            if (!videoEl) return; // Защита от ошибок, если элемент не найден
+            if (!videoEl) return; 
 
-            // Важно: убедитесь, что имена файлов в папке static/ в нижнем регистре (reg_ru.mp4, reg_en.mp4)
-            // Render чувствителен к регистру!
+            // НОВОЕ: Возвращаем расширение .MP4, раз оно работает
             const videoSrcRu = "{{ url_for('static', filename='reg_ru.MP4') }}";
             const videoSrcEn = "{{ url_for('static', filename='reg_en.MP4') }}";
             
-            // Устанавливаем нужный источник видео в зависимости от языка
             videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
-            
-            // Загружаем новое видео
             videoEl.load();
-
-            // <--- САМОЕ ГЛАВНОЕ: Показываем экран с инструкцией
             showView('how-to-register-view');
         };
 
-        // === ИЗМЕНЕНИЕ 3: Улучшение для кнопки "Назад" ===
         document.getElementById('btn-how-to-reg-back').onclick = () => {
             const videoEl = document.getElementById('registration-video');
             if (videoEl) {
-                videoEl.pause(); // <--- Останавливаем видео при выходе, чтобы не играло в фоне
-                videoEl.currentTime = 0; // Сбрасываем видео на начало
+                videoEl.pause(); 
+                videoEl.currentTime = 0;
             }
             showView('onboarding-3-view');
         };
-        // === КОНЕЦ ИЗМЕНЕНИЙ ===
 
+        // НОВОЕ: Навигация для новых кнопок и экранов
+        document.getElementById('btn-why-delete').onclick = () => showView('why-delete-info-view');
+        document.getElementById('btn-why-delete-info-back').onclick = () => showView('how-to-delete-view');
 
-        // Остальная навигация (остается без изменений)
+        // Остальная навигация
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-tutorial-back').onclick = () => showView('onboarding-1-view');
         document.getElementById('btn-tutorial-ready').onclick = () => showView('onboarding-3-view');
@@ -588,8 +624,6 @@
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
     }
-    
-    // ... (ваши функции fetchAndUpdateView и main остаются без изменений) ...
     async function fetchAndUpdateView(userId) {
         try {
             const response = await fetch(`/user/${userId}/data`);
@@ -607,13 +641,13 @@
                     sessionStorage.setItem(proTipSessionKey, 'true');
                     document.getElementById('pro-tip-overlay').style.display = 'flex';
                 } else {
-                    const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view'];
+                    const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view', 'why-delete-info-view'];
                     if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); }
                 }
             } else if (data.is_registered) {
-                if(!['post-reg-view', 'how-to-register-view'].includes(currentViewId)) { showView('reg-success-view'); }
+                if(!['post-reg-view', 'how-to-register-view', 'why-delete-info-view'].includes(currentViewId)) { showView('reg-success-view'); }
             } else {
-                const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view'];
+                const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view', 'why-delete-info-view'];
                 if (!onboardingViews.includes(currentViewId)) { showView('onboarding-1-view'); }
             }
         } catch (error) {
@@ -655,21 +689,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
