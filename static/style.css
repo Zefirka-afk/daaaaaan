@@ -632,3 +632,23 @@ b { color: var(--color-accent); font-weight: 600; }
 .ranks-info-list li b {
     color: var(--text-primary);
 }
+/* === НОВЫЕ СТИЛИ ДЛЯ ЭКРАНА "ЗАЧЕМ УДАЛЯТЬ" === */
+#why-delete-info-view .card {
+    text-align: center; /* Центрирует все дочерние элементы, включая заголовок и кнопку "Назад" */
+}
+
+#why-delete-info-view .title {
+    margin-bottom: 25px; /* Добавим отступ после заголовка */
+}
+
+.warning-note {
+    background-color: rgba(255, 61, 106, 0.08); /* Красноватый фон для предупреждения */
+    border-left: 3px solid var(--color-red);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    text-align: center; /* Центрируем текст внутри этого блока */
+}
