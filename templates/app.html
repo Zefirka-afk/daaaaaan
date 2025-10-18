@@ -471,23 +471,43 @@
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
         
-        // --- НОВАЯ ЛОГИКА ДЛЯ ТУТОРИАЛА ---
+        // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ ТУТОРИАЛА ---
         document.querySelector('#tutorial-btn-1 button').onclick = () => {
+            document.getElementById('tutorial-step-2').style.display = 'flex';
             document.getElementById('tutorial-step-2').style.opacity = 1;
             document.getElementById('tutorial-btn-2').style.display = 'block';
             document.getElementById('tutorial-btn-1').style.display = 'none';
         };
         document.querySelector('#tutorial-btn-2 button').onclick = () => {
+            document.getElementById('tutorial-step-3').style.display = 'flex';
             document.getElementById('tutorial-step-3').style.opacity = 1;
             document.getElementById('tutorial-btn-3').style.display = 'block';
             document.getElementById('tutorial-btn-2').style.display = 'none';
         };
         document.querySelector('#tutorial-btn-3 button').onclick = () => {
+            document.getElementById('tutorial-step-4').style.display = 'flex';
             document.getElementById('tutorial-step-4').style.opacity = 1;
             document.getElementById('tutorial-final-btns').style.display = 'flex';
             document.getElementById('tutorial-btn-3').style.display = 'none';
         };
-        // --- КОНЕЦ НОВОЙ ЛОГИКИ ---
+        // --- КОНЕЦ ИСПРАВЛЕНИЙ ТУТОРИАЛА ---
+
+        // --- ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ "КАК СДЕЛАТЬ РЕГИСТРАЦИЮ" ---
+        document.getElementById('btn-step1-how-to').onclick = () => {
+            const videoEl = document.getElementById('registration-video');
+            // Убедитесь, что имена файлов в папке static совпадают
+            const videoSrcRu = "{{ url_for('static', filename='reg_ru.MP4') }}";
+            const videoSrcEn = "{{ url_for('static', filename='reg_en.MP4') }}";
+            
+            videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
+            
+            showView('how-to-register-view');
+        };
+        document.getElementById('btn-how-to-reg-back').onclick = () => {
+            document.getElementById('registration-video').pause(); // Останавливаем видео при выходе
+            showView('onboarding-3-view');
+        };
+        // --- КОНЕЦ ИСПРАВЛЕНИЙ КНОПКИ ---
 
         // Остальная навигация
         document.getElementById('btn-onb1-next').onclick = () => showView('onboarding-2-view');
@@ -496,43 +516,35 @@
         
         document.getElementById('btn-rating').onclick = () => showView('rating-view');
         document.getElementById('btn-rating-back').onclick = () => showView('trader-profile-view');
+        
+        document.querySelectorAll('.promocode-item .code').forEach(el => { el.onclick = () => { navigator.clipboard.writeText(el.textContent).then(() => { const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; showNotification(t.promocode_copied); }).catch(err => { console.error('Failed to copy text: ', err); }); }; });
         document.getElementById('btn-promocodes').onclick = () => showView('promocodes-view');
         document.getElementById('btn-promocodes-back').onclick = () => showView('trader-profile-view');
+        
         document.getElementById('btn-trade-free').onclick = prepareFreeSignalView;
         document.getElementById('btn-free-signal-start').onclick = startSignalFlow;
         document.getElementById('btn-free-signal-back').onclick = () => showView('trader-profile-view');
+        
         const nextSignalHandler = () => { incrementSignalCount(); prepareFreeSignalView(); };
         document.getElementById('btn-next-signal').onclick = nextSignalHandler;
         document.getElementById('btn-next-from-loss-result').onclick = nextSignalHandler;
+        
         document.getElementById('btn-i-lost').onclick = () => showView('loss-analysis-view');
         document.getElementById('btn-loss-analysis-back').onclick = () => showView('signal-active-view');
+        
         const goToProfileHandler = () => showView('trader-profile-view');
         document.getElementById('btn-goto-profile-from-win').onclick = goToProfileHandler;
         document.getElementById('btn-goto-profile-from-loss').onclick = goToProfileHandler;
         document.getElementById('btn-pro-tip-ok').onclick = () => { document.getElementById('pro-tip-overlay').style.display = 'none'; showView('post-deposit-view'); };
         document.getElementById('btn-goto-profile').onclick = goToProfileHandler;
         document.getElementById('btn-profile-back').onclick = () => showView('post-deposit-view');
+        
         document.getElementById('rank-container').onclick = (e) => { const details = document.getElementById('rank-details'); const toggleBtn = document.getElementById('rank-toggle-btn'); toggleBtn.classList.toggle('open'); details.style.display = details.style.display === 'none' ? 'block' : 'none'; };
         document.getElementById('btn-trade-vip').onclick = () => showView('wip-view');
         document.getElementById('btn-help').onclick = () => showView('wip-view');
         document.getElementById('btn-step1-back').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-step1-register').onclick = openRegisterLink;
-        document.getElementById('btn-step1-how-to').onclick = () => {
-            const videoEl = document.getElementById('registration-video');
-            // Замените на ваши пути к видеофайлам в папке static
-            const videoSrcRu = "{{ url_for('static', filename='reg_ru.mp4') }}";
-            const videoSrcEn = "{{ url_for('static', filename='reg_en.mp4') }}";
-            
-            // В зависимости от языка пользователя, устанавливаем нужный источник видео
-            videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
-            
-            showView('how-to-register-view');
-        };
         document.getElementById('btn-how-to-reg-link').onclick = openRegisterLink;
-        document.getElementById('btn-how-to-reg-back').onclick = () => {
-            document.getElementById('registration-video').pause(); // Останавливаем видео
-            showView('onboarding-3-view');
-        };
         document.getElementById('btn-reg-success-next').onclick = () => showView('post-reg-view');
         document.getElementById('btn-step1-have-account').onclick = () => showView('real-money-check-view');
         document.getElementById('btn-real-money-back').onclick = () => showView('onboarding-3-view');
@@ -553,7 +565,6 @@
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
     }
-
     async function fetchAndUpdateView(userId) {
         try {
             const response = await fetch(`/user/${userId}/data`);
@@ -619,6 +630,7 @@
 
 </body>
 </html>
+
 
 
 
