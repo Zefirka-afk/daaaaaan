@@ -32,8 +32,10 @@
             <p class="version-tag">v.5.0</p>
             <p class="ai-users-text" data-translate-key="onb1_ai_users"></p>
             <div class="stats-container">
-                <div class="stat-item"><div class="value">30 000+</div><div class="label" data-translate-key="onb1_stat_users"></div></div>
-                <div class="stat-item"><div class="value">$7M+</div><div class="label" data-translate-key="onb1_stat_earned"></div></div>
+                <!-- ИЗМЕНЕНИЕ 1: Убран пробел в числе -->
+                <div class="stat-item"><div class="value">30000+</div><div class="label" data-translate-key="onb1_stat_users"></div></div>
+                <!-- ИЗМЕНЕНИЕ 2: Добавлен ключ для перевода значения -->
+                <div class="stat-item"><div class="value" data-translate-key="onb1_stat_earned_value">$7M+</div><div class="label" data-translate-key="onb1_stat_earned"></div></div>
                 <div class="stat-item"><div class="value">TOP 1</div><div class="label" data-translate-key="onb1_stat_recommended"></div></div>
             </div>
             <div class="nav-buttons full-width"><button class="main-button" id="btn-onb1-next" data-translate-key="next_btn"></button></div>
@@ -236,7 +238,7 @@
     const TRANSLATIONS = {
         'ru': {
             'loading': 'Загрузка данных...', 'error_text': 'Ошибка: не удалось определить пользователя.', 'next_btn': 'Далее >', 'back_btn': '< Назад',
-            'onb1_ai_users': '40+ про-трейдеров используют этого ИИ-бота', 'onb1_stat_users': 'юзеров', 'onb1_stat_earned': 'заработано', 'onb1_stat_recommended': 'сигнал-бот',
+            'onb1_ai_users': '40+ про-трейдеров используют этого ИИ-бота', 'onb1_stat_users': 'юзеров', 'onb1_stat_earned': 'заработано', 'onb1_stat_recommended': 'сигнал-бот', 'onb1_stat_earned_value': '$7млн+',
             
             'tutorial_title': 'Туториал', 'tutorial_b1': 'Подготовься перед сигналом, будь внимателен(-на).', 'tutorial_btn1': 'ОК! 👀', 'tutorial_b2': 'Быстро открой сайт и повтори сделку за мной. Я дам инструкции, тут важна твоя <b>скорость</b>.', 'tutorial_btn2': 'Понятно! 🏇💨', 'tutorial_b3': 'Закрепи свою прибыль и не торопись её тратить. Продолжай торговать, будь <b>рационален(-на)</b>.', 'tutorial_btn3': 'Хорошо 🧠', 'tutorial_b4': 'Расти в рейтинге и получи доступ в сообщество успешных юзеров.', 'tutorial_ready_btn': 'Я готов! 🤑',
 
@@ -286,7 +288,7 @@
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
-            'onb1_ai_users': '40+ pro-traders use this AI bot', 'onb1_stat_users': 'users', 'onb1_stat_earned': 'earned', 'onb1_stat_recommended': 'signal-bot',
+            'onb1_ai_users': '40+ pro-traders use this AI bot', 'onb1_stat_users': 'users', 'onb1_stat_earned': 'earned', 'onb1_stat_recommended': 'signal-bot', 'onb1_stat_earned_value': '$7M+',
             'tutorial_title': 'Tutorial', 'tutorial_b1': 'Prepare before the signal, be attentive.', 'tutorial_btn1': 'OK! 👀', 'tutorial_b2': 'Quickly open the site and copy the trade after me. I will give instructions, your <b>speed</b> is important here.', 'tutorial_btn2': 'Got it! 🏇💨', 'tutorial_b3': 'Secure your profit and don\'t rush to spend it. Keep trading, be <b>rational</b>.', 'tutorial_btn3': 'Alright 🧠', 'tutorial_b4': 'Grow in the rankings and get access to the community of successful users.', 'tutorial_ready_btn': 'I\'m ready! 🤑',
 
             'step1_label': 'FIRST STEP', 'step1_title': 'Create an account', 'step1_side_note': 'All our users have instant withdrawals thanks to the license from <b>Pocket Option</b>.',
