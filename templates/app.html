@@ -159,6 +159,27 @@
             </div>
         </div>
     </div>
+        <!-- ЭКРАН: КАК ВЫВЕСТИ ДЕНЬГИ (НОВЫЙ) -->
+    <div id="how-to-withdraw-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="how_to_wdr_title"></h1>
+            <!-- Используем тот же класс, что и для других инструкций для единообразия -->
+            <ol class="instruction-list">
+                <li data-translate-key="how_to_wdr_s1"></li>
+                <li data-translate-key="how_to_wdr_s2"></li>
+                <li data-translate-key="how_to_wdr_s3"></li>
+                <li data-translate-key="how_to_wdr_s4"></li>
+                <li data-translate-key="how_to_wdr_s5"></li>
+            </ol>
+            <video id="withdraw-video" width="100%" controls muted playsinline style="border-radius: 12px; margin-bottom: 25px;">
+                <source src="{{ url_for('static', filename='withdraw_ru.MP4') }}" type="video/mp4">
+                Твой браузер не поддерживает видео.
+            </video>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-how-to-wdr-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
 
     <div id="risk-info-view" class="view"><div class="card"><p class="risk-info-text" data-translate-key="risk_info_text"></p><div class="nav-buttons"><button class="back-button" id="btn-risk-info-back" data-translate-key="back_btn"></button></div></div></div>
     
@@ -291,6 +312,12 @@
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
             'search_title': 'Я в поиске сигнала', 'search_desc': 'Подготовься, зайди на платформу...', 'signal_get_btn': 'Получить сигнал', 'signal_ready': 'Готово!', 'signal_pair_select': 'Выбери валютную пару <b>{pair}</b>', 'signal_exp_time': 'Время экспирации <b>{exp}</b>', 'signal_exp_soon': 'СЕЙЧАС скажу время экспирации', 'signal_buy': 'ПОКУПАЙ 🟢', 'signal_sell': 'ПРОДАВАЙ 🔴', 'signal_win': 'ПОБЕДА', 'signal_loss': 'ПРОИГРЫШ', 'next_signal_btn': 'Следующий!', 'want_vip_btn': 'Хочу ВИП сигнал', 'i_lost_btn': 'Я проиграл', 'confirm_ready_btn': 'Я готов!',
             'rank_strategist': 'Strategist', 'rank_royal': 'Royal', 'rank_hero': 'Hero', 'rank_nova': 'Nova', 'rank_legend': 'Legend',
+            'how_to_wdr_title': 'Как вывести деньги?',
+            'how_to_wdr_s1': 'Откройте раздел финансы',
+            'how_to_wdr_s2': 'Выберите вывод средств',
+            'how_to_wdr_s3': 'Выберите удобный способ оплаты',
+            'how_to_wdr_s4': 'Укажите сумму вывода и номер счета, куда хотите сделать вывод',
+            'how_to_wdr_s5': 'Готово! Ваша заявка находится в очереди',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -334,6 +361,12 @@
             'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.',
             'search_title': 'Searching for a signal', 'search_desc': 'Get ready, go to the platform...', 'signal_get_btn': 'Get Signal', 'signal_ready': 'Ready!', 'signal_pair_select': 'Choose currency pair <b>{pair}</b>', 'signal_exp_time': 'Expiration time <b>{exp}</b>', 'signal_exp_soon': 'I will tell you the expiration time NOW', 'signal_buy': 'BUY 🟢', 'signal_sell': 'SELL 🔴', 'signal_win': 'VICTORY', 'signal_loss': 'LOSS', 'next_signal_btn': 'Next Signal!', 'want_vip_btn': 'I want a VIP signal', 'i_lost_btn': 'I lost', 'confirm_ready_btn': 'I\'m ready!',
             'rank_strategist': 'Strategist', 'rank_royal': 'Royal', 'rank_hero': 'Hero', 'rank_nova': 'Nova', 'rank_legend': 'Legend',
+            'how_to_wdr_title': 'How to withdraw funds?',
+            'how_to_wdr_s1': 'Open the "Finance" section',
+            'how_to_wdr_s2': 'Select "Withdrawal"',
+            'how_to_wdr_s3': 'Choose a convenient payment method',
+            'how_to_wdr_s4': 'Specify the withdrawal amount and the account details for the transfer',
+            'how_to_wdr_s5': 'Done! Your request is in the queue',
         }
     };
     let userLang = 'en';
@@ -381,7 +414,7 @@
         document.getElementById('btn-why-delete-info-back').onclick = () => showView('how-to-delete-view');
 
         // Навигация для сценария "Есть деньги"
-        document.getElementById('btn-how-to-withdraw').onclick = () => showView('wip-view');
+        document.getElementById('btn-how-to-withdraw').onclick = () => showView('how-to-withdraw-view');
         document.getElementById('btn-register-for-friend').onclick = openRegisterLink;
         document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
         document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
@@ -442,6 +475,11 @@
         document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
+        document.getElementById('btn-how-to-wdr-back').onclick = () => {
+            const videoEl = document.getElementById('withdraw-video');
+            if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; }
+            showView('have-money-options-view');
+        };
     }
     async function fetchAndUpdateView(userId) { try { const response = await fetch(`/user/${userId}/data`); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); renderProfileData(data); renderRating(data); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); if (depositEvent) { document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`; } const ftdEvent = data.events.find(e => e[0] === 'FTD'); const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep'); if (hasDeposit) { const proTipSessionKey = `proTipShown_${userId}`; if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) { sessionStorage.setItem(proTipSessionKey, 'true'); document.getElementById('pro-tip-overlay').style.display = 'flex'; } else { const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view', 'why-delete-info-view']; if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); } } } else if (data.is_registered) { if(!['post-reg-view', 'how-to-register-view', 'why-delete-info-view'].includes(currentViewId)) { showView('reg-success-view'); } } else { const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view', 'why-delete-info-view']; if (!onboardingViews.includes(currentViewId)) { showView('onboarding-1-view'); } } } catch (error) { console.error("Data loading error:", error); showView('error-view'); } }
     async function main() { if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) { applyTranslations('en'); showView('error-view'); return; } const user = tg.initDataUnsafe.user; userId = user.id; userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; document.documentElement.lang = userLang; applyTranslations(userLang); setupNavigation(); await fetchAndUpdateView(userId); const socket = io(); socket.on('connect', () => { console.log('Connected to WebSocket server!'); socket.emit('join', { 'chat_id': userId }); }); socket.on('update_data', (data) => { console.log('Received update from server:', data.message); tg.HapticFeedback.notificationOccurred('success'); fetchAndUpdateView(userId); }); }
@@ -450,6 +488,7 @@
 
 </body>
 </html>
+
 
 
 
