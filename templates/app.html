@@ -384,8 +384,89 @@
     function showNotification(text) { const toast = document.getElementById('notification-toast'); toast.textContent = text; toast.classList.add('visible'); setTimeout(() => { toast.classList.remove('visible'); }, 2500); }
     function renderProfileField(fieldKey, valueElId) { const valueEl = document.getElementById(valueElId); const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; const renderDisplayMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; const buttonText = savedValue ? t.edit_btn : t.fill_in_btn; const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`; valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`; valueEl.querySelector('.edit-button').onclick = renderEditMode; }; const renderEditMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; valueEl.innerHTML = ` <input type="text" class="inline-input" value="${savedValue}"> <button class="save-button">${t.save_btn}</button> `; const input = valueEl.querySelector('.inline-input'); input.focus(); const saveValue = () => { localStorage.setItem(`${fieldKey}_${userId}`, input.value); renderDisplayMode(); }; valueEl.querySelector('.save-button').onclick = saveValue; input.onkeydown = (e) => { if (e.key === 'Enter') { saveValue(); } }; }; renderDisplayMode(); }
     function renderProfileData(data) { const user = tg.initDataUnsafe.user; const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set'; renderProfileField('userName', 'profile-name-val'); renderProfileField('userAbout', 'profile-about-val'); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00"; document.getElementById('profile-balance-val').innerText = `$${balance}`; const totalDeposit = data.total_deposit_sum || 0; let rankKey = 'rank_strategist'; if (totalDeposit >= 20000) rankKey = 'rank_legend'; else if (totalDeposit >= 5000) rankKey = 'rank_nova'; else if (totalDeposit >= 1000) rankKey = 'rank_hero'; else if (totalDeposit >= 400) rankKey = 'rank_royal'; document.getElementById('current-rank-name').innerText = t[rankKey]; if (data.reg_date) { const regDate = new Date(data.reg_date); const today = new Date(); const timeDiff = today.getTime() - regDate.getTime(); const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24))); document.getElementById('days-since-reg').innerText = daysDiff; } else { document.getElementById('days-since-reg').innerText = 'N/A'; } document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`; }
-    function startSignalFlow() { showView('signal-active-view'); const allElements = {'stage1': document.getElementById('signal-stage-1'),'stage2': document.getElementById('signal-stage-2'),'stage3': document.getElementById('signal-stage-3'),'resultContainer': document.getElementById('signal-result-container'),'winButtons': document.getElementById('signal-win-buttons'),'lossButtons': document.getElementById('signal-loss-buttons'),'confirmationContainer': document.getElementById('signal-confirmation-container'),'signalStatusReady': document.getElementById('signal-status-ready'),'signalPair': document.getElementById('signal-pair'),'signalStatusExpSoon': document.getElementById('signal-exp-soon'),'signalExpiration': document.getElementById('signal-expiration'),'signalDirection': document.getElementById('signal-direction'),}; for (const key in allElements) { allElements[key].style.display = 'none'; } allElements.stage1.style.display = 'block'; setTimeout(() => {allElements.stage1.style.display = 'none'; allElements.stage2.style.display = 'block';}, 5000); document.getElementById('btn-get-signal').onclick = () => { allElements.stage2.style.display = 'none'; allElements.stage3.style.display = 'block'; const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"], expirations = ["S15", "S20", "S25"], directions = ["buy", "sell"], getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)], selectedPair = getRandomItem(currencyPairs), selectedExp = getRandomItem(expirations), selectedDir = getRandomItem(directions); setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500); setTimeout(() => { allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); allElements.signalPair.style.display = 'block'; }, 1500); setTimeout(() => { allElements.signalStatusExpSoon.style.display = 'block'; }, 3000); setTimeout(() => { allElements.signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', `<b>${selectedExp}</b>`); allElements.signalExpiration.style.display = 'block'; allElements.confirmationContainer.style.display = 'block'; }, 10000); document.getElementById('btn-confirm-ready').onclick = () => { allElements.confirmationContainer.style.display = 'none'; let dirText = selectedDir === 'buy' ? TRANSLATIONS[userLang]['signal_buy'] : TRANSLATIONS[userLang]['signal_sell']; allElements.signalDirection.className = `signal-step ${selectedDir}-signal`; allElements.signalDirection.innerHTML = dirText; allElements.signalDirection.style.display = 'block'; const expirationInMs = parseInt(selectedExp.substring(1)) * 1000; setTimeout(() => { const isWin = Math.random() < 0.7; const signalResultEl = document.getElementById('signal-result'); if (isWin) { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_win']; signalResultEl.className = 'signal-result win'; allElements.winButtons.style.display = 'flex'; } else { signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_loss']; signalResultEl.className = 'signal-result loss'; allElements.lossButtons.style.display = 'flex'; } allElements.resultContainer.style.display = 'block'; }, expirationInMs); }; }; }
-    
+    function startSignalFlow() { 
+        showView('signal-active-view'); 
+        const allElements = {
+            'stage1': document.getElementById('signal-stage-1'),
+            'stage2': document.getElementById('signal-stage-2'),
+            'stage3': document.getElementById('signal-stage-3'),
+            'resultContainer': document.getElementById('signal-result-container'),
+            'winButtons': document.getElementById('signal-win-buttons'),
+            'lossButtons': document.getElementById('signal-loss-buttons'),
+            'confirmationContainer': document.getElementById('signal-confirmation-container'),
+            'signalStatusReady': document.getElementById('signal-status-ready'),
+            'signalPair': document.getElementById('signal-pair'),
+            'signalStatusExpSoon': document.getElementById('signal-exp-soon'),
+            'signalExpiration': document.getElementById('signal-expiration'),
+            'signalDirection': document.getElementById('signal-direction'),
+        }; 
+        for (const key in allElements) { allElements[key].style.display = 'none'; } 
+        allElements.stage1.style.display = 'block'; 
+        
+        setTimeout(() => {
+            allElements.stage1.style.display = 'none'; 
+            allElements.stage2.style.display = 'block';
+        }, 5000); 
+        
+        document.getElementById('btn-get-signal').onclick = () => { 
+            allElements.stage2.style.display = 'none'; 
+            allElements.stage3.style.display = 'block'; 
+
+            // ==========================================================
+            // === ВРЕМЕННЫЕ ИЗМЕНЕНИЯ ДЛЯ ОТБОРА СИГНАЛОВ (09.07.2024) ===
+            // ==========================================================
+            const selectedPair = "AUD/CAD OTC"; // ЗАДАЧА 1: Валютная пара всегда AUD/CAD OTC
+            const selectedExp = "S10";         // ЗАДАЧА 3: Экспирация всегда 10 секунд
+            
+            // Направление оставляем случайным
+            const directions = ["buy", "sell"];
+            const getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)];
+            const selectedDir = getRandomItem(directions);
+            // ==========================================================
+
+            setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500); 
+            setTimeout(() => { 
+                allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); 
+                allElements.signalPair.style.display = 'block'; 
+            }, 1500); 
+            setTimeout(() => { allElements.signalStatusExpSoon.style.display = 'block'; }, 3000); 
+            setTimeout(() => { 
+                allElements.signalExpiration.innerHTML = TRANSLATIONS[userLang]['signal_exp_time'].replace('{exp}', `<b>${selectedExp}</b>`); 
+                allElements.signalExpiration.style.display = 'block'; 
+                allElements.confirmationContainer.style.display = 'block'; 
+            }, 10000); 
+            
+            document.getElementById('btn-confirm-ready').onclick = () => { 
+                allElements.confirmationContainer.style.display = 'none'; 
+                let dirText = selectedDir === 'buy' ? TRANSLATIONS[userLang]['signal_buy'] : TRANSLATIONS[userLang]['signal_sell']; 
+                allElements.signalDirection.className = `signal-step ${selectedDir}-signal`; 
+                allElements.signalDirection.innerHTML = dirText; 
+                allElements.signalDirection.style.display = 'block'; 
+                
+                const expirationInMs = parseInt(selectedExp.substring(1)) * 1000; 
+                
+                setTimeout(() => { 
+                    // === ВРЕМЕННОЕ ИЗМЕНЕНИЕ: Сигнал всегда выигрышный ===
+                    const isWin = true; // ЗАДАЧА 2: Сигнал всегда "победа"
+                    // ======================================================
+                    
+                    const signalResultEl = document.getElementById('signal-result'); 
+                    
+                    if (isWin) { 
+                        signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_win']; 
+                        signalResultEl.className = 'signal-result win'; 
+                        allElements.winButtons.style.display = 'flex'; 
+                    } else { 
+                        // Этот блок теперь никогда не выполнится, но оставляем его для будущего
+                        signalResultEl.innerHTML = TRANSLATIONS[userLang]['signal_loss']; 
+                        signalResultEl.className = 'signal-result loss'; 
+                        allElements.lossButtons.style.display = 'flex'; 
+                    } 
+                    allElements.resultContainer.style.display = 'block'; 
+                }, expirationInMs); 
+            }; 
+        }; 
+    }
     // === ИЗМЕНЕНИЕ 3: Обновлена навигация ===
     function setupNavigation() {
         const openRegisterLink = () => { const personalLink = `${REGISTER_LINK_TEMPLATE}&sub_id1=${userId}`; tg.openLink(personalLink); };
@@ -488,6 +569,7 @@
 
 </body>
 </html>
+
 
 
 
