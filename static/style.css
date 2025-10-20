@@ -191,9 +191,9 @@ b { color: var(--color-accent); font-weight: 600; }
 .strategy-card li::before { content: '✓'; position: absolute; left: 0; color: var(--color-accent); font-weight: 600; }
 .toggle { display: inline-block; width: 44px; height: 26px; border-radius: 13px; position: relative; transition: background-color 0.3s; }
 .toggle::after { content: ''; position: absolute; width: 22px; height: 22px; border-radius: 50%; top: 2px; background-color: #fff; transition: transform 0.3s; }
-.toggle.on { background-color: var(--color-green); }
+.toggle.on { background-color: var(--color-red); }
 .toggle.on::after { transform: translateX(18px); }
-.toggle.off { background-color: var(--text-secondary); }
+.toggle.off { background-color: var(--color-green); }
 .toggle.off::after { transform: translateX(2px); }
 
 /* --- 20. Стили для сценария "У меня есть аккаунт" --- */
@@ -652,6 +652,7 @@ b { color: var(--color-accent); font-weight: 600; }
     color: var(--text-primary);
     text-align: center; /* Центрируем текст внутри блока */
 }
+
 
 
 
