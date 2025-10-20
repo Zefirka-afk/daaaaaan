@@ -652,6 +652,24 @@ b { color: var(--color-accent); font-weight: 600; }
     color: var(--text-primary);
     text-align: center; /* Центрируем текст внутри блока */
 }
+/* --- 29. Стили для автообновления рейтинга --- */
+@keyframes pulseUp {
+    0% { transform: scale(1); color: var(--color-green); text-shadow: 0 0 8px rgba(0, 230, 118, 0.4); }
+    50% { transform: scale(1.1); color: #fff; text-shadow: 0 0 15px rgba(0, 230, 118, 0.7); }
+    100% { transform: scale(1); color: var(--color-green); text-shadow: 0 0 8px rgba(0, 230, 118, 0.4); }
+}
+@keyframes pulseDown {
+    0% { transform: scale(1); color: var(--color-red); text-shadow: 0 0 8px rgba(255, 61, 106, 0.4); }
+    50% { transform: scale(1.1); color: #fff; text-shadow: 0 0 15px rgba(255, 61, 106, 0.7); }
+    100% { transform: scale(1); color: var(--color-red); text-shadow: 0 0 8px rgba(255, 61, 106, 0.4); }
+}
+
+.update-pulse-up {
+    animation: pulseUp 0.7s ease-in-out;
+}
+.update-pulse-down {
+    animation: pulseDown 0.7s ease-in-out;
+}
 
 
 
