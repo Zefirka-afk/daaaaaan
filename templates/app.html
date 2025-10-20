@@ -477,7 +477,37 @@
     function showView(viewId) { if (currentViewId && currentViewId !== viewId) { previousViewId = currentViewId; } currentViewId = viewId; document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); const viewElement = document.getElementById(viewId); if (viewElement) { viewElement.classList.add('active'); } const faqButton = document.getElementById('faq-button'); const faqVisibleOn = ['post-deposit-view', 'post-reg-view', 'trader-profile-view']; if (faqVisibleOn.includes(viewId)) { faqButton.classList.add('visible'); } else { faqButton.classList.remove('visible'); } }
     function showNotification(text) { const toast = document.getElementById('notification-toast'); toast.textContent = text; toast.classList.add('visible'); setTimeout(() => { toast.classList.remove('visible'); }, 2500); }
     function renderProfileField(fieldKey, valueElId) { const valueEl = document.getElementById(valueElId); const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; const renderDisplayMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; const buttonText = savedValue ? t.edit_btn : t.fill_in_btn; const displayText = savedValue || `<span style="opacity: 0.6;">${t.not_filled_in}</span>`; valueEl.innerHTML = `${displayText} <button class="edit-button">${buttonText}</button>`; valueEl.querySelector('.edit-button').onclick = renderEditMode; }; const renderEditMode = () => { const savedValue = localStorage.getItem(`${fieldKey}_${userId}`) || ''; valueEl.innerHTML = ` <input type="text" class="inline-input" value="${savedValue}"> <button class="save-button">${t.save_btn}</button> `; const input = valueEl.querySelector('.inline-input'); input.focus(); const saveValue = () => { localStorage.setItem(`${fieldKey}_${userId}`, input.value); renderDisplayMode(); }; valueEl.querySelector('.save-button').onclick = saveValue; input.onkeydown = (e) => { if (e.key === 'Enter') { saveValue(); } }; }; renderDisplayMode(); }
-    function renderProfileData(data) { const user = tg.initDataUnsafe.user; const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set'; renderProfileField('userName', 'profile-name-val'); renderProfileField('userAbout', 'profile-about-val'); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); const balance = depositEvent ? parseFloat(depositEvent[1]).toFixed(2) : "0.00"; document.getElementById('profile-balance-val').innerText = `$${balance}`; const totalDeposit = data.total_deposit_sum || 0; let rankKey = 'rank_strategist'; if (totalDeposit >= 20000) rankKey = 'rank_legend'; else if (totalDeposit >= 5000) rankKey = 'rank_nova'; else if (totalDeposit >= 1000) rankKey = 'rank_hero'; else if (totalDeposit >= 400) rankKey = 'rank_royal'; document.getElementById('current-rank-name').innerText = t[rankKey]; if (data.reg_date) { const regDate = new Date(data.reg_date); const today = new Date(); const timeDiff = today.getTime() - regDate.getTime(); const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24))); document.getElementById('days-since-reg').innerText = daysDiff; } else { document.getElementById('days-since-reg').innerText = 'N/A'; } document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`; }
+    function renderProfileData(data) { 
+        const user = tg.initDataUnsafe.user; 
+        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; 
+        document.getElementById('profile-nickname-val').innerText = user.username ? `@${user.username}` : 'Not set'; 
+        renderProfileField('userName', 'profile-name-val'); 
+        renderProfileField('userAbout', 'profile-about-val'); 
+        
+        // ИСПРАВЛЕНИЕ: Используем data.max_deposit, как и договаривались.
+        document.getElementById('profile-balance-val').innerText = `$${data.max_deposit || "0.00"}`; 
+        
+        const totalDeposit = data.total_deposit_sum || 0; 
+        let rankKey = 'rank_strategist'; 
+        if (totalDeposit >= 20000) rankKey = 'rank_legend'; 
+        else if (totalDeposit >= 5000) rankKey = 'rank_nova'; 
+        else if (totalDeposit >= 1000) rankKey = 'rank_hero'; 
+        else if (totalDeposit >= 400) rankKey = 'rank_royal'; 
+        document.getElementById('current-rank-name').innerText = t[rankKey]; 
+        
+        if (data.reg_date) { 
+            const regDate = new Date(data.reg_date); 
+            const today = new Date(); 
+            const timeDiff = today.getTime() - regDate.getTime(); 
+            const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24))); 
+            document.getElementById('days-since-reg').innerText = daysDiff; 
+        } else { 
+            document.getElementById('days-since-reg').innerText = 'N/A'; 
+        } 
+        
+        // Это поле тоже должно показывать максимальный депозит
+        document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`; 
+    }
     function startSignalFlow() { 
         showView('signal-active-view'); 
         const allElements = {
@@ -633,7 +663,6 @@
         
         document.getElementById('rank-container').onclick = (e) => { const details = document.getElementById('rank-details'); const toggleBtn = document.getElementById('rank-toggle-btn'); toggleBtn.classList.toggle('open'); details.style.display = details.style.display === 'none' ? 'block' : 'none'; };
         document.getElementById('btn-trade-vip').onclick = () => showView('wip-view');
-        document.getElementById('btn-help').onclick = () => showView('wip-view');
         document.getElementById('btn-step1-back').onclick = () => showView('onboarding-2-view');
         document.getElementById('btn-step1-register').onclick = openRegisterLink;
         document.getElementById('btn-how-to-reg-link').onclick = openRegisterLink;
@@ -675,6 +704,7 @@
 
 </body>
 </html>
+
 
 
 
