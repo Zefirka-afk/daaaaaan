@@ -401,7 +401,74 @@
     let userId;
 
     function getRussianOrdinal(n) { if (userLang !== 'ru') { const lastDigit = n % 10, lastTwoDigits = n % 100; if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return `${n}th`; switch (lastDigit) { case 1: return `${n}st`; case 2: return `${n}nd`; case 3: return `${n}rd`; default: return `${n}th`; } } return `${n}-й`; }
-    function renderRating(data) { const container = document.getElementById('rating-list-container'); container.innerHTML = ''; const user = tg.initDataUnsafe.user; const t = TRANSLATIONS[userLang] || TRANSLATIONS['en']; const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"]; const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; const top5Sums = [641219.71, 412101.03, 398336.80, 361540.11, 334110.56]; let lastSum = top5Sums[4]; for(let i = 1; i <= 15; i++) { const name = fakeNames[i-1]; let sum; if (i <= 5) { sum = top5Sums[i-1]; } else { lastSum -= getRandom(15000, 30000); sum = Math.max(lastSum, (16 - i) * 10000); } container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; } container.innerHTML += `<li class="rating-separator">...</li>`; let userRankKey = `userRank_${userId}`; let userPos = localStorage.getItem(userRankKey); if (!userPos) { userPos = getRandom(20138, 21999); localStorage.setItem(userRankKey, userPos); } userPos = parseInt(userPos); const userSum = data.user_withdrawal_sum || 0.0; const playerAboveSum = userSum + getRandom(50, 200); container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; const userName = user.first_name || t.your_position; container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${userName} (Вы)</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`; container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length - 1)]}</span><span class="rating-sum">$0.00</span></li>`; }
+    let ratingInterval = null; // Переменная для хранения интервала
+    function renderRating(data) {
+        if (ratingInterval) clearInterval(ratingInterval); // Очищаем старый интервал, если он есть
+
+        const container = document.getElementById('rating-list-container');
+        container.innerHTML = '';
+        const user = tg.initDataUnsafe.user;
+        const t = TRANSLATIONS[userLang] || TRANSLATIONS['en'];
+        const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"];
+        const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        
+        // ИЗМЕНЕНИЕ 1: Все суммы уменьшены в 6 раз
+        const top5Sums = [106869.95, 68683.51, 66389.47, 60256.69, 55685.09]; 
+        let lastSum = top5Sums[4];
+
+        for (let i = 1; i <= 15; i++) {
+            const name = fakeNames[i-1];
+            let sum;
+            if (i <= 5) {
+                sum = top5Sums[i-1];
+            } else {
+                lastSum -= getRandom(2500, 5000); // Диапазон уменьшен в 6 раз
+                sum = Math.max(lastSum, (16 - i) * 1667); // База уменьшена в 6 раз
+            }
+            container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${i}</span><span class="rating-name">${name}</span><span class="rating-sum">$${sum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
+        }
+        
+        container.innerHTML += `<li class="rating-separator">...</li>`;
+        
+        let userRankKey = `userRank_${userId}`;
+        let userPos = localStorage.getItem(userRankKey);
+        if (!userPos) {
+            userPos = getRandom(20138, 21999);
+            localStorage.setItem(userRankKey, userPos);
+        }
+        userPos = parseInt(userPos);
+
+        const userSum = (data.user_withdrawal_sum || 0.0) / 6; // Сумма пользователя тоже уменьшена в 6 раз
+        const playerAboveSum = userSum + getRandom(8, 33); // Диапазон уменьшен
+        const playerBelowSum = Math.max(0, userSum - getRandom(8, 33)); // Игрок снизу
+        
+        container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length-1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
+        
+        const userName = user.first_name || t.your_position;
+        container.innerHTML += `<li class="rating-item user"><span class="rating-pos">#${userPos}</span><span class="rating-name">${(userLang === 'ru' ? `${userName} (Вы)`: `You (${userName})`)}</span><span class="rating-sum">$${userSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
+        
+        container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length-1)]}</span><span class="rating-sum">$${playerBelowSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
+
+        // ИЗМЕНЕНИЕ 2: Визуальное автообновление
+        ratingInterval = setInterval(() => {
+            const items = container.querySelectorAll('.rating-item:not(.user)');
+            if (items.length === 0) return;
+
+            const randomItem = items[Math.floor(Math.random() * items.length)];
+            const sumEl = randomItem.querySelector('.rating-sum');
+            
+            let currentSum = parseFloat(sumEl.textContent.replace('$', '').replace(/,/g, ''));
+            const change = (Math.random() * 50 - 25); // Случайное изменение от -25 до +25
+            currentSum += change;
+            
+            sumEl.textContent = `$${currentSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            const pulseClass = change >= 0 ? 'update-pulse-up' : 'update-pulse-down';
+            sumEl.classList.add(pulseClass);
+            setTimeout(() => sumEl.classList.remove(pulseClass), 700);
+
+        }, 2500); // Обновление каждые 2.5 секунды
+    }
     function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
     function incrementSignalCount() { let count = getSignalCount(); localStorage.setItem(`signalCounter_${userId}`, count + 1); }
     function applyTranslations(lang) { const t = TRANSLATIONS[lang]; document.querySelectorAll('[data-translate-key]').forEach(el => { const key = el.getAttribute('data-translate-key'); if (t[key]) { el.innerHTML = t[key]; } }); }
@@ -607,6 +674,7 @@
 
 </body>
 </html>
+
 
 
 
