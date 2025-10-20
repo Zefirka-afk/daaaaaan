@@ -188,8 +188,22 @@
     
     <!-- ЭКРАН ДЕПОЗИТА -->
     <div id="post-reg-view" class="view"><div class="card"><h1 class="step2-title" data-translate-key="step2_title"></h1><p class="description" data-translate-key="step2_subtitle"></p><div class="strategy-section"><div class="strategy-bubble" data-translate-key="step2_strategy_bubble"></div><div class="strategy-choices"><div class="strategy-card risk-on"><h3><span class="toggle on"></span><span data-translate-key="strat1_title"></span></h3><ul><li data-translate-key="strat1_li1"></li><li data-translate-key="strat1_li2"></li><li data-translate-key="strat1_li3"></li></ul></div><div class="strategy-card risk-off"><h3><span class="toggle off"></span><span data-translate-key="strat2_title"></span></h3><ul><li data-translate-key="strat2_li1"></li><li data-translate-key="strat2_li2"></li><li data-translate-key="strat2_li3"></li></ul></div></div></div><div class="nav-buttons-vertical"><button class="main-button" id="btn-make-deposit" data-translate-key="step2_btn_deposit"></button><button class="secondary-button" id="btn-how-to-deposit" data-translate-key="how_to_deposit_btn"></button></div></div></div>
-    <div id="how-to-deposit-view" class="view"><div class="card"><p class="description" data-translate-key="how_to_deposit_text"></p><div class="nav-buttons"><button class="back-button" id="btn-how-to-deposit-back" data-translate-key="back_btn"></button></div></div></div>
-
+    <div id="how-to-deposit-view" class="view">
+        <div class="card">
+            <h1 class="title" data-translate-key="how_to_dep_title"></h1>
+            <ol class="instruction-list">
+                <li data-translate-key="how_to_dep_s1"></li>
+                <li data-translate-key="how_to_dep_s2"></li>
+                <li data-translate-key="how_to_dep_s3"></li>
+                <li data-translate-key="how_to_dep_s4"></li>
+                <li data-translate-key="how_to_dep_s5"></li>
+            </ol>
+            <video id="deposit-video" width="100%" controls muted playsinline style="border-radius: 12px; margin-bottom: 25px;"></video>
+            <div class="nav-buttons">
+                <button class="back-button" id="btn-how-to-deposit-back" data-translate-key="back_btn"></button>
+            </div>
+        </div>
+    </div>
     <!-- БЛОК 3: ПОСЛЕ ДЕПОЗИТА (ЛОББИ) -->
     <div id="post-deposit-view" class="view"><div class="card"><h1 class="lobby-title" data-translate-key="lobby_title"></h1><p class="description" data-translate-key="lobby_congrats"></p><div class="deposit-display"><div class="deposit-amount" id="deposit-amount-display"></div></div><p class="small-text" data-translate-key="lobby_footnote"></p><div class="nav-buttons-vertical"><button class="secondary-button" id="btn-goto-profile" data-translate-key="lobby_btn_profile"></button></div></div></div>
     
@@ -318,6 +332,12 @@
             'how_to_wdr_s3': 'Выберите удобный способ оплаты',
             'how_to_wdr_s4': 'Укажите сумму вывода и номер счета, куда хотите сделать вывод',
             'how_to_wdr_s5': 'Готово! Ваша заявка находится в очереди',
+            'how_to_dep_title': 'Как сделать депозит?',
+            'how_to_dep_s1': 'Нажмите на кнопку "пополнить счет"',
+            'how_to_dep_s2': 'Выберите удобный способ оплаты',
+            'how_to_dep_s3': 'Введите данные платежа',
+            'how_to_dep_s4': 'Введите промокод <b>50START</b> и получите бонус 50% к депозиту',
+            'how_to_dep_s5': 'Готово! Ожидайте поступления ✅',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -367,6 +387,12 @@
             'how_to_wdr_s3': 'Choose a convenient payment method',
             'how_to_wdr_s4': 'Specify the withdrawal amount and the account details for the transfer',
             'how_to_wdr_s5': 'Done! Your request is in the queue',
+            'how_to_dep_title': 'How to make a deposit?',
+            'how_to_dep_s1': 'Press the "Top-up account" button',
+            'how_to_dep_s2': 'Choose a convenient payment method',
+            'how_to_dep_s3': 'Enter your payment details',
+            'how_to_dep_s4': 'Enter the promocode <b>50START</b> to get a 50% bonus on your deposit',
+            'how_to_dep_s5': 'Done! Wait for the funds to arrive ✅',
         }
     };
     let userLang = 'en';
@@ -552,8 +578,20 @@
         document.getElementById('btn-real-money-no').onclick = () => showView('new-account-flow-view');
         
         document.getElementById('btn-make-deposit').onclick = openRegisterLink;
-        document.getElementById('btn-how-to-deposit').onclick = () => showView('how-to-deposit-view');
-        document.getElementById('btn-how-to-deposit-back').onclick = () => showView('post-reg-view');
+        document.getElementById('btn-how-to-deposit').onclick = () => {
+            const videoEl = document.getElementById('deposit-video');
+            if (!videoEl) return;
+            const videoSrcRu = "{{ url_for('static', filename='deposit_ru.mp4') }}";
+            const videoSrcEn = "{{ url_for('static', filename='deposit_en.mp4') }}";
+            videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
+            videoEl.load();
+            showView('how-to-deposit-view');
+        };
+        document.getElementById('btn-how-to-deposit-back').onclick = () => {
+            const videoEl = document.getElementById('deposit-video');
+            if (videoEl) { videoEl.pause(); videoEl.currentTime = 0; }
+            showView('post-reg-view');
+        };
         document.getElementById('btn-wip-back').onclick = () => { if (previousViewId) { showView(previousViewId); } else { showView('trader-profile-view'); }};
         document.getElementById('faq-button').onclick = () => showView('wip-view');
         document.getElementById('btn-how-to-wdr-back').onclick = () => {
@@ -569,6 +607,7 @@
 
 </body>
 </html>
+
 
 
 
