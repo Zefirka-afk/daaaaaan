@@ -705,12 +705,42 @@
         };
     }
     async function fetchAndUpdateView(userId) { try { const response = await fetch(`/user/${userId}/data`); if (!response.ok) throw new Error('Network response was not ok'); const data = await response.json(); renderProfileData(data); renderRating(data); const depositEvent = data.events.find(e => e[0] === 'FTD' || e[0] === 'dep'); if (depositEvent) { document.getElementById('deposit-amount-display').innerText = `$${parseFloat(depositEvent[1]).toFixed(2)}`; } const ftdEvent = data.events.find(e => e[0] === 'FTD'); const hasDeposit = ftdEvent || data.events.some(e => e[0] === 'dep'); if (hasDeposit) { const proTipSessionKey = `proTipShown_${userId}`; if (ftdEvent && !sessionStorage.getItem(proTipSessionKey)) { sessionStorage.setItem(proTipSessionKey, 'true'); document.getElementById('pro-tip-overlay').style.display = 'flex'; } else { const postDepositViews = ['post-deposit-view', 'trader-profile-view', 'rating-view', 'signal-active-view', 'wip-view', 'promocodes-view', 'free-signal-start-view', 'loss-analysis-view', 'how-to-register-view', 'why-delete-info-view']; if (!postDepositViews.includes(currentViewId)) { showView('post-deposit-view'); } } } else if (data.is_registered) { if(!['post-reg-view', 'how-to-register-view', 'why-delete-info-view'].includes(currentViewId)) { showView('reg-success-view'); } } else { const onboardingViews = ['onboarding-1-view', 'onboarding-2-view', 'onboarding-3-view', 'real-money-check-view', 'new-account-flow-view', 'how-to-delete-view', 'have-money-options-view', 'risk-info-view', 'how-to-register-view', 'why-delete-info-view']; if (!onboardingViews.includes(currentViewId)) { showView('onboarding-1-view'); } } } catch (error) { console.error("Data loading error:", error); showView('error-view'); } }
-    async function main() { if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) { applyTranslations('en'); showView('error-view'); return; } const user = tg.initDataUnsafe.user; userId = user.id; userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; document.documentElement.lang = userLang; applyTranslations(userLang); setupNavigation(); await fetchAndUpdateView(userId); const socket = io(); socket.on('connect', () => { console.log('Connected to WebSocket server!'); socket.emit('join', { 'chat_id': userId }); }); socket.on('update_data', (data) => { console.log('Received update from server:', data.message); tg.HapticFeedback.notificationOccurred('success'); fetchAndUpdateView(userId); }); }
+    async function main() { 
+        if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) { 
+            applyTranslations('en'); 
+            showView('error-view'); 
+            return; 
+        } 
+        const user = tg.initDataUnsafe.user; 
+        userId = user.id; 
+        userLang = (user.language_code && user.language_code.startsWith('ru')) ? 'ru' : 'en'; 
+        document.documentElement.lang = userLang; 
+        applyTranslations(userLang); 
+        setupNavigation(); 
+        await fetchAndUpdateView(userId); 
+        
+        // ИЗМЕНЕННЫЙ КУСОК КОДА:
+        const socket = io(); 
+        socket.on('connect', () => { 
+            console.log('Connected to WebSocket server!'); 
+            socket.emit('join', { 'chat_id': userId }); 
+        }); 
+        socket.on('update_data', (data) => { 
+            console.log('Received update from server:', data.message); 
+            tg.HapticFeedback.notificationOccurred('success'); 
+            
+            // Добавляем задержку в 750 мс перед запросом данных
+            setTimeout(() => {
+                fetchAndUpdateView(userId);
+            }, 750); 
+        }); 
+    }
     document.addEventListener('DOMContentLoaded', main);
 </script>
 
 </body>
 </html>
+
 
 
 
