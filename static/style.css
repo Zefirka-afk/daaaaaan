@@ -1,4 +1,4 @@
-/* --- 1. Шрифты иременные --- */
+/* --- 1. Шрифты переменные --- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
@@ -670,6 +670,7 @@ b { color: var(--color-accent); font-weight: 600; }
 .update-pulse-down {
     animation: pulseDown 0.7s ease-in-out;
 }
+
 
 
 
