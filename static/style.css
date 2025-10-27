@@ -671,6 +671,10 @@ b { color: var(--color-accent); font-weight: 600; }
     animation: pulseDown 0.7s ease-in-out;
 }
 
+/* --- 30. Вспомогательные классы --- */
+.no-wrap {
+    white-space: nowrap;
+}
 
 
 
