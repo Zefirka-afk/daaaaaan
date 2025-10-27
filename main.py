@@ -216,13 +216,22 @@ def _process_and_notify(event, subid, data):
         c.execute("SELECT lang FROM users WHERE chat_id = ?", (chat_id,)); result = c.fetchone(); conn.close()
         lang = result[0] if result else 'en'
         message_text = ""
-        if event in ["FTD", "dep"] and sumdep_raw:
-            try: display_sum = f"{(float(sumdep_raw) / 94 * 100):.2f}"
-            except (ValueError, TypeError, ZeroDivisionError): display_sum = sumdep_raw
+
+        # --- ИЗМЕНЕНИЕ: Проверка события сделана нечувствительной к регистру ---
+        event_lower = event.lower() if event else None
+
+        if event_lower in ["ftd", "dep"] and sumdep_raw:
+            try:
+                display_sum = f"{(float(sumdep_raw) / 94 * 100):.2f}"
+            except (ValueError, TypeError, ZeroDivisionError):
+                display_sum = sumdep_raw
+            # Для определения ftd_success нужно использовать оригинальное, а не пониженное событие
             message_key = 'ftd_success' if event == 'FTD' else 'dep_success'
             message_text = TEXTS[lang][message_key].format(sum=display_sum)
-        elif event == "reg":
+        elif event_lower == "reg":
             message_text = TEXTS[lang]['reg_success']
+        # -----------------------------------------------------------------------
+
         if message_text:
             bot.send_message(chat_id, message_text)
     except Exception as e:
@@ -280,5 +289,6 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
 
 
