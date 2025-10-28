@@ -221,15 +221,16 @@
             </ul>
             <div id="rank-details" style="display: none;">
                 <div class="rank-details">
-                    <p><span data-translate-key="rank_detail_vip"></span>: 0</p>
-                    <p><span data-translate-key="rank_detail_days"></span>: <span id="days-since-reg">0</span></p>
-                    <p><span data-translate-key="rank_detail_maxdep"></span>: <span id="max-deposit-val">$0.00</span> (<span data-translate-key="rank_detail_maxdep_note"></span>)</p>
+                    <!-- Новая строка для суммы выводов -->
+                    <p><span data-translate-key="rank_detail_total_wdr"></span>: <span id="total-withdrawal-val">$0.00</span></p>
+                    
+                    <!-- Обновленный список рангов -->
                     <ul class="ranks-info-list">
-                        <li><b>Strategist:</b> $1 - $399</li>
-                        <li><b>Royal:</b> $400 - $999</li>
-                        <li><b>Hero:</b> $1000 - $4999</li>
-                        <li><b>Nova:</b> $5000 - $19999</li>
-                        <li><b>Legend:</b> $20000+</li>
+                        <li><b data-translate-key="rank_strategist">Strategist</b>: $1 - $399</li>
+                        <li><b data-translate-key="rank_royal">Royal</b>: $400 - $999</li>
+                        <li><b data-translate-key="rank_hero">Hero</b>: $1000 - $4999</li>
+                        <li><b data-translate-key="rank_nova">Nova</b>: $5000 - $19999</li>
+                        <li><b data-translate-key="rank_legend">Legend</b>: $20000+</li>
                     </ul>
                 </div>
             </div>
@@ -318,8 +319,7 @@
             'risk_info_text': 'Если денег на балансе мало — рискуй ими до конца: либо всё проиграешь, либо удвоишь. Мои сигналы окупят больше, чем твой остаток. <em>Действуй!</em>',
             'pro_tip_title': 'Совет от про-трейдеров', 'pro_tip_desc': 'Не бойся потерь, они есть у всех...', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Лобби', 'lobby_congrats': 'Поздравляю с первым депозитом!', 'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.', 'lobby_btn_profile': 'Перейти в профиль трейдера',
-            'profile_title': 'Профиль трейдера', 'profile_nickname': 'Никнейм', 'profile_name': 'Имя', 'profile_about': 'О себе', 'profile_balance': 'Максимальный депозит', 'profile_rank': 'Текущее звание', 'rank_novice': 'Strategist', 'rank_detail_vip': 'Количество полученных ВИП сигналов', 'rank_detail_days': 'С даты регистрации прошло', 'rank_detail_maxdep': 'Максимальный депозит', 'rank_detail_maxdep_note': 'ниже среднего',
-            'profile_btn_trade_free': 'Торговать на бесплатных сигналах', 'profile_btn_rating': 'Рейтинг', 'profile_btn_trade_vip': 'VIP сигналы', 'profile_btn_promocodes': 'Персональные промокоды',
+            'profile_title': 'Профиль трейдера', 'profile_nickname': 'Никнейм', 'profile_name': 'Имя', 'profile_about': 'О себе', 'profile_balance': 'Максимальный депозит', 'profile_rank': 'Текущее звание', 'rank_novice': 'Strategist',
             'rating_title': 'Рейтинг выводов', 'your_position': 'Ваша позиция', 'promocode_title': 'Мои промокоды',
             'free_signal_title': 'Бесплатный сигнал', 'free_signal_text': 'Нажми кнопку <b>Старт</b>, когда будешь готов получить свой {count} сигнал.',
             'loss_analysis_title': 'Скорее всего, ты сделал что-то не так', 'loss_analysis_subtitle': 'Возможные варианты:', 'loss_reason1': 'Не вовремя открыл сделку <span>(слишком поздно)</span>', 'loss_reason2': 'Выбрал неверную валютную пару', 'loss_reason3': 'Открыл сделку в противоположном направлении', 'loss_reason4': 'Либо мои алгоритмы дали сбой <span>(и такое возможно)</span>', 'loss_motivation': 'Помни, что потерь не нужно бояться...', 'loss_analysis_btn': 'Ни шагу назад!',
@@ -338,6 +338,12 @@
             'how_to_dep_s3': 'Введи данные платежа',
             'how_to_dep_s4': 'Введи промокод <b>50START</b> и получи бонус 50% к депозиту',
             'how_to_dep_s5': 'Готово! Ожидай поступления ✅',
+            'rank_detail_total_wdr': 'Общая сумма выводов',
+            'rank_strategist': 'Новичок', 
+            'rank_royal': 'Ученик', 
+            'rank_hero': 'Адепт', 
+            'rank_nova': 'Мастер', 
+            'rank_legend': 'Легенда',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -377,8 +383,7 @@
             'pro_tip_title': 'Advice from pro-traders', 'pro_tip_desc': 'Don\'t be afraid of losses, everyone has them. In the long run, all your actions will bring profit!', 'pro_tip_btn': 'OK!',
             'lobby_title': 'Lobby', 'lobby_congrats': 'Congratulations on your first deposit!', 'lobby_footnote': 'This is your starting point, not counting bonuses.', 'lobby_btn_profile': 'Go to trader\'s profile',
             
-            'profile_title': 'Trader Profile', 'profile_nickname': 'Nickname', 'profile_name': 'Name', 'profile_about': 'About me', 'profile_balance': 'Maximum Deposit', 'profile_rank': 'Current Rank', 'rank_novice': 'Strategist', 'rank_detail_vip': 'VIP signals received', 'rank_detail_days': 'Days since registration', 'rank_detail_maxdep': 'Maximum deposit', 'rank_detail_maxdep_note': 'below average',
-            'profile_btn_trade_free': 'Trade on free signals', 'profile_btn_rating': 'Rating', 'profile_btn_trade_vip': 'VIP signals', 'profile_btn_promocodes': 'Personal promo codes',
+            'profile_title': 'Trader Profile', 'profile_nickname': 'Nickname', 'profile_name': 'Name', 'profile_about': 'About me', 'profile_balance': 'Maximum Deposit', 'profile_rank': 'Current Rank', 'rank_novice': 'Strategist', 'rank_detail_total_wdr': 'Total withdrawal amount',
             
             'rating_title': 'Withdrawal Rating', 'your_position': 'Your Position', 'promocode_title': 'My promocodes',
             'free_signal_title': 'Free Signal', 'free_signal_text': 'Press the <b>Start</b> button when you are ready to receive your {count} signal.',
@@ -502,6 +507,7 @@
         
         // ИСПРАВЛЕНИЕ: Используем data.max_deposit, как и договаривались.
         document.getElementById('profile-balance-val').innerText = `$${data.max_deposit || "0.00"}`; 
+        document.getElementById('total-withdrawal-val').innerText = `$${(data.user_withdrawal_sum || 0.0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
         
         const totalDeposit = data.total_deposit_sum || 0; 
         let rankKey = 'rank_strategist'; 
@@ -749,6 +755,7 @@
 
 </body>
 </html>
+
 
 
 
