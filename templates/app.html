@@ -520,19 +520,6 @@
         else if (totalDeposit >= 1000) rankKey = 'rank_hero'; 
         else if (totalDeposit >= 400) rankKey = 'rank_royal'; 
         document.getElementById('current-rank-name').innerText = t[rankKey]; 
-        
-        if (data.reg_date) { 
-            const regDate = new Date(data.reg_date); 
-            const today = new Date(); 
-            const timeDiff = today.getTime() - regDate.getTime(); 
-            const daysDiff = Math.max(0, Math.floor(timeDiff / (1000 * 3600 * 24))); 
-            document.getElementById('days-since-reg').innerText = daysDiff; 
-        } else { 
-            document.getElementById('days-since-reg').innerText = 'N/A'; 
-        } 
-        
-        // Это поле тоже должно показывать максимальный депозит
-        document.getElementById('max-deposit-val').innerText = `$${data.max_deposit || "0.00"}`; 
     }
     function startSignalFlow() { 
         showView('signal-active-view'); 
@@ -759,6 +746,7 @@
 
 </body>
 </html>
+
 
 
 
