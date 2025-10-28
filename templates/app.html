@@ -320,7 +320,7 @@
             'lobby_title': 'Лобби', 'lobby_congrats': 'Поздравляю с первым депозитом!', 'lobby_footnote': 'Это твоя отправная точка, не считая бонусы.', 'lobby_btn_profile': 'Перейти в профиль трейдера',
             'profile_title': 'Профиль трейдера', 'profile_nickname': 'Никнейм', 'profile_name': 'Имя', 'profile_about': 'О себе', 'profile_balance': 'Максимальный депозит', 'profile_rank': 'Текущее звание', 'rank_novice': 'Strategist', 'rank_detail_vip': 'Количество полученных ВИП сигналов', 'rank_detail_days': 'С даты регистрации прошло', 'rank_detail_maxdep': 'Максимальный депозит', 'rank_detail_maxdep_note': 'ниже среднего',
             'profile_btn_trade_free': 'Торговать на бесплатных сигналах', 'profile_btn_rating': 'Рейтинг', 'profile_btn_trade_vip': 'VIP сигналы', 'profile_btn_promocodes': 'Персональные промокоды',
-            'rating_title': 'Рейтинг', 'your_position': 'Ваша позиция', 'promocode_title': 'Мои промокоды',
+            'rating_title': 'Рейтинг выводов', 'your_position': 'Ваша позиция', 'promocode_title': 'Мои промокоды',
             'free_signal_title': 'Бесплатный сигнал', 'free_signal_text': 'Нажми кнопку <b>Старт</b>, когда будешь готов получить свой {count} сигнал.',
             'loss_analysis_title': 'Скорее всего, ты сделал что-то не так', 'loss_analysis_subtitle': 'Возможные варианты:', 'loss_reason1': 'Не вовремя открыл сделку <span>(слишком поздно)</span>', 'loss_reason2': 'Выбрал неверную валютную пару', 'loss_reason3': 'Открыл сделку в противоположном направлении', 'loss_reason4': 'Либо мои алгоритмы дали сбой <span>(и такое возможно)</span>', 'loss_motivation': 'Помни, что потерь не нужно бояться...', 'loss_analysis_btn': 'Ни шагу назад!',
             'wip_title': 'В разработке', 'wip_desc': 'Эта функция скоро будет доступна.',
@@ -380,7 +380,7 @@
             'profile_title': 'Trader Profile', 'profile_nickname': 'Nickname', 'profile_name': 'Name', 'profile_about': 'About me', 'profile_balance': 'Maximum Deposit', 'profile_rank': 'Current Rank', 'rank_novice': 'Strategist', 'rank_detail_vip': 'VIP signals received', 'rank_detail_days': 'Days since registration', 'rank_detail_maxdep': 'Maximum deposit', 'rank_detail_maxdep_note': 'below average',
             'profile_btn_trade_free': 'Trade on free signals', 'profile_btn_rating': 'Rating', 'profile_btn_trade_vip': 'VIP signals', 'profile_btn_promocodes': 'Personal promo codes',
             
-            'rating_title': 'Rating', 'your_position': 'Your Position', 'promocode_title': 'My promocodes',
+            'rating_title': 'Withdrawal Rating', 'your_position': 'Your Position', 'promocode_title': 'My promocodes',
             'free_signal_title': 'Free Signal', 'free_signal_text': 'Press the <b>Start</b> button when you are ready to receive your {count} signal.',
             'loss_analysis_title': 'You probably did something wrong', 'loss_analysis_subtitle': 'Possible options:', 'loss_reason1': 'Opened the trade at the wrong time <span>(too late)</span>', 'loss_reason2': 'Chose the wrong currency pair', 'loss_reason3': 'Opened the trade in the opposite direction', 'loss_reason4': 'Or my algorithms failed <span>(it happens)</span>', 'loss_motivation': 'Remember not to be afraid of losses; everyone has them. Those who don\'t break from them will reach their profit multipliers!', 'loss_analysis_btn': 'Not one step back!',
             'wip_title': 'Work in Progress','wip_desc': 'This feature will be available soon.',
@@ -420,7 +420,7 @@
         const fakeNames = ["CryptoKing", "ProfitHunter", "ScalperX", "LamboDreamer", "WolfOfTrades", "MarginCall", "DiamondHand", "SignalSurfer", "BullrunRider", "CandleMaster", "PixelTrader", "QuantumLeap", "ZenithTrader", "ApexGainz", "StonksOnly"];
         const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
         
-        // ИЗМЕНЕНИЕ 1: Все суммы уменьшены еще в 2 раза (в 12 раз от оригинала).
+        // Фейковые суммы оставлены для топ-листа
         const top5Sums = [53434.98, 34341.76, 33194.74, 30128.35, 27842.55]; 
         let lastSum = top5Sums[4];
 
@@ -446,10 +446,11 @@
         }
         userPos = parseInt(userPos);
 
-        // ИЗМЕНЕНИЕ 2: Рейтинг теперь основан на СУММЕ ДЕПОЗИТОВ (data.total_deposit_sum) и отмасштабирован.
-        const userSum = (data.total_deposit_sum || 0.0) / 12; 
-        const playerAboveSum = userSum + getRandom(4, 16); 
-        const playerBelowSum = Math.max(0, userSum - getRandom(4, 16));
+        // ИЗМЕНЕНИЕ 1: Сумма пользователя теперь - это его реальная сумма выводов без масштабирования
+        const userSum = data.user_withdrawal_sum || 0.0; 
+        
+        const playerAboveSum = userSum + getRandom(100, 300); // Ставим над ним игрока с чуть большей суммой
+        const playerBelowSum = Math.max(0, userSum - getRandom(100, 300)); // Игрока с чуть меньшей
         
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos - 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length-1)]}</span><span class="rating-sum">$${playerAboveSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
         
@@ -458,25 +459,32 @@
         
         container.innerHTML += `<li class="rating-item"><span class="rating-pos">#${userPos + 1}</span><span class="rating-name">${fakeNames[getRandom(0, fakeNames.length-1)]}</span><span class="rating-sum">$${playerBelowSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></li>`;
 
-        // ИЗМЕНЕНИЕ 3: Автообновление теперь только увеличивает суммы (имитация роста).
+        // ИЗМЕНЕНИЕ 2: Новая логика автообновления
         ratingInterval = setInterval(() => {
-            const items = container.querySelectorAll('.rating-item:not(.user)');
+            const items = Array.from(container.querySelectorAll('.rating-item:not(.user)'));
             if (items.length === 0) return;
 
-            const randomItem = items[Math.floor(Math.random() * items.length)];
-            const sumEl = randomItem.querySelector('.rating-sum');
+            // Перемешиваем массив, чтобы всегда выбирать разных пользователей
+            items.sort(() => 0.5 - Math.random());
             
-            let currentSum = parseFloat(sumEl.textContent.replace('$', '').replace(/,/g, ''));
-            const change = (Math.random() * 25); // Случайное УВЕЛИЧЕНИЕ от 0 до 25
-            currentSum += change;
-            
-            sumEl.textContent = `$${currentSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            
-            // Всегда используем "pulse-up", так как сумма только растет
-            sumEl.classList.add('update-pulse-up');
-            setTimeout(() => sumEl.classList.remove('update-pulse-up'), 700);
+            // Обновляем первых трех
+            const numToUpdate = Math.min(3, items.length);
+            for(let i = 0; i < numToUpdate; i++) {
+                const randomItem = items[i];
+                const sumEl = randomItem.querySelector('.rating-sum');
+                let currentSum = parseFloat(sumEl.textContent.replace('$', '').replace(/,/g, ''));
+                
+                // Увеличиваем сумму на случайное значение от 210 до 652
+                const change = Math.random() * (652 - 210) + 210;
+                currentSum += change;
+                
+                sumEl.textContent = `$${currentSum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                
+                sumEl.classList.add('update-pulse-up');
+                setTimeout(() => sumEl.classList.remove('update-pulse-up'), 1000); // Увеличим время анимации для наглядности
+            }
 
-        }, 2500); // Обновление каждые 2.5 секунды
+        }, 3600000); // 1 час = 3,600,000 миллисекунд
     }
     function getSignalCount() { return parseInt(localStorage.getItem(`signalCounter_${userId}`) || '1'); }
     function incrementSignalCount() { let count = getSignalCount(); localStorage.setItem(`signalCounter_${userId}`, count + 1); }
@@ -741,6 +749,7 @@
 
 </body>
 </html>
+
 
 
 
