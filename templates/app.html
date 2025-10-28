@@ -109,10 +109,11 @@
     <div id="new-account-flow-view" class="view"><div class="card"><h1 class="title" data-translate-key="new_acc_flow_title_no_money"></h1><p class="description" data-translate-key="new_acc_flow_subtitle"></p><div class="flow-step"><div class="step-content"><span class="step-number">1</span><p data-translate-key="new_acc_flow_step1"></p></div><button class="secondary-button" id="btn-how-and-why-delete" data-translate-key="new_acc_flow_btn1"></button></div><div class="flow-step"><div class="step-content"><span class="step-number">2</span><p data-translate-key="new_acc_flow_step2"></p></div><button class="main-button" id="btn-new-acc-register" data-translate-key="step1_btn_register"></button></div><div class="important-note" data-translate-key="new_acc_flow_note"></div><div class="nav-buttons"><button class="back-button" id="btn-new-acc-back" data-translate-key="back_btn"></button></div></div></div>
     
         <!-- Экран "Как удалить аккаунт" -->
+        <!-- Экран "Как удалить аккаунт" -->
     <div id="how-to-delete-view" class="view"><div class="card"><h1 class="title" data-translate-key="how_to_del_title"></h1><ul class="delete-guide"><li data-translate-key="how_to_del_s1"></li><li data-translate-key="how_to_del_s2"></li><li data-translate-key="how_to_del_s3"></li><li data-translate-key="how_to_del_s4"></li><li data-translate-key="how_to_del_s5"></li></ul>
-        <!-- ИЗМЕНЕНИЕ: Плейсхолдер заменен на видео-инструкцию -->
+        <!-- ИЗМЕНЕНИЕ: Обновлен путь к видео-инструкции -->
         <video id="delete-account-video" width="100%" controls muted playsinline style="border-radius: 12px; margin-bottom: 25px;">
-            <source src="{{ url_for('static', filename='delete_account.MP4') }}" type="video/mp4">
+            <source src="{{ url_for('static', filename='delete_a.MOV') }}" type="video/quicktime">
             Твой браузер не поддерживает видео.
         </video>
         <div class="nav-buttons-vertical" style="margin-bottom: 20px;">
@@ -741,6 +742,7 @@
 
 </body>
 </html>
+
 
 
 
