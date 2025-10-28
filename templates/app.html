@@ -550,18 +550,20 @@
             allElements.stage3.style.display = 'block'; 
 
             // ==========================================================
-            // === ВРЕМЕННЫЕ ИЗМЕНЕНИЯ ДЛЯ ОТБОРА СИГНАЛОВ (09.07.2024) ===
+            // === ВОЗВРАЩАЕМ СТАРУЮ ЛОГИКУ ГЕНЕРАЦИИ СИГНАЛОВ ===
             // ==========================================================
-            const selectedPair = "AUD/CAD OTC"; // ЗАДАЧА 1: Валютная пара всегда AUD/CAD OTC
-            const selectedExp = "S10";         // ЗАДАЧА 3: Экспирация всегда 10 секунд
-            
-            // Направление оставляем случайным
+            const currencyPairs = ["EUR/RUB OTC", "AUD/USD OTC", "AUD/CAD OTC"];
+            const expirations = ["S15", "S20", "S25"];
             const directions = ["buy", "sell"];
             const getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)];
+            
+            const selectedPair = getRandomItem(currencyPairs);
+            const selectedExp = getRandomItem(expirations);
             const selectedDir = getRandomItem(directions);
             // ==========================================================
 
-            setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500); 
+            setTimeout(() => { allElements.signalStatusReady.style.display = 'block'; }, 500);
+            // ... (остальной код)
             setTimeout(() => { 
                 allElements.signalPair.innerHTML = TRANSLATIONS[userLang]['signal_pair_select'].replace('{pair}', `<b>${selectedPair}</b>`); 
                 allElements.signalPair.style.display = 'block'; 
@@ -746,6 +748,7 @@
 
 </body>
 </html>
+
 
 
 
