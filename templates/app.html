@@ -251,8 +251,8 @@
     <div id="rating-view" class="view"><div class="card"><h1 class="title" data-translate-key="rating_title"></h1><ul class="rating-list" id="rating-list-container"></ul><div class="nav-buttons"><button class="back-button" id="btn-rating-back" data-translate-key="back_btn"></button></div></div></div>
 
     <!-- ЭКРАН ПРОМОКОДОВ -->
-    <div id="promocodes-view" class="view"><div class="card"><h1 class="title" data-translate-key="promocode_title"></h1><ul class="promocode-list"><li class="promocode-item"><span class="text">+50% от $50 <span class="arrow">›</span></span><span class="code">WXL727</span></li><li class="promocode-item"><span class="text">+60% от $500 <span class="arrow">›</span></span><span class="code">ONB511</span></li><li class="promocode-item"><span class="text">+60% от $1000 <span class="arrow">›</span></span><span class="code">HFB504</span></li></ul><div class="nav-buttons"><button class="back-button" id="btn-promocodes-back" data-translate-key="back_btn"></button></div></div></div>
-    
+    <!-- ЭКРАН ПРОМОКОДОВ -->
+    <div id="promocodes-view" class="view"><div class="card"><h1 class="title" data-translate-key="promocode_title"></h1><ul class="promocode-list"><li class="promocode-item"><span class="text" data-translate-key="promo_50_text">+50% от $50 <span class="arrow">›</span></span><span class="code">WXL727</span></li><li class="promocode-item"><span class="text" data-translate-key="promo_60_500_text">+60% от $500 <span class="arrow">›</span></span><span class="code">ONB511</span></li><li class="promocode-item"><span class="text" data-translate-key="promo_60_1000_text">+60% от $1000 <span class="arrow">›</span></span><span class="code">HFB504</span></li></ul><div class="nav-buttons"><button class="back-button" id="btn-promocodes-back" data-translate-key="back_btn"></button></div></div></div>    
     <!-- ЭКРАН СТАРТА БЕСПЛАТНОГО СИГНАЛА -->
     <div id="free-signal-start-view" class="view"><div class="card"><h1 class="title" data-translate-key="free_signal_title"></h1><p class="description" id="free-signal-text"></p><div class="nav-buttons"><button class="back-button" id="btn-free-signal-back" data-translate-key="back_btn"></button><button class="main-button" id="btn-free-signal-start" data-translate-key="start_btn"></button></div></div></div>
 
@@ -358,6 +358,9 @@
             'rank_nova': 'Мастер', 
             'rank_legend': 'Легенда',
             'onb1_stat_top_value': 'ТОП 1',
+            'promo_50_text': '+50% от $50 <span class="arrow">›</span>',
+            'promo_60_500_text': '+60% от $500 <span class="arrow">›</span>',
+            'promo_60_1000_text': '+60% от $1000 <span class="arrow">›</span>',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -427,6 +430,9 @@
             'rank_hero': 'Hero', 
             'rank_nova': 'Nova', 
             'rank_legend': 'Legend',
+            'promo_50_text': '+50% of $50 <span class="arrow">›</span>',
+            'promo_60_500_text': '+60% of $500 <span class="arrow">›</span>',
+            'promo_60_1000_text': '+60% of $1000 <span class="arrow">›</span>',
         },
     };
     let userLang = 'en';
@@ -772,6 +778,7 @@
 
 </body>
 </html>
+
 
 
 
