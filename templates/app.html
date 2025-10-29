@@ -37,7 +37,8 @@
                 <!-- ИЗМЕНЕНИЕ 2: Добавлен ключ для перевода значения -->
                 <div class="stat-item"><div class="value" data-translate-key="onb1_stat_earned_value">$7M+</div><div class="label" data-translate-key="onb1_stat_earned"></div></div>
                 <!-- ИЗМЕНЕНИЯ 3 и 4: -->
-                <div class="stat-item"><div class="value">ТОП 1</div><div class="label no-wrap" data-translate-key="onb1_stat_recommended"></div></div>
+                                <!-- ИЗМЕНЕНИЯ 3 и 4: -->
+                <div class="stat-item"><div class="value" data-translate-key="onb1_stat_top_value">TOP 1</div><div class="label no-wrap" data-translate-key="onb1_stat_recommended"></div></div>
             </div>
             <div class="nav-buttons full-width"><button class="main-button" id="btn-onb1-next" data-translate-key="next_btn"></button></div>
         </div>
@@ -356,6 +357,7 @@
             'rank_hero': 'Адепт', 
             'rank_nova': 'Мастер', 
             'rank_legend': 'Легенда',
+            'onb1_stat_top_value': 'ТОП 1',
         },
         'en': { 
             'loading': 'Loading data...', 'error_text': 'Error: User not identified.', 'next_btn': 'Next >', 'back_btn': '< Back',
@@ -417,6 +419,7 @@
             'how_to_dep_s3': 'Enter your payment details',
             'how_to_dep_s4': 'Enter the promocode <b>50START</b> to get a 50% bonus on your deposit',
             'how_to_dep_s5': 'Done! Wait for the funds to arrive ✅',
+            'onb1_stat_top_value': 'TOP 1',
         }
     };
     let userLang = 'en';
@@ -640,7 +643,15 @@
         document.getElementById('btn-why-delete-info-back').onclick = () => showView('how-to-delete-view');
 
         // Навигация для сценария "Есть деньги"
-        document.getElementById('btn-how-to-withdraw').onclick = () => showView('how-to-withdraw-view');
+        document.getElementById('btn-how-to-withdraw').onclick = () => {
+            const videoEl = document.getElementById('withdraw-video');
+            if (!videoEl) return;
+            const videoSrcRu = "{{ url_for('static', filename='withdraw_ru.mp4') }}";
+            const videoSrcEn = "{{ url_for('static', filename='withdraw_en.mp4') }}";
+            videoEl.src = (userLang === 'ru') ? videoSrcRu : videoSrcEn;
+            videoEl.load();
+            showView('how-to-withdraw-view');
+        };
         document.getElementById('btn-register-for-friend').onclick = openRegisterLink;
         document.getElementById('btn-risk-what').onclick = () => showView('risk-info-view');
         document.getElementById('btn-options-back').onclick = () => showView('real-money-check-view');
@@ -754,6 +765,7 @@
 
 </body>
 </html>
+
 
 
 
