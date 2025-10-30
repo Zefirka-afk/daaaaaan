@@ -60,7 +60,8 @@ bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 # ===================================================================
 # ========= ЛОГИКА РАБОТЫ С БАЗОЙ ДАННЫХ =========
 # ===================================================================
-DB_NAME = "data.db"
+# Путь к файлу базы данных теперь находится на постоянном диске Render
+DB_NAME = "/var/data/data.db"
 def init_db():
     conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     c = conn.cursor()
@@ -289,6 +290,7 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
 
 
 
