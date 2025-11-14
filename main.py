@@ -11,7 +11,7 @@ import telebot
 # ===================================================================
 # ========= КОНФИГУРАЦИЯ =
 # ===================================================================
-TOKEN = "8441945670:AAFTTAym0douRv4mUnFfDlu3k1eNsBATPu8"
+TOKEN = "7839526012:AAFPeWqBb-clbfKjBAhKngRMPW7S5P7Wyv0"
 WEB_APP_URL = "https://daaaaaan.onrender.com"
 ADMIN_IDS = [6453186214, 5575262788, 1106921220] # ID всех, кто может видеть статистику
 
@@ -290,6 +290,7 @@ if __name__ == "__main__":
     threading.Thread(target=run_bot, daemon=True).start()
     port = int(os.environ.get("PORT", 8080))
     socketio.run(app, host="0.0.0.0", port=port, log_output=True)
+
 
 
 
